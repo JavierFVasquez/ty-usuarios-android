@@ -1,0 +1,7 @@
+#Wed Mar 15 08:57:02 COT 2017
+base.0=/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/transforms/dex/celuvansusuario/debug/folders/1000/10000/instant-run_35853be84afa9a995e7c1d6fcd698944b2e05eb8
+renamed.1=classes2.dex
+renamed.0=classes.dex
+file.1=/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/transforms/dex/celuvansusuario/debug/folders/1000/10000/instant-run-bootstrap_303d4b430bf1e33bf3352a30b437840e8e14c8ab/classes.dex
+base.1=/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/transforms/dex/celuvansusuario/debug/folders/1000/10000/instant-run-bootstrap_303d4b430bf1e33bf3352a30b437840e8e14c8ab
+file.0=/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/transforms/dex/celuvansusuario/debug/folders/1000/10000/instant-run_35853be84afa9a995e7c1d6fcd698944b2e05eb8/classes.dex

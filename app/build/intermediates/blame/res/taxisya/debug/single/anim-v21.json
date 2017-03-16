@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/res/merged/taxisya/debug/anim-v21/design_bottom_sheet_slide_in.xml",
+        "source": "/Users/developer_celuvans/.android/build-cache/1750f2e89709a9d5e783dacf214d2e765ddbb656/output/res/anim-v21/design_bottom_sheet_slide_in.xml"
+    },
+    {
+        "merged": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/res/merged/taxisya/debug/anim-v21/design_bottom_sheet_slide_out.xml",
+        "source": "/Users/developer_celuvans/.android/build-cache/1750f2e89709a9d5e783dacf214d2e765ddbb656/output/res/anim-v21/design_bottom_sheet_slide_out.xml"
+    },
+    {
+        "merged": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/res/merged/taxisya/debug/anim-v21/design_appbar_state_list_animator.xml",
+        "source": "/Users/developer_celuvans/.android/build-cache/1750f2e89709a9d5e783dacf214d2e765ddbb656/output/res/anim-v21/design_appbar_state_list_animator.xml"
+    }
+]

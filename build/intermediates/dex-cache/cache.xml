@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/Users/developer_celuvans/.android/build-cache/c5edaca0caa30ed542573ac7bb0aee215500675b/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="f7ac4b327fdb9e2ee386f5adc46164927658de4b">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/classes_8e2b328b772862a696816eee322594e72e7d7195.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/developer_celuvans/.android/build-cache/1750f2e89709a9d5e783dacf214d2e765ddbb656/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="3b236883e0df6002cabb01ce57d00a5b1e5de610">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/classes_cb21a1e51cf712ab8ec8a71e0a62444cd74edbd1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/developer_celuvans/.android/build-cache/b376cbb699ca67a1105e7253d9a3e88ba4cdf4cd/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/classes_479c37830d4b8823fb05f51ca0d0bb4838626a90.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/incremental-runtime-classes/celuvansusuario/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/transforms/dex/celuvansusuario/debug/folders/1000/10000/instant-run_35853be84afa9a995e7c1d6fcd698944b2e05eb8/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/developer_celuvans/.android/build-cache/bac0aec706b07872de195ead13d066c6afb82580/output/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/internal_impl-25.0.1_93e9130ebfa3ad9e104e0b59f34c936c57e08451.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/developer_celuvans/.gradle/caches/modules-2/files-2.1/de.greenrobot/eventbus/2.1.0/61f34937f8e9b4c692c49e7ba76afb751b9edf43/eventbus-2.1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="61f34937f8e9b4c692c49e7ba76afb751b9edf43">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/eventbus-2.1.0_cb37b94c4c81eec95af62011eb36fe6befc9e6f4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/developer_celuvans/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/25.0.1/support-annotations-25.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="a09194311f8f89c3e6db09d79f50897a889d615e">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/support-annotations-25.0.1_52f463d4a9c6540f39246300be71f562bc02275a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/developer_celuvans/.android/build-cache/1f30b77967acbac9dea6d0592419fa5ac815fd60/output/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="f83b00041ecfba705603fec40363416c7de69719">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/internal_impl-25.0.1_94ca129d0a58b0e70e4b9749be3c0d8d0b0ab9f1.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/incremental-classes/celuvansusuario/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="1b30fa4ef96a1ea27a7047426bd453d9243af972">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/transforms/dex/celuvansusuario/debug/folders/1000/10000/instant-run-bootstrap_303d4b430bf1e33bf3352a30b437840e8e14c8ab/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/developer_celuvans/.android/build-cache/e9ec5e8b73a3d8d230edaba8b38a32728da56982/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="b24e1c688744078e1fa833ffadf696794761bbe5">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/classes_c8a60769319b84d1c50414233cc49c365520e7f2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/developer_celuvans/.android/build-cache/1f30b77967acbac9dea6d0592419fa5ac815fd60/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="6a1479afe9f1b3645e1cd9a87318976893472818">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/classes_6b5f413d66102aefa04605fe6d7a84a7b4315848.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/developer_celuvans/.android/build-cache/acd5be3084cc0502cc345816f278582b1633f212/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="ac6948cce36f694f3eb3d73a135e298dc4b3527a">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/classes_9be5d1f60ffe0e911f61211b4ee01b23825a6af1.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/libs/gcm.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="f0e7f01db9f6cbc6e5bf47c10c7d74fd7a7052d0">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/transforms/dex/celuvansusuario/debug/folders/1000/2/gcm_69c77827066392836c7ac4375f997d3e03a769d9/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/libs/gcm.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="f0e7f01db9f6cbc6e5bf47c10c7d74fd7a7052d0">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/gcm_69c77827066392836c7ac4375f997d3e03a769d9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/developer_celuvans/.android/build-cache/4e3314540b5fcab17beb6efb7c3182e1ca368454/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="297d4bcf6ed4e747a1bf7d0d094a2d911a8d3a8e">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/classes_116433cf78f1c051924462ae7a0a6d292f61794e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/developer_celuvans/.android/build-cache/c16ca7fa4b0fdf583895fa0ec3db52524b4e323e/output/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c0bd6ffb002a85b5e7cad29f8558d1cc59539679">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/internal_impl-25.0.1_07a405c82287a868a1177111f2d189b532979174.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/developer_celuvans/.android/build-cache/eb7ee1ea2203d1e549772903622ceca05e4c46e9/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="00d4c8eebf2b681073c72a26bd0849549e51c7cb">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/classes_a3582b1a1cb0a4424d313753974d62fd8d4e5fa8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/developer_celuvans/.gradle/caches/modules-2/files-2.1/com.nostra13.universalimageloader/universal-image-loader/1.9.5/442dbfb517b9ab5cb5c6da7ebf8cc28ec5bd0375/universal-image-loader-1.9.5.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="442dbfb517b9ab5cb5c6da7ebf8cc28ec5bd0375">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/universal-image-loader-1.9.5_98bdc2d4301fd5584018de5a0f6d3810aa17f6db.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/developer_celuvans/.android/build-cache/3df01f9408b76278aff462cf53c5bc93ca5eabe9/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="692a913dff3246e0cc5369c2508f5970ecfeca01">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/classes_2d63ba956c9fdbdc6fdfb63e20756622c3a572b9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/developer_celuvans/.android/build-cache/bac0aec706b07872de195ead13d066c6afb82580/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="51eba4a4dd73044f90a9d58dd7ca34adbebfcf4e">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/classes_f906015e3f1f7a5a4b6e597dfb35b9f295a9adc6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/developer_celuvans/.android/build-cache/b7f43b2cbe065a6b46832b2cbb8aadad1c181041/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="1108575c7dc7b7f5b378b3290ac90de81a9b8830">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/classes_0c10d71b60e85b5fdd21fa5fc13f943d6933a73a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/developer_celuvans/.android/build-cache/c16ca7fa4b0fdf583895fa0ec3db52524b4e323e/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="26c6eef571592c91f29e56fda0bac73321de0c92">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/classes_8e6ab3b320a6cb68a418ca674c3f5149e1fba0a6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/developer_celuvans/.android/build-cache/fa4869230b2d5ede726d1419da217385158ebab1/output/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e5343c9d19cb19ff55f6b268c7f3fe8c9d224f6f">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/internal_impl-25.0.1_929cf4ac5fb13acf4add1f7500900b35bdfe5a57.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/developer_celuvans/.android/build-cache/4f84036b11b3021aac590c9c1ae4ed78d97c3fa1/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/classes_7e43cfc004b7b9e5bfe2f0d2347d83620f517ece.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/developer_celuvans/.android/build-cache/fa4869230b2d5ede726d1419da217385158ebab1/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="bc7e99e8d0fc279a05aa91378530f467ad62d443">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/classes_70cc747baaf81098ad6a6083ecc4cf346b0a1b2f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/developer_celuvans/.android/build-cache/72985aeaebdc1188a7ce8bba56cd7efd6ea48ca9/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c1b6ab157e8e12cb08b9ee82bb5e3c5d22632eb3">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/classes_582a75858c27f8fd41f9c54d50d82e7ba5366f70.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/developer_celuvans/.android/build-cache/eb7ee1ea2203d1e549772903622ceca05e4c46e9/output/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c5b7145fb34779b6639147b8f2f8dd77c0db771b">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/internal_impl-25.0.1_b14f6acce797bfbfe7a388cc25f7b2e9133713fe.jar" />
+    </item>
+
+</items>
