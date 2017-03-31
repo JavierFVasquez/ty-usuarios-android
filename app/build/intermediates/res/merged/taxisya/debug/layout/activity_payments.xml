@@ -21,15 +21,6 @@
             android:paddingTop="10dp"
             android:src="@drawable/logo" />
 
-        <ImageView
-            android:id="@+id/btn_volver"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/btn_back" />
     </RelativeLayout>
 
     <LinearLayout
@@ -75,19 +66,11 @@
                 android:textColor="@color/white"
                 android:visibility="visible" />
 
-            <!--<ListView-->
-                <!--android:id="@+id/listView1"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content" >-->
-            <!--</ListView>-->
-
-
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                />
+                android:layout_weight="1" />
 
         </LinearLayout>
 

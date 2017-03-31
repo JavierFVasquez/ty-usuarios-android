@@ -328,20 +328,16 @@ public class HistorialActivity extends Activity {
 							JSONObject responsejson = new JSONObject(response);
 
 							JSONObject json_data;
-
 							json_data = responsejson;
 
 							HistorialActivity.json_servicios = json_data;
-
 							HistorialActivity.json_dias = json_data.getJSONArray("dayList");
 
 							int logstatus = responsejson.optInt("error");
 
 							if (logstatus == 0 ) {
-
 								//HistorialActivity.convertirDatos();
 								convertirDatos();
-
 
 							} else {
 								err_services();

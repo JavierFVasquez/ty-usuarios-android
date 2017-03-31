@@ -615,17 +615,13 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
     public void err_cancel() {
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(200);
-        Toast.makeText(getApplicationContext(),
-                getString(R.string.error_cancel_service), Toast.LENGTH_SHORT)
-                .show();
+        Toast.makeText(getApplicationContext(), getString(R.string.error_cancel_service), Toast.LENGTH_SHORT).show();
     }
 
     public void err_driver() {
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(200);
-        Toast.makeText(getApplicationContext(),
-                getString(R.string.error_load_driver), Toast.LENGTH_SHORT)
-                .show();
+        Toast.makeText(getApplicationContext(), getString(R.string.error_load_driver), Toast.LENGTH_SHORT).show();
     }
 
     private void cargarTaxista(JSONObject driver) {

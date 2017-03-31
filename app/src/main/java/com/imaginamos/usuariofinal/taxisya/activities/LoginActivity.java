@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.imaginamos.usuariofinal.taxisya.models.Conf;
@@ -102,16 +101,14 @@ public class LoginActivity extends Activity implements OnClickListener {
 
         if (checklogindata(email, password)) {
             if (uuid == null) {
-                Toast.makeText(this, getString(R.string.error_net),
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.error_net), Toast.LENGTH_LONG).show();
 
                 uuid = Utils.uuid(this);
                 Log.e("ERROR", "loginService uuid " + uuid);
 
             } else {
 
-                MiddleConnect.login(this, email, crypted_pass, uuid,
-                        new AsyncHttpResponseHandler() {
+                MiddleConnect.login(this, email, crypted_pass, uuid, new AsyncHttpResponseHandler() {
 
                             @Override
                             public void onStart() {
@@ -140,21 +137,13 @@ public class LoginActivity extends Activity implements OnClickListener {
                                         String cellphone = responsejson.getString("cellphone");
 
                                         conf = new Conf(getApplicationContext());
-
                                         conf.setLogin(true);
-
                                         conf.setName(name);
-
                                         conf.setPhone(cellphone);
-
                                         conf.setIdUser(id_user);
-
                                         conf.setPass(crypted_pass);
-
                                         conf.setUser(email);
-
                                         conf.setUuid(uuid);
-
                                         conf.setIsFirst(false);
 
                                         if (target_option > 0) {
@@ -208,8 +197,7 @@ public class LoginActivity extends Activity implements OnClickListener {
     public void err_login(int i) {
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(200);
-        Toast.makeText(getApplicationContext(),
-                getString(R.string.error_login), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), getString(R.string.error_login), Toast.LENGTH_LONG).show();
     }
 
     public boolean checklogindata(String username, String password) {

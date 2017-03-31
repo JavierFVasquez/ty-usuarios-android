@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.imaginamos.taxisya.activities.MapaActivitys;
@@ -56,13 +55,10 @@ public class RegistroActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-
 		overridePendingTransition(R.anim.pull_in_from_right, R.anim.hold);
-
 		setContentView(R.layout.activity_registro);
 
 		uuid = Utils.uuid(this);
-
 		conf  = new Conf(this);
 
 		btnRegister = (Button) findViewById(R.id.btnRegister);
@@ -100,9 +96,6 @@ public class RegistroActivity extends Activity implements OnClickListener {
 
 			case R.id.btnRegister:
 				registerService();
-				Intent intent1 = new Intent(RegistroActivity.this, MapaActivitys.class);
-				intent1.putExtra("target", target_option);
-				startActivityForResult(intent1, 0);
 				break;
 
 			case R.id.btnLogin:
@@ -127,13 +120,9 @@ public class RegistroActivity extends Activity implements OnClickListener {
 	}
 
 	private void registerService() {
-
 		nombre = name.getText().toString();
-
 		usuario = user.getText().toString();
-
 		password = pass.getText().toString();
-
 		phone = cellphone.getText().toString();
 
 		if(uuid != null) {
@@ -183,6 +172,10 @@ public class RegistroActivity extends Activity implements OnClickListener {
 
 								}
 
+								Intent intent1 = new Intent(RegistroActivity.this, MapaActivitys.class);
+								intent1.putExtra("target", target_option);
+								startActivityForResult(intent1, 0);
+
 							}
 
 							@Override
@@ -197,17 +190,18 @@ public class RegistroActivity extends Activity implements OnClickListener {
 									pDialog.dismiss();
 								} catch (Exception e) {
 								}
+
 							}
 						});
 
 			} else {
 				err_register();
 			}
+
 		} else {
 			uuid = Utils.uuid(this);
 			Toast.makeText(getApplicationContext(),getResources().getString(R.string.error_net), Toast.LENGTH_SHORT).show();
 		}
-
 
 	}
 
@@ -244,8 +238,8 @@ public class RegistroActivity extends Activity implements OnClickListener {
 	private void err_register() {
 		Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		vibrator.vibrate(200);
-		Toast.makeText(getApplicationContext(),getResources().getString(R.string.registry_error), Toast.LENGTH_SHORT).show();
-		//finish();
+		Toast.makeText(getApplicationContext(),getResources().getString(R.string.text_campos_imcompletos), Toast.LENGTH_SHORT).show();
+		//	finish();
 	}
 
 	private boolean checkregisterdata(String nombre, String apellido,String username, String password, String phone) {
@@ -260,4 +254,9 @@ public class RegistroActivity extends Activity implements OnClickListener {
 
 	}
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		//super.onBackPressed();
+	}
 }

@@ -42,7 +42,7 @@
                 android:visibility="gone" />
 
             <ImageView
-                android:id="@+id/btn_volver"
+                android:id="@+id/btn_menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -134,9 +134,7 @@
                             android:layout_height="fill_parent"
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentLeft="true"
-                            android:clickable="true"
-                            map:cameraTargetLat="4.597317"
-                            map:cameraTargetLng="-74.077098" />
+                            android:clickable="true" />
 
                         <ImageView
                             android:id="@+id/ivMarker"

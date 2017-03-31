@@ -41,7 +41,7 @@
                 android:visibility="gone" />
 
             <ImageView
-                android:id="@+id/btn_volver"
+                android:id="@+id/btn_menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -121,55 +121,57 @@
 
                     </LinearLayout>
 
+                    <RelativeLayout
+                        android:id="@+id/change_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
                     <FrameLayout
-                        android:id="@+id/ragment_map"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
                         <fragment
-                            android:id="@+id/map"
+                            android:id="@+id/marker"
                             class="com.google.android.gms.maps.SupportMapFragment"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentLeft="true"
-                            android:clickable="true"
-                            map:cameraTargetLat="4.597317"
-                            map:cameraTargetLng="-74.077098" />
-
-                        <ImageView
-                            android:id="@+id/ivMarker"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:contentDescription="@string/app_name"
-                            android:src="@drawable/pointer" />
-
-                        <RelativeLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="210dp">
+                            android:clickable="true" />
 
                             <ImageView
-                                android:id="@+id/image_map"
-                                android:layout_width="fill_parent"
-                                android:layout_height="210dp"
-                                android:layout_gravity="top"
-                                android:scaleType="centerCrop"
-                                android:visibility="gone" />
-
-                            <ImageView
-                                android:id="@+id/ivMarker2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:layout_gravity="center"
+                                android:id="@+id/ivMarker"
+                                android:layout_width="78dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_horizontal"
                                 android:contentDescription="@string/app_name"
-                                android:src="@drawable/pointer"
-                                android:visibility="gone" />
+                                android:src="@drawable/pointer" />
 
+                            <RelativeLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent">
 
-                        </RelativeLayout>
+                                <ImageView
+                                    android:id="@+id/image_map"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="210dp"
+                                    android:layout_gravity="top"
+                                    android:scaleType="centerCrop"
+                                    android:visibility="gone" />
+
+                                <ImageView
+                                    android:id="@+id/ivMarker2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@string/app_name"
+                                    android:src="@drawable/pointer"
+                                    android:visibility="gone" />
+
+                            </RelativeLayout>
                     </FrameLayout>
+                    </RelativeLayout>
 
                 </LinearLayout>
 

@@ -48,27 +48,16 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 	public static final int NOTIFICATION_ID = 1;
 
 	private ImageView volver;
-
 	private String id_user, uuid, service_id, index, comp1, comp2, no, barrio, obs, latitud, longitud;
-
 	private ProgressDialog pDialog;
-
 	private AnimationDrawable frameAnimation;
-
 	private boolean isError = false;
-
 	private AlertDialog alert;
-
 	private Conf conf;
-
 	private String url_cancel_current;
-
 	private Timer myTimer = new Timer();
-
 	private BroadcastReceiver  mBroadCastReceiver;
-
 	private BroadcastReceiver mReceiver;
-
 	private int reintento = 0;
 
 	private Date fecha1;
@@ -637,14 +626,12 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 					@Override
 					public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 						String response = new String(responseBody);
-						try {
 
+						try {
 							Log.v("checkService", "SUCCES: "+response);
 
 							JSONObject responsejson = new JSONObject(response);
 
-							//if (responsejson.getInt("status_id"))
-							//{
 								int status = responsejson.getInt("status_id");
 					            Log.v("checkService", "status_id: " + String.valueOf(status));
 
@@ -675,20 +662,7 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 					            	}
 					            }
 
-							//}
-
-
-                            /*
-							if (responsejson.getBoolean("success"))
-							{
-
-								conf.setServiceId(responsejson.getString("service_id"));
-
-							}
-							*/
-
-						} catch (Exception e)
-						{
+						} catch (Exception e) {
 							Log.v("checkService", "Problema json"+e.toString());
 						}
 					}
@@ -710,7 +684,6 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 			});
 
     }
-
 
 	public void err_request() {
 		Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
