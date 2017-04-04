@@ -182,45 +182,45 @@ public class HomeActivity extends Activity {
                         String response = new String(responseBody);
                         Utils.log(TAG, response);
 
-                            try {
-                                Log.v("checkService", "SUCCES: " + response);
-                                JSONObject responsejson = new JSONObject(response);
-                                int status = responsejson.getInt("status_id");
-                                Log.v("checkService", "status_id: " + String.valueOf(status));
+                        try {
+                            Log.v("checkService", "SUCCES: " + response);
+                            JSONObject responsejson = new JSONObject(response);
+                            int status = responsejson.getInt("status_id");
+                            Log.v("checkService", "status_id: " + String.valueOf(status));
 
-                                if (status == 5) {
-                                    Log.v("checkService", "servicios detectado por socket, sin push");
-                                    Intent mIntent = new Intent(getApplicationContext(), ConfirmacionActivity.class);
-                                    mIntent.putExtra("driver", responsejson.getJSONObject("driver").toString());
-                                } else {
-                                    Intent mIntent = new Intent(getApplicationContext(), ConfirmacionActivity.class);
-                                    mIntent.putExtra("qualification", "1");
-                                }
-                                if ((status == 2) || (status == 4)) {
-                                    Log.v("checkService", "servicios detectado por socket, sin push");
-                                    Intent mIntent = new Intent(getApplicationContext(), ConfirmacionActivity.class);
-                                    mIntent.putExtra("driver", responsejson.getJSONObject("driver").toString());
-                                    startActivity(mIntent);
-                                    finish();
+                            if (status == 5) {
+                                Log.v("checkService", "servicios detectado por socket, sin push");
+                                Intent mIntent = new Intent(getApplicationContext(), ConfirmacionActivity.class);
+                                mIntent.putExtra("driver", responsejson.getJSONObject("driver").toString());
+                            } else {
+                                Intent mIntent = new Intent(getApplicationContext(), ConfirmacionActivity.class);
+                                mIntent.putExtra("qualification", "1");
+                            }
+                            if ((status == 2) || (status == 4)) {
+                                Log.v("checkService", "servicios detectado por socket, sin push");
+                                Intent mIntent = new Intent(getApplicationContext(), ConfirmacionActivity.class);
+                                mIntent.putExtra("driver", responsejson.getJSONObject("driver").toString());
+                                startActivity(mIntent);
+                                finish();
 
-                                } else {
-                                    if (status >= 6) {
-                                        String msg;
+                            } else {
+                                if (status >= 6) {
+                                    String msg;
+                                    //Toast.makeText(HomeActivity.this, R.string.servicio_cancelado, Toast.LENGTH_SHORT).show();
+                                    if (status == 8) {
+                                        msg = getString(R.string.servicio_cancelado_conductor);
+                                        //Toast.makeText(HomeActivity.this, R.string.servicio_cancelado_conductor, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        msg = getString(R.string.servicio_cancelado);
                                         //Toast.makeText(HomeActivity.this, R.string.servicio_cancelado, Toast.LENGTH_SHORT).show();
-                                        if (status == 8) {
-                                            msg = getString(R.string.servicio_cancelado_conductor);
-                                            //Toast.makeText(HomeActivity.this, R.string.servicio_cancelado_conductor, Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            msg = getString(R.string.servicio_cancelado);
-                                            //Toast.makeText(HomeActivity.this, R.string.servicio_cancelado, Toast.LENGTH_SHORT).show();
-                                        }
                                     }
                                 }
-
-                            } catch (Exception e) {
-                                Log.v("checkService", "Problema json" + e.toString());
                             }
+
+                        } catch (Exception e) {
+                            Log.v("checkService", "Problema json" + e.toString());
                         }
+                    }
 
 
                     @Override
@@ -233,10 +233,10 @@ public class HomeActivity extends Activity {
                 });
             }
 
-            }else{
+        }else{
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setTitle("No tiene una conexión a internet");
-            alertDialog.setMessage(getString(R.string.enable_internet));
+            alertDialog.setMessage(getString(R.string.aceptar));
             alertDialog.setPositiveButton("Habilitar",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
@@ -253,21 +253,21 @@ public class HomeActivity extends Activity {
                         }
                     });
             alertDialog.show();
-          }
+        }
 
-            try {
-                setView();
-            } catch (JSONException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+        try {
+            setView();
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-            // almacena activity actual
-            // Store our shared preference
-            mPref = new Preferencias(this);
-            mPref.setRootActivity("HomeActivity");
+        // almacena activity actual
+        // Store our shared preference
+        mPref = new Preferencias(this);
+        mPref.setRootActivity("HomeActivity");
 
-               //checkAppVersions();
+        //checkAppVersions();
     }
 
     void mostrarMensaje(final String message) {
@@ -303,7 +303,7 @@ public class HomeActivity extends Activity {
         mapa_ani = AnimationUtils.loadAnimation(this, R.anim.mapa_main);
         traslation.setFillAfter(true);
         traslation2.setFillAfter(true);
-       // checkAppVersions();
+        // checkAppVersions();
         mapa.setAnimation(mapa_ani);
         nombre.setAnimation(traslation2);
         fondo.setAnimation(traslation);
@@ -394,17 +394,7 @@ public class HomeActivity extends Activity {
                                     if (updateAvailable)
                                         showDialog();
                                     else {
-                                        if (conf.getLogin()) {
-                                            mPref.setRootActivity("HomeActivity");
-                                            Intent in = new Intent(HomeActivity.this, PerfilActivity.class);
-                                            startActivity(in);
-                                        } else {
-                                            mPref.setRootActivity("HomeActivity");
 
-                                            Intent in = new Intent(HomeActivity.this, RegistroActivity.class);
-                                            in.putExtra("target", Target.HISTORY_TARGET);
-                                            startActivity(in);
-                                        }
                                     }
                                     break;
                             }
@@ -559,78 +549,80 @@ public class HomeActivity extends Activity {
         builder.show();
     }
 
-       public boolean checkService() throws JSONException {
+    public boolean checkService() throws JSONException {
 
-            //service_id = conf.getServiceId();
-            id_user = conf.getIdUser();
-            service_id = "";
-            Log.v("checkService", "ini");
-            Log.v("checkService", "id_user=" + id_user + " service_id=" + service_id);
+        //service_id = conf.getServiceId();
+        id_user = conf.getIdUser();
+        service_id = "";
+        Log.v("checkService", "ini");
+        Log.v("checkService", "id_user=" + id_user + " service_id=" + service_id);
 
-            MiddleConnect.checkStatusService(this, id_user, service_id, "uuid", new AsyncHttpResponseHandler() {
+        MiddleConnect.checkStatusService(this, id_user, service_id, "uuid", new AsyncHttpResponseHandler() {
 
-                @Override
-                public void onStart() {
-                    Log.v("checkService", "onStart");
-                }
+            @Override
+            public void onStart() {
+                Log.v("checkService", "onStart");
+            }
 
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                    String response = new String(responseBody);
-                    try {
-                        JSONObject responsejson = new JSONObject(response);
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String response = new String(responseBody);
+                try {
+                    JSONObject responsejson = new JSONObject(response);
 
-                        status_service = responsejson.getInt("status_id");
+                    status_service = responsejson.getInt("status_id");
 
-                        Log.v("checkService", "status_id: " + String.valueOf(status_service));
-                        // si hay un servicio asignado lo recupera
-                        if ((status_service == 2) || (status_service == 4)) {
+                    Log.v("checkService", "status_id: " + String.valueOf(status_service));
+                    // si hay un servicio asignado lo recupera
+                    if ((status_service == 2) || (status_service == 4)) {
 
-                            service_id = responsejson.getString("id");
-                            conf.setServiceId(service_id);
+                        service_id = responsejson.getString("id");
+                        conf.setServiceId(service_id);
 
-                            Log.v("HomeActivity", "checkService() servicio recuperado - status_service " + String.valueOf(status_service) + " service_id=" + service_id);
-                            Log.v("HomeActivity", "checkService() servicio recuperado - driver " + responsejson.getJSONObject("driver").toString());
+                        Log.v("HomeActivity", "checkService() servicio recuperado - status_service " + String.valueOf(status_service) + " service_id=" + service_id);
+                        Log.v("HomeActivity", "checkService() servicio recuperado - driver " + responsejson.getJSONObject("driver").toString());
 
-                            Log.v("CNF_SRV1", "HomeActivity before call ConfirmacionActivity.class");
+                        Log.v("CNF_SRV1", "HomeActivity before call ConfirmacionActivity.class");
 
-                            mPref.setRootActivity("HomeActivity");
+                        mPref.setRootActivity("HomeActivity");
 
-                            Intent mIntent = new Intent(getApplicationContext(), ConfirmacionActivity.class);
+                        Intent mIntent = new Intent(getApplicationContext(), ConfirmacionActivity.class);
+                        mIntent.putExtra("driver", responsejson.getJSONObject("driver").toString());
+                        //if (responsejson.isNull("qualification")) {
+                        if (status_service == 5) {
+                            mIntent.putExtra("qualification", "1");
+                            mIntent = new Intent(getApplicationContext(), CalificarActivity.class);
                             mIntent.putExtra("driver", responsejson.getJSONObject("driver").toString());
-                            //if (responsejson.isNull("qualification")) {
-                            if (status_service == 5) {
-                                mIntent.putExtra("qualification", "1");
-                            } else {
-                                mIntent.putExtra("qualification", "0");
-                            }
-                            startActivity(mIntent);
                         } else {
-                            Log.v("HomeActivity", "checkService() no tenia servicio para recuperar");
-                            Log.v("HomeActivity", "responsejson = " + responsejson.getJSONObject("driver").toString());
+                            mIntent.putExtra("qualification", "0");
                         }
-                        if(status_service == 7 ||status_service == 8 || status_service == 9){
-                            Toast.makeText(getApplicationContext(), getString(R.string.servicio_cancelado), Toast.LENGTH_SHORT).show();
-                        }
-
-                    } catch (JSONException e) {
-                        Log.v("checkService", "Problema json " + e.toString());
+                        startActivity(mIntent);
+                    } else {
+                        Log.v("HomeActivity", "checkService() no tenia servicio para recuperar");
+                        Log.v("HomeActivity", "responsejson = " + responsejson.getJSONObject("driver").toString());
                     }
+                    if(status_service == 7 ||status_service == 8 || status_service == 9){
+                        Toast.makeText(getApplicationContext(), getString(R.string.servicio_cancelado), Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    Log.v("checkService", "Problema json " + e.toString());
                 }
+            }
 
-                @Override
-                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                    //  String response = new String(responseBody);
-                    // Log.v("checkService", "onFailure = " + response);
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                //  String response = new String(responseBody);
+                // Log.v("checkService", "onFailure = " + response);
 
-                }
+            }
 
-                @Override
-                public void onFinish() {
-                    Log.v("checkService", "onFinish");
-                }
+            @Override
+            public void onFinish() {
+                Log.v("checkService", "onFinish");
+            }
 
-            });
+        });
         return true;
     }
 
@@ -691,7 +683,7 @@ public class HomeActivity extends Activity {
 
             @Override
             public void onFinish() {
-               Log.v("checkServiceInOtherDev", "onFinish");
+                Log.v("checkServiceInOtherDev", "onFinish");
             }
         });
         return inUse;

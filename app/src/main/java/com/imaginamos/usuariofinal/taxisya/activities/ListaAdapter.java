@@ -16,13 +16,13 @@ import com.imaginamos.usuariofinal.taxisya.R;
 
 
 public class ListaAdapter extends BaseAdapter {
+
     Context context;
     String[] titulos;
     int[] imagenes;
     LayoutInflater inflater;
 
     public ListaAdapter(Context context, String[] titulos, int[] imagenes) {
-
         this.context = context;
         this.titulos = titulos;
         this.imagenes = imagenes;

@@ -56,8 +56,7 @@
     <string name="error_load_driver">Error al cargar los datos del conductor</string>
     <string name="error_load_services">Hubo un error al cargar el historial</string>
     <string name="error_login">Nombre de usuario o password incorrectos</string>
-    <string name="error_net">Hubo un error con su conexión, Intente de nuevo</string>
-    <string name="enable_internet">Por favor habilite una conexión a Internet</string>
+    <string name="error_net">Hubo un error con su conexión , ¡Intente de nuevo!</string>
     <string name="network_connectivity_message">Verificando...</string>
     <string name="error_no_driver">En el momento no hay conductores disponibles</string>
     <string name="error_no_procc">No se pudo procesar la solicitud\n intentelo de nuevo</string>

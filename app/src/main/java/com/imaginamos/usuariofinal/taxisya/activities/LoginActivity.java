@@ -13,11 +13,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.imaginamos.usuariofinal.taxisya.models.Conf;
 import com.imaginamos.usuariofinal.taxisya.comm.MiddleConnect;
-import com.imaginamos.usuariofinal.taxisya.models.Target;
 import com.imaginamos.usuariofinal.taxisya.utils.Utils;
 import com.imaginamos.usuariofinal.taxisya.R;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -26,6 +26,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class LoginActivity extends Activity implements OnClickListener {
 
+    private ImageView volver;
     private EditText user, pass;
     private String uuid, id_user;
     private Button reset_pass;
@@ -51,6 +52,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 
         setContentView(R.layout.activity_login);
 
+        volver = (ImageView) findViewById(R.id.btn_volver);
+
         reset_pass = (Button) findViewById(R.id.reset_pass);
 
         btnIngresar = (Button) findViewById(R.id.btnIngresar);
@@ -59,6 +62,8 @@ public class LoginActivity extends Activity implements OnClickListener {
         reset_pass.setOnClickListener(this);
         btnIngresar.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
+
+        volver.setOnClickListener(this);
 
         user = (EditText) findViewById(R.id.usuario);
         pass = (EditText) findViewById(R.id.contrasena);
@@ -77,20 +82,17 @@ public class LoginActivity extends Activity implements OnClickListener {
                 break;
 
             case R.id.btnRegister:
-                returnView();
+                finish();
                 break;
 
+            case R.id.btn_volver:
+                finish();
+                break;
             case R.id.reset_pass:
                 Intent i = new Intent(getApplicationContext(), ResetPassActivity.class);
                 startActivity(i);
                 break;
         }
-    }
-
-    private void returnView(){
-        Intent i = new Intent(this, RegistroActivity.class);
-        i.putExtra("target", Target.ADDRESS_TARGET);
-        startActivityForResult(i, 10);
     }
 
     private void loginService() {
@@ -101,14 +103,16 @@ public class LoginActivity extends Activity implements OnClickListener {
 
         if (checklogindata(email, password)) {
             if (uuid == null) {
-                Toast.makeText(this, getString(R.string.error_net), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.error_net),
+                        Toast.LENGTH_LONG).show();
 
                 uuid = Utils.uuid(this);
                 Log.e("ERROR", "loginService uuid " + uuid);
 
             } else {
 
-                MiddleConnect.login(this, email, crypted_pass, uuid, new AsyncHttpResponseHandler() {
+                MiddleConnect.login(this, email, crypted_pass, uuid,
+                        new AsyncHttpResponseHandler() {
 
                             @Override
                             public void onStart() {
@@ -137,13 +141,21 @@ public class LoginActivity extends Activity implements OnClickListener {
                                         String cellphone = responsejson.getString("cellphone");
 
                                         conf = new Conf(getApplicationContext());
+
                                         conf.setLogin(true);
+
                                         conf.setName(name);
+
                                         conf.setPhone(cellphone);
+
                                         conf.setIdUser(id_user);
+
                                         conf.setPass(crypted_pass);
+
                                         conf.setUser(email);
+
                                         conf.setUuid(uuid);
+
                                         conf.setIsFirst(false);
 
                                         if (target_option > 0) {
@@ -155,7 +167,8 @@ public class LoginActivity extends Activity implements OnClickListener {
                                         } else {
                                             Log.v("LoginActivity", "target_option > 0");
                                             Intent returnIntent = new Intent();
-                                            returnIntent.putExtra("target_for", target_option);
+                                            returnIntent.putExtra("target_for",
+                                                    target_option);
                                             setResult(RESULT_OK, returnIntent);
                                             finish();
                                         }
@@ -197,7 +210,8 @@ public class LoginActivity extends Activity implements OnClickListener {
     public void err_login(int i) {
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(200);
-        Toast.makeText(getApplicationContext(), getString(R.string.error_login), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),
+                getString(R.string.error_login), Toast.LENGTH_LONG).show();
     }
 
     public boolean checklogindata(String username, String password) {

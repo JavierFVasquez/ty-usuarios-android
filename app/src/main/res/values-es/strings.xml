@@ -32,14 +32,14 @@
     <string name="calificar">service/score</string>
     <string name="cancel">cancelar</string>
     <string name="cancel_schedule">schedule/cancel</string>
-    <string name="cancel_service">Servicio cancelado</string>
+    <string name="cancel_service">v2/user/%1$s/cancelservice</string>
     <string name="cancel_service_system">service/systemcancel</string>
     <string name="checkstatuservice">service/status</string>
     <string name="city">Ciudad</string>
     <string name="close_session_error">Hubo un error al cerrar sesión</string>
     <string name="code_pass">user/pwd/confirm</string>
     <string name="codigo_de_confirmaci_n">Codigo de confirmación</string>
-    <string name="confirm_cancel">¿Desea cancelar el servicio?</string>
+    <string name="confirm_cancel">¿Estás seguro de cancelar el servicio?</string>
     <string name="confirmacion_seguro_cierra_sesion">¿Está seguro de cerrar la sesión?</string>
     <string name="deladdress">address/delete</string>
     <string name="digita_nueva_contrase_a">Digita nueva contraseña</string>
@@ -49,7 +49,6 @@
     <string name="dir3">Ej:40</string>
     <string name="driver">driver/view</string>
     <string name="enable_gps">Por favor habilite su GPS.</string>
-    <string name="enable_internet">Por favor habilite una conexión a Internet</string>
     <string name="enviando">Enviando...</string>
     <string name="enviando_calificacion">Enviando Calificacion...</string>
     <string name="error_cancel_service">Hubo un error al cancelar el servicio</string>
@@ -57,16 +56,16 @@
     <string name="error_load_driver">Error al cargar los datos del conductor</string>
     <string name="error_load_services">Hubo un error al cargar el historial</string>
     <string name="error_login">Nombre de usuario o password incorrectos</string>
-    <string name="error_net">Hubo un error con su conexión, Intente de nuevo</string>
+    <string name="error_net">Hubo un error con su conexión , ¡Intente de nuevo!</string>
     <string name="network_connectivity_message">Verificando...</string>
     <string name="error_no_driver">En el momento no hay conductores disponibles</string>
     <string name="error_no_procc">No se pudo procesar la solicitud\n intentelo de nuevo</string>
     <string name="error_position">No fue posible obtener su ubicación, espere unos segundos e intente otra vez!</string>
     <string name="error_q_service">Hubo un error al calificar el servicio</string>
-    <string name="error_speed">Su conexión a internet presenta problemas de velocidad</string>
+    <string name="error_speed">Su conexión a internet presenta problemas de velocidad!</string>
     <string name="finish_schedule">schedule/finish</string>
     <string name="getaddress">address/byuser</string>
-    <string name="getdriverinfo">Hubo un error al cargar loss datos del conductor</string>
+    <string name="getdriverinfo">Hubo un error al cargar los datos del conductor</string>
     <string name="getlatlngaddress">http://maps.googleapis.com/maps/api/geocode/json?</string>
     <string name="guion">-</string>
     <string name="has">#</string>
@@ -264,6 +263,5 @@
     <string name="ticket_data">Ingresa datos del vale</string>
     <string name="title_code_authorization">Código de autorización:</string>
     <string name="ticket_invalid">El vale no se ingresó o es inválido</string>
-    <string name="ticket_unauthorized">El vale no está autorizado</string>
 
 </resources>

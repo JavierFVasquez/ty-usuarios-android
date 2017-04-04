@@ -11,6 +11,7 @@ public class Conf {
 	private Editor editor;
 
 	private String ISLOGIN =  "ISLOGIN";
+
 	private String USER = "USER";
 	private String PASS = "PASS";
 	private String UUID = "uuid";
@@ -19,6 +20,7 @@ public class Conf {
 	private String PHONE = "PHONE";
 	private String CARD_DEFAULT = "CARD_DEFAULT";
 	private String USER_EMAIL = "USER_EMAIL"; // para transaccion
+
 	private String ISFIRST = "isFirst";
 	private String IDSERVICE ="IDSERVICE";
 	private String IDDRIVER ="IDDRIVER";
@@ -31,16 +33,19 @@ public class Conf {
 		editor = prefs.edit();
 	}
 
-	public void setLogin(boolean is) {
+	public void setLogin(boolean is)
+	{
 		editor.putBoolean(ISLOGIN, is);
 		editor.commit();
 	}
 
-	public boolean getLogin() {
+	public boolean getLogin()
+	{
 		return prefs.getBoolean(ISLOGIN, false);
 	}
 
-	public void setUser(String user) {
+	public void setUser(String user)
+	{
 		editor.putString(USER, user);
 		editor.commit();
 	}
@@ -50,7 +55,8 @@ public class Conf {
 		return prefs.getString(USER, null);
 	}
 
-	public void setPass(String pass) {
+	public void setPass(String pass)
+	{
 		editor.putString(PASS, pass);
 		editor.commit();
 	}
@@ -60,7 +66,8 @@ public class Conf {
 		return prefs.getString(PASS, null);
 	}
 
-	public void setName(String name) {
+	public void setName(String name)
+	{
 		editor.putString(NAME, name);
 		editor.commit();
 	}
@@ -70,7 +77,8 @@ public class Conf {
 		return prefs.getString(NAME, null);
 	}
 
-	public void setPhone(String phone) {
+	public void setPhone(String phone)
+	{
 		editor.putString(PHONE, phone);
 		editor.commit();
 	}
@@ -80,7 +88,8 @@ public class Conf {
 		return prefs.getString(PHONE, null);
 	}
 
-	public void setUuid(String uuid) {
+	public void setUuid(String uuid)
+	{
 		editor.putString(UUID, uuid);
 		editor.commit();
 	}
@@ -89,7 +98,8 @@ public class Conf {
 	{
 		return prefs.getString(UUID, null);
 	}
-	public void setIdUser(String iduser) {
+	public void setIdUser(String iduser)
+	{
 		editor.putString(IDUSER, iduser);
 		editor.commit();
 	}
@@ -99,7 +109,8 @@ public class Conf {
 		return prefs.getString(IDUSER, null);
 	}
 
-	public void setIsFirst(boolean isFirst) {
+	public void setIsFirst(boolean isFirst)
+	{
 		editor.putBoolean(ISFIRST, isFirst);
 		editor.commit();
 	}
@@ -114,7 +125,8 @@ public class Conf {
 		return prefs.getString(IDSERVICE, null);
 	}
 
-	public void setServiceId(String idservice) {
+	public void setServiceId(String idservice)
+	{
 		editor.putString(IDSERVICE, idservice);
 		editor.commit();
 	}
@@ -123,16 +135,19 @@ public class Conf {
 		return prefs.getInt(APPVERSION, 0);
 	}
 
-	public void setAppVersion(int appversion) {
+	public void setAppVersion(int appversion)
+	{
 		editor.putInt(APPVERSION, appversion);
 		editor.commit();
 	}
-	public String getDriverId() {
+	public String getDriverId()
+	{
 
 		return prefs.getString(IDDRIVER, null);
 	}
 
-	public void setDriverId(String iddriver) {
+	public void setDriverId(String iddriver)
+	{
 		editor.putString(IDDRIVER, iddriver);
 		editor.commit();
 	}

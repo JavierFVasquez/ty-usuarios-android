@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/incremental/mergeCeluvansusuarioDebugResources/merged.dir/values-large-v4/values-large-v4.xml",
+        "outputFile": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/incremental/mergeCeluvansusuarioDebugResources/merged.dir/values-large-v4/values-large-v4.xml",
         "map": [
             {
                 "to": {
@@ -144,7 +144,7 @@
                     "endOffset": 585
                 },
                 "from": {
-                    "file": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/src/main/res/values-large/dimens.xml",
+                    "file": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/src/main/res/values-large/dimens.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -163,7 +163,7 @@
                     "endOffset": 641
                 },
                 "from": {
-                    "file": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/src/main/res/values-large/dimens.xml",
+                    "file": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/src/main/res/values-large/dimens.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -182,7 +182,7 @@
                     "endOffset": 684
                 },
                 "from": {
-                    "file": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/src/main/res/values-large/dimens.xml",
+                    "file": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/src/main/res/values-large/dimens.xml",
                     "position": {
                         "startLine": 8,
                         "startColumn": 1,
@@ -201,7 +201,7 @@
                     "endOffset": 727
                 },
                 "from": {
-                    "file": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/src/main/res/values-large/dimens.xml",
+                    "file": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/src/main/res/values-large/dimens.xml",
                     "position": {
                         "startLine": 7,
                         "startColumn": 1,
@@ -220,7 +220,7 @@
                     "endOffset": 774
                 },
                 "from": {
-                    "file": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/src/main/res/values-large/dimens.xml",
+                    "file": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/src/main/res/values-large/dimens.xml",
                     "position": {
                         "startLine": 6,
                         "startColumn": 1,
@@ -239,7 +239,7 @@
                     "endOffset": 816
                 },
                 "from": {
-                    "file": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/src/main/res/values-large/dimens.xml",
+                    "file": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/src/main/res/values-large/dimens.xml",
                     "position": {
                         "startLine": 5,
                         "startColumn": 1,

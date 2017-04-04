@@ -55,6 +55,8 @@ public class MyAddressesActivity extends Activity implements OnClickListener, Ca
     private Conf conf;
 
     private BroadcastReceiver mReceiver;
+
+    private ImageView mBack;
     private Button mAddAddress;
     private LinearLayout mNewAddress;
     private EditText edt_new_name;
@@ -81,8 +83,11 @@ public class MyAddressesActivity extends Activity implements OnClickListener, Ca
 
         btnGuardar = (Button) findViewById(R.id.btn_nueva_direccion);
 
+
+        mBack = (ImageView) findViewById(R.id.btn_volver);
         mAddAddress = (Button) findViewById(R.id.btn_add);
 
+        mBack.setOnClickListener(this);
         mAddAddress.setOnClickListener(this);
         btnGuardar.setOnClickListener(this);
 
@@ -171,6 +176,11 @@ public class MyAddressesActivity extends Activity implements OnClickListener, Ca
                 return false;
             }
         });
+
+
+
+
+
 
         addressList = (RecyclerView) findViewById(R.id.addresses_list);
         addressAdapter = new AddressAdapter(this);

@@ -24,14 +24,14 @@
                 android:adjustViewBounds="true"
                 android:background="@drawable/borde_superior" />
 
-            <!--ImageView
+            <ImageView
                 android:id="@+id/bt_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:adjustViewBounds="true"
-                 android:src="@drawable/btn_back" /-->
+                android:src="@drawable/btn_back" />
 
             <ImageView
                 android:id="@+id/imageView3"

@@ -11,7 +11,7 @@
     <string name="getaddress">address/byuser</string>
     <string name="deladdress">address/delete</string>
     <string name="addaddress">address/create</string>
-    <string name="cancel_service">Service canceled</string>
+    <string name="cancel_service">v2/user/%1$s/cancelservice</string>
     <string name="cancel_service_system">service/systemcancel</string>
     <string name="request_service">v2/user/%1$s/requestservice</string>
     <string name="request_service_address">v2/user/%1$s/requestservice_address</string>
@@ -64,7 +64,6 @@
     <string name="thank_r">Thank you! We have received your information.</string>
     <string name="error_login">Username or password incorrect</string>
     <string name="enable_gps">Please enable your GPS.</string>
-    <string name="enable_internet">Please enable a Internet connection</string>
     <string name="enviando">Sending...</string>
     <string name="type_code">Enter the confirmation code sent to your email so you can enter the new password</string>
     <string name="servicio_cancelado">The service was canceled</string>
@@ -253,7 +252,7 @@
     <string name="text_cancelar1">Cancel</string>
     <string name="driver_arrived_message">The driver arrived. Thank you for using TaxisYa</string>
     <string name="agradecimiento_uso_taxisya">Thank you for using TaxisYa, we invite you to rate our service</string>
-    <string name="confirm_cancel">Do you wish to cancel this service?</string>
+    <string name="confirm_cancel">Are you sure to cancel the service?</string>
     <string name="lun">Mon</string>
     <string name="marca">brand</string>
     <string name="text_dia_jue">Thu</string>
@@ -273,6 +272,5 @@
     <string name="ticket_data">Input data of ticket</string>
     <string name="title_code_authorization">Code of authorization:</string>
     <string name="ticket_invalid">The ticket is not filled or not authorized</string>
-    <string name="ticket_unauthorized">The ticket is unauthorized</string>
 
 </resources>

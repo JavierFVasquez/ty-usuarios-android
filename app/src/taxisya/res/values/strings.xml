@@ -11,7 +11,7 @@
     <string name="getaddress">address/byuser</string>
     <string name="deladdress">address/delete</string>
     <string name="addaddress">address/create</string>
-    <string name="cancel_service">Service canceled</string>
+    <string name="cancel_service">v2/user/%1$s/cancelservice</string>
     <string name="cancel_service_system">service/systemcancel</string>
     <string name="request_service">v2/user/%1$s/requestservice</string>
     <string name="request_service_address">v2/user/%1$s/requestservice_address</string>

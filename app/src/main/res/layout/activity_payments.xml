@@ -20,7 +20,16 @@
             android:paddingBottom="5dp"
             android:paddingTop="10dp"
             android:src="@drawable/logo" />
-s
+
+        <ImageView
+            android:id="@+id/btn_volver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/btn_back" />
     </RelativeLayout>
 
     <LinearLayout

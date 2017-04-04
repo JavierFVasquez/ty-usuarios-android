@@ -775,7 +775,7 @@
     <string name="calificar">service/score</string>
     <string name="cancel">cancel</string>
     <string name="cancel_schedule">schedule/cancel</string>
-    <string name="cancel_service">Service canceled</string>
+    <string name="cancel_service">v2/user/%1$s/cancelservice</string>
     <string name="cancel_service_system">service/systemcancel</string>
     <string name="card_add_msg1">Deleted credit card!</string>
     <string name="card_add_msg2">Ok</string>
@@ -785,7 +785,7 @@
     <string name="close_session_error">There was an error logging out</string>
     <string name="code_pass">user/pwd/confirm</string>
     <string name="codigo_de_confirmaci_n">Confirmation code</string>
-    <string name="com.crashlytics.android.build_id" ns1:ignore="UnusedResources,TypographyDashes" translatable="false">4c2a6890-50e5-4f23-a043-16df89b8278c</string>
+    <string name="com.crashlytics.android.build_id" ns1:ignore="UnusedResources,TypographyDashes" translatable="false">f09219da-bc09-4c36-83f3-d86c4f40fdb0</string>
     <string msgid="2523291102206661146" name="common_google_play_services_enable_button">Enable</string>
     <string msgid="227660514972886228" name="common_google_play_services_enable_text"><ns2:g id="app_name">%1$s</ns2:g> won\'t work unless you enable Google Play services.</string>
     <string msgid="5122002158466380389" name="common_google_play_services_enable_title">Enable Google Play services</string>
@@ -816,7 +816,6 @@
     <string name="driver">driver/view</string>
     <string name="driver_arrived_message">The driver arrived. Thank you for using TaxisYa</string>
     <string name="enable_gps">Please enable your GPS.</string>
-    <string name="enable_internet">Please enable a Internet connection</string>
     <string name="enviando">Sending...</string>
     <string name="enviando_calificacion">Rated sending...</string>
     <string name="error_cancel_service">There was an error cancelling the service</string>

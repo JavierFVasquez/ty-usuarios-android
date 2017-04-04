@@ -32,7 +32,7 @@
     <string name="calificar">service/score</string>
     <string name="cancel">cancelar</string>
     <string name="cancel_schedule">schedule/cancel</string>
-    <string name="cancel_service">Servicio cancelado</string>
+    <string name="cancel_service">v2/user/%1$s/cancelservice</string>
     <string name="cancel_service_system">service/systemcancel</string>
     <string name="checkstatuservice">service/status</string>
     <string name="city">Ciudad</string>

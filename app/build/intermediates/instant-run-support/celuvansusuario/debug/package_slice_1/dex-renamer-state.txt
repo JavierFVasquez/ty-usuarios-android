@@ -1,4 +1,0 @@
-#Wed Mar 15 08:57:01 COT 2017
-base.0=/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/transforms/dex/celuvansusuario/debug/folders/1000/5/slice_1
-renamed.0=classes.dex
-file.0=/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/transforms/dex/celuvansusuario/debug/folders/1000/5/slice_1/classes.dex

@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.imaginamos.taxisya.activities.MapaActivitys;
@@ -32,24 +33,37 @@ import cz.msebera.android.httpclient.Header;
 
 public class PerfilActivity extends Activity implements OnClickListener {
 
-    //private ImageView mBack;
-    private Button mBtnActualizar, mBtnClose, mBtnPagos;
-    private EditText mEdtName, mEdtUser, mEdtPassword, mEdtCellphone;
-    private String mUser, mPassword, mName, mCellphone, mUuid;
-    private ProgressDialog pDialog;
-    private Conf mConf;
-    private BroadcastReceiver mReceiver;
+    private ImageView mBack;
 
-    // posible delete!!
+    private Button mBtnActualizar, mBtnClose, mBtnPagos;
+
+    private EditText mEdtName, mEdtUser, mEdtPassword, mEdtCellphone;
+
+    private String mUser, mPassword, mName, mCellphone, mUuid;
+
     private int target_option = 0;
+
+    private ProgressDialog pDialog;
+
+    private Conf mConf;
+
     private String index;
+
     private String comp1;
+
     private String comp2;
+
     private String no;
+
     private String barrio;
+
     private String obs;
+
     private String latitud;
+
     private String longitud;
+
+    private BroadcastReceiver mReceiver;
 
     @Override
     public void onRestart() {
@@ -61,17 +75,27 @@ public class PerfilActivity extends Activity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
         overridePendingTransition(R.anim.pull_in_from_right, R.anim.hold);
+
         setContentView(R.layout.activity_perfil);
 
         mUuid = Utils.uuid(this);
+
         mConf = new Conf(this);
+
         mBtnActualizar = (Button) findViewById(R.id.btnActualizar);
         mBtnActualizar.setOnClickListener(this);
+
         mBtnClose = (Button) findViewById(R.id.btnClose);
         mBtnClose.setOnClickListener(this);
+
         mBtnPagos = (Button) findViewById(R.id.btnPayments);
         mBtnPagos.setOnClickListener(this);
+
+        mBack = (ImageView) findViewById(R.id.btn_volver);
+        mBack.setOnClickListener(this);
+
         mEdtName = (EditText) findViewById(R.id.editTxtNombre);
         mEdtUser = (EditText) findViewById(R.id.editTxtUsuario);
         mEdtPassword = (EditText) findViewById(R.id.editTxtContrasena);
@@ -178,8 +202,19 @@ public class PerfilActivity extends Activity implements OnClickListener {
         builder.setTitle(R.string.titulo_cierre_sesion);
         builder.setMessage(R.string.confirmacion_seguro_cierra_sesion);
 
-        builder.setPositiveButton(R.string.text_btn_si, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.text_btn_si,
+                new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+
+/*
+                        Conf conf = new Conf(getApplicationContext());
+                        conf.setLogin(false);
+
+                        Intent in3 = new Intent(PerfilActivity.this,LoginActivity.class);
+                        in3.putExtra("target", 0);
+				        startActivity(in3);
+				        finish();
+*/
 
                         // call servicio log
                         String usr = mConf.getUser();
@@ -212,7 +247,7 @@ public class PerfilActivity extends Activity implements OnClickListener {
                                         pDialog.dismiss();
 
 
-                                        Intent in3 = new Intent(PerfilActivity.this, HomeActivity.class);
+                                        Intent in3 = new Intent(PerfilActivity.this, LoginActivity.class);
                                         in3.putExtra("target", 0);
                                         startActivity(in3);
                                         finish();
@@ -241,14 +276,13 @@ public class PerfilActivity extends Activity implements OnClickListener {
                             public void onFinish() {
                                 try {
                                     pDialog.dismiss();
-                                    System.exit(0);
-                                    finish();
                                 } catch (Exception e) {
                                 }
                             }
                         });
-                    }
 
+
+                    }
                 });
         builder.setNegativeButton(R.string.text_btn_no,
                 new DialogInterface.OnClickListener() {
@@ -278,10 +312,12 @@ public class PerfilActivity extends Activity implements OnClickListener {
 
     private void updateProfile() {
         mName = mEdtName.getText().toString();
+
         mUser = mEdtUser.getText().toString();
 
         if (mEdtPassword.getText().toString().length() > 1) {
             mPassword = mEdtPassword.getText().toString();
+
             mPassword = Utils.md5(mPassword);
 
         } else {
@@ -368,6 +404,7 @@ public class PerfilActivity extends Activity implements OnClickListener {
             case Target.TAXI_TARGET:
 
                 // Intent i = new Intent(PerfilActivity.this, SolicitandoActivity.class);
+
                 // i.putExtra("index", index);
                 // i.putExtra("comp1", comp1);
                 // i.putExtra("comp2", comp2);
@@ -430,7 +467,6 @@ public class PerfilActivity extends Activity implements OnClickListener {
         if (mReceiver != null) {
             unregisterReceiver(mReceiver);
         }
-        finish();
     }
 
 }

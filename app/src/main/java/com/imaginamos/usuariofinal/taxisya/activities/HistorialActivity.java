@@ -47,7 +47,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import cz.msebera.android.httpclient.Header;
 
 @SuppressLint("HandlerLeak")
-public class HistorialActivity extends Activity {
+public class HistorialActivity extends Activity implements OnClickListener {
 
 
 	static ArrayList<Historico> servicios;
@@ -61,7 +61,7 @@ public class HistorialActivity extends Activity {
 	public static JSONObject json_servicios = null;
 	public static JSONArray json_dias = null;
 	public String respuesta;
-	//private ImageView bt_back;
+	private ImageView bt_back;
 	public static int mYear, mMonth, mDay;
 	private int log_ = 0;
 	private Handler myhand;
@@ -95,7 +95,7 @@ public class HistorialActivity extends Activity {
 
 		lista_dias = (HorizontalListView) findViewById(R.id.listview_dias);
 
-		//bt_back = (ImageView) findViewById(R.id.bt_back);
+		bt_back = (ImageView) findViewById(R.id.bt_back);
 		servicios = new ArrayList<Historico>();
 		dias = new ArrayList<DiaMes>();
 		adaptador = new HistoricoAdapter(servicios);
@@ -140,8 +140,8 @@ public class HistorialActivity extends Activity {
 			  public void handleMessage(Message msg)
 			  {
 				  HistorialActivity.this.setContentView(R.layout.activity_sin_historial);
-				 // bt_back = (ImageView) findViewById(R.id.bt_back);
-				 // bt_back.setOnClickListener(HistorialActivity.this);
+				  bt_back = (ImageView) findViewById(R.id.bt_back);
+				  bt_back.setOnClickListener(HistorialActivity.this);
 			  }
 		};
 
@@ -183,7 +183,7 @@ public class HistorialActivity extends Activity {
 
 		cargarHistorial(String.valueOf(mMonth));
 
-		//bt_back.setOnClickListener(this);
+		bt_back.setOnClickListener(this);
 
 		DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
         .cacheInMemory(true)
@@ -328,16 +328,20 @@ public class HistorialActivity extends Activity {
 							JSONObject responsejson = new JSONObject(response);
 
 							JSONObject json_data;
+
 							json_data = responsejson;
 
 							HistorialActivity.json_servicios = json_data;
+
 							HistorialActivity.json_dias = json_data.getJSONArray("dayList");
 
 							int logstatus = responsejson.optInt("error");
 
 							if (logstatus == 0 ) {
+
 								//HistorialActivity.convertirDatos();
 								convertirDatos();
+
 
 							} else {
 								err_services();
@@ -649,7 +653,7 @@ public class HistorialActivity extends Activity {
 		}
 	}
 
-	/*@Override
+	@Override
 	public void onClick(View v) {
 
 		switch (v.getId()) {
@@ -658,6 +662,6 @@ public class HistorialActivity extends Activity {
 			break;
 		}
 
-	}*/
+	}
 
 }

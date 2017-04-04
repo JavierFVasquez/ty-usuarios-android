@@ -105,7 +105,6 @@
     <string name="driver">driver/view</string>
     <string name="driver_arrived_message">Ya llego tu conductor. Gracias por utilizar TaxisYa</string>
     <string name="enable_gps">Por favor habilite su GPS.</string>
-    <string name="enable_internet">Por favor habilite una conexión a Internet</string>
     <string name="enviando">Enviando...</string>
     <string name="enviando_calificacion">Enviando Calificacion...</string>
     <string name="error_cancel_service">Hubo un error al cancelar el servicio</string>
@@ -113,7 +112,7 @@
     <string name="error_load_driver">Error al cargar los datos del conductor</string>
     <string name="error_load_services">Hubo un error al cargar el historial</string>
     <string name="error_login">Nombre de usuario o password incorrectos</string>
-    <string name="error_net">Hubo un error con su conexión, Intente de nuevo</string>
+    <string name="error_net">Hubo un error con su conexión , ¡Intente de nuevo!</string>
     <string name="error_no_driver">En el momento no hay conductores disponibles</string>
     <string name="error_no_procc">No se pudo procesar la solicitud\n intentelo de nuevo</string>
     <string name="error_position">No fue posible obtener su ubicación, espere unos segundos e intente otra vez!</string>

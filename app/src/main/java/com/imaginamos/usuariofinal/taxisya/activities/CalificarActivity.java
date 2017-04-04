@@ -9,14 +9,11 @@ import android.content.IntentFilter;
 import android.content.BroadcastReceiver;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.provider.Settings;
-import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.imaginamos.taxisya.activities.MapaActivitys;
@@ -35,14 +32,12 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import static com.imaginamos.usuariofinal.taxisya.R.layout.item;
-
 public class CalificarActivity extends Activity implements OnClickListener {
 
     private String mIdUser, mUuid, mServiceId;
     private Button mBtnMuyBueno, mBtnBueno, mBtnMalo;
 
-    private String m_Text = "";
+
     private String mScore;
     private Conf mConf;
     private BroadcastReceiver mReceiver;
@@ -165,36 +160,28 @@ public class CalificarActivity extends Activity implements OnClickListener {
         switch (v.getId()) {
             case R.id.btnMuyBueno:
                 mScore = "1";
-                closeCalification();
                 break;
 
             case R.id.btnBueno:
                 mScore = "2";
-                closeCalification();
                 break;
 
             case R.id.btnMalo:
-
                 mScore = "3";
-                /*<final EditText txtUrl = new EditText(this);
-                txtUrl.setHint("Escribe tu queja");
-                new AlertDialog.Builder(this).setPositiveButton("enviar", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                String url = txtUrl.getText().toString();
-                                m_Text(null, url);
-                            }
-                        })
-                .show();*/
-                final CharSequence[] item = {"Cobro injusto", "Vehículo en mal estado", "Conductor irrespetuoso"};
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-                alertDialog.setTitle("Razón:");
-                alertDialog.setSingleChoiceItems(item, -1, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        closeCalification();
+                final CharSequence[] items = {"Cobro injusto", "Vehiculo en mal estado", "Conductor irrespetuoso"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Razon:");
+                builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
+                        Toast toast = Toast.makeText(getApplicationContext(), "Haz elegido la opcion: " + items[item] , Toast.LENGTH_SHORT);
+                        toast.show();
                         dialog.cancel();
                     }
                 });
-                alertDialog.show();
+                AlertDialog alert = builder.create();
+                alert.show();
+                break;
+
         }
 
         MiddleConnect.calificar(this, mUuid, mIdUser, mServiceId, mScore, new AsyncHttpResponseHandler() {
@@ -219,20 +206,15 @@ public class CalificarActivity extends Activity implements OnClickListener {
             @Override
             public void onFinish() {
                 Log.v("CALIFICAR1", "onFinish ");
-                //closeCalification();
+                closeCalification();
             }
         });
 
     }
 
-    private void m_Text(Object o, String url) {
-        closeCalification();
-    }
-
     public void closeCalification() {
 
         mPref.setRootActivity("MapaActivitys");
-        Log.v("CALIFICAR1", "onFinish ");
         Intent i = new Intent(CalificarActivity.this, MapaActivitys.class);
         startActivity(i);
         finish();

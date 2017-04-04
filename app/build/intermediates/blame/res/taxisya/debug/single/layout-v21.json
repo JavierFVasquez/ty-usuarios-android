@@ -1,50 +1,18 @@
 [
     {
-        "merged": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android/app/build/intermediates/res/merged/taxisya/debug/layout-v21/notification_action.xml",
+        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/layout-v21/notification_action.xml",
         "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/layout-v21/notification_action.xml"
     },
     {
-        "merged": "/Users/developer_celuvans/Documents/workspace/android/ty-usuarios-android.git/app/build/intermediates/res/merged/taxisya/debug/layout-v21/notification_action.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/layout-v21/notification_action.xml"
-    },
-    {
-        "merged": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android/app/build/intermediates/res/merged/taxisya/debug/layout-v21/notification_action_tombstone.xml",
+        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/layout-v21/notification_action_tombstone.xml",
         "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/layout-v21/notification_action_tombstone.xml"
     },
     {
-        "merged": "/Users/developer_celuvans/Documents/workspace/android/ty-usuarios-android.git/app/build/intermediates/res/merged/taxisya/debug/layout-v21/notification_template_custom_big.xml",
+        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/layout-v21/notification_template_custom_big.xml",
         "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/layout-v21/notification_template_custom_big.xml"
     },
     {
-        "merged": "/Users/developer_celuvans/Documents/workspace/android/ty-usuarios-android.git/app/build/intermediates/res/merged/taxisya/debug/layout-v21/notification_action_tombstone.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/layout-v21/notification_action_tombstone.xml"
-    },
-    {
-        "merged": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/res/merged/taxisya/debug/layout-v21/notification_template_custom_big.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/layout-v21/notification_template_custom_big.xml"
-    },
-    {
-        "merged": "/Users/developer_celuvans/Documents/workspace/android/ty-usuarios-android.git/app/build/intermediates/res/merged/taxisya/debug/layout-v21/notification_template_icon_group.xml",
+        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/layout-v21/notification_template_icon_group.xml",
         "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/layout-v21/notification_template_icon_group.xml"
-    },
-    {
-        "merged": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android/app/build/intermediates/res/merged/taxisya/debug/layout-v21/notification_template_icon_group.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/layout-v21/notification_template_icon_group.xml"
-    },
-    {
-        "merged": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/res/merged/taxisya/debug/layout-v21/notification_template_icon_group.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/layout-v21/notification_template_icon_group.xml"
-    },
-    {
-        "merged": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/res/merged/taxisya/debug/layout-v21/notification_action_tombstone.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/layout-v21/notification_action_tombstone.xml"
-    },
-    {
-        "merged": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android.git/app/build/intermediates/res/merged/taxisya/debug/layout-v21/notification_action.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/layout-v21/notification_action.xml"
-    },
-    {
-        "merged": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android/app/build/intermediates/res/merged/taxisya/debug/layout-v21/notification_template_custom_big.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/layout-v21/notification_template_custom_big.xml"
     }
 ]
