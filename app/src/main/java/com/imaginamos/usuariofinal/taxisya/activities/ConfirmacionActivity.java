@@ -240,20 +240,20 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
 
                     showResumeService();
                     //mostrarMensaje(message);
-                // } else if (intent.getAction().equals(Actions.ACTION_TAXI_GO)) {
-                //     Log.v("SERVICE_PUSH", "TAXI_GO servicio");
-                //     try {
-                //         JSONObject position = new JSONObject(intent.getExtras()
-                //                 .getString("service"));
-                //         Log.v("CONFIRMATION", "onReceive() position = " + position.toString());
+                    // } else if (intent.getAction().equals(Actions.ACTION_TAXI_GO)) {
+                    //     Log.v("SERVICE_PUSH", "TAXI_GO servicio");
+                    //     try {
+                    //         JSONObject position = new JSONObject(intent.getExtras()
+                    //                 .getString("service"));
+                    //         Log.v("CONFIRMATION", "onReceive() position = " + position.toString());
 
-                //         latitud_taxi = position.getDouble("lat");
+                    //         latitud_taxi = position.getDouble("lat");
 
-                //         longitud_taxi = position.getDouble("lng");
+                    //         longitud_taxi = position.getDouble("lng");
 
-                //     } catch (Exception e) {
-                //         Log.e("CONFIRMACION", e.toString() + "");
-                //     }
+                    //     } catch (Exception e) {
+                    //         Log.e("CONFIRMACION", e.toString() + "");
+                    //     }
                 } else if (intent.getAction().equals(Actions.ACTION_USER_CLOSE_SESSION)) {
                     Log.v("USER_CLOSE_SESSION", "Sesión cerrada - confirmación");
                     Conf conf = new Conf(getApplicationContext());
@@ -291,11 +291,11 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
         authorizationCodeTextView = (TextView) findViewById(R.id.authorizationCode);
 
         //if (mPayType == 3) {
-            String strPhone = conf.getPhone();
-            String strCode = strPhone.length() > 2 ? strPhone.substring(strPhone.length() - 2) : strPhone;
-            String strMessage = getResources().getString(R.string.title_code_authorization) + strCode;
-            authorizationCodeTextView.setText(strMessage);
-            authorizationCodeTextView.setVisibility(View.VISIBLE);
+        String strPhone = conf.getPhone();
+        String strCode = strPhone.length() > 2 ? strPhone.substring(strPhone.length() - 2) : strPhone;
+        String strMessage = getResources().getString(R.string.title_code_authorization) + strCode;
+        authorizationCodeTextView.setText(strMessage);
+        authorizationCodeTextView.setVisibility(View.VISIBLE);
         //}
 
 
@@ -615,13 +615,17 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
     public void err_cancel() {
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(200);
-        Toast.makeText(getApplicationContext(), getString(R.string.error_cancel_service), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),
+                getString(R.string.error_cancel_service), Toast.LENGTH_SHORT)
+                .show();
     }
 
     public void err_driver() {
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(200);
-        Toast.makeText(getApplicationContext(), getString(R.string.error_load_driver), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),
+                getString(R.string.error_load_driver), Toast.LENGTH_SHORT)
+                .show();
     }
 
     private void cargarTaxista(JSONObject driver) {

@@ -11,7 +11,6 @@ public class Conf {
 	private Editor editor;
 
 	private String ISLOGIN =  "ISLOGIN";
-
 	private String USER = "USER";
 	private String PASS = "PASS";
 	private String UUID = "uuid";
@@ -20,7 +19,6 @@ public class Conf {
 	private String PHONE = "PHONE";
 	private String CARD_DEFAULT = "CARD_DEFAULT";
 	private String USER_EMAIL = "USER_EMAIL"; // para transaccion
-
 	private String ISFIRST = "isFirst";
 	private String IDSERVICE ="IDSERVICE";
 	private String IDDRIVER ="IDDRIVER";

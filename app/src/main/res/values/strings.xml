@@ -253,7 +253,7 @@
     <string name="text_cancelar1">Cancel</string>
     <string name="driver_arrived_message">The driver arrived. Thank you for using TaxisYa</string>
     <string name="agradecimiento_uso_taxisya">Thank you for using TaxisYa, we invite you to rate our service</string>
-    <string name="confirm_cancel">Are you sure to cancel the service?</string>
+    <string name="confirm_cancel">Do you wish to cancel this service?</string>
     <string name="lun">Mon</string>
     <string name="marca">brand</string>
     <string name="text_dia_jue">Thu</string>
@@ -273,5 +273,6 @@
     <string name="ticket_data">Input data of ticket</string>
     <string name="title_code_authorization">Code of authorization:</string>
     <string name="ticket_invalid">The ticket is not filled or not authorized</string>
+    <string name="ticket_unauthorized">The ticket is unauthorized</string>
 
 </resources>

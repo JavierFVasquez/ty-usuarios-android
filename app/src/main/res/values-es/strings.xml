@@ -39,7 +39,7 @@
     <string name="close_session_error">Hubo un error al cerrar sesión</string>
     <string name="code_pass">user/pwd/confirm</string>
     <string name="codigo_de_confirmaci_n">Codigo de confirmación</string>
-    <string name="confirm_cancel">¿Estás seguro de cancelar el servicio?</string>
+    <string name="confirm_cancel">¿Desea cancelar el servicio?</string>
     <string name="confirmacion_seguro_cierra_sesion">¿Está seguro de cerrar la sesión?</string>
     <string name="deladdress">address/delete</string>
     <string name="digita_nueva_contrase_a">Digita nueva contraseña</string>
@@ -264,5 +264,6 @@
     <string name="ticket_data">Ingresa datos del vale</string>
     <string name="title_code_authorization">Código de autorización:</string>
     <string name="ticket_invalid">El vale no se ingresó o es inválido</string>
+    <string name="ticket_unauthorized">El vale no está autorizado</string>
 
 </resources>

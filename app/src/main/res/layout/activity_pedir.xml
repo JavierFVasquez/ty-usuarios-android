@@ -166,7 +166,6 @@
                                 android:src="@drawable/pointer"
                                 android:visibility="gone" />
 
-
                         </RelativeLayout>
                     </FrameLayout>
 
@@ -239,8 +238,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:background="@android:color/white"
-                    android:layout_marginRight="10dp"
-                    >
+                    android:layout_marginRight="10dp">
 
                         <EditText
                             android:id="@+id/ticketValue"
@@ -310,7 +308,8 @@
                     <!--android:layout_height="match_parent"-->
                     <!--android:layout_alignParentTop="true" />-->
 
-                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/imageMap"
                         android:layout_width="250dp"
                         android:layout_height="250dp"
@@ -320,7 +319,7 @@
 
                     <ImageView
                         android:id="@+id/ivMarker3"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_gravity="center"
@@ -333,12 +332,14 @@
                         style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="250dp"
                         android:layout_height="250dp"
-                        android:layout_centerInParent="true"
                         android:max="91"
                         android:padding="4dp"
                         android:progress="0"
                         android:progressDrawable="@drawable/circular"
-                        android:visibility="visible" />
+                        android:visibility="visible"
+                        android:layout_centerHorizontal="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentBottom="true" />
 
                     <TextView
                         android:id="@+id/text_falta"
@@ -381,13 +382,6 @@
                 </RelativeLayout>
 
             </FrameLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="1dp">
-
-            </RelativeLayout>
 
         </FrameLayout>
 

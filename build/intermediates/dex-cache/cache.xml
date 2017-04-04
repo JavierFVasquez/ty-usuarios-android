@@ -3,6 +3,15 @@
 
     <item
         is-multidex="false"
+        jar="/Users/developer_celuvans/Documents/workspace/android/ty-usuarios-android.git/app/libs/gcm.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="f0e7f01db9f6cbc6e5bf47c10c7d74fd7a7052d0">
+        <dex dex="/Users/developer_celuvans/Documents/workspace/android/ty-usuarios-android.git/app/build/intermediates/pre-dexed/taxisya/debug/gcm_2b2684d8c994a49d0d81d9837dbb2e7b9df41c52.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android/app/libs/gcm.jar"
         jumboMode="false"
         optimize="true"

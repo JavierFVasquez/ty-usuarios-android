@@ -338,7 +338,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                                 if (responsejson.getString("error").equals("1")) {
                                     btnSolicitar.setEnabled(false);
                                     btnSolicitar.setBackgroundResource(R.drawable.btn_gray);
-                                    Toast.makeText(MapaActivitys.this, "ticket no valido", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MapaActivitys.this, R.string.ticket_unauthorized, Toast.LENGTH_SHORT).show();
                                 }
 
                             } catch (Exception e) {
@@ -873,13 +873,11 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
 
                 final String stk = mTicket.getText().toString();
 
-                if (stk.equals(null)|| stk.equals("")){
-                    btnSolicitar.setEnabled(false);
-                    btnSolicitar.setBackgroundResource(R.drawable.btn_gray);
+                if (stk.equals("")){
                     isTicketValid = false;
-                    Toast.makeText(MapaActivitys.this, "El campo Vale no puede estar vacio", Toast.LENGTH_SHORT).show();
-                    break;
-                } else {
+                    Toast.makeText(MapaActivitys.this, "Completa el campo para continuar", Toast.LENGTH_SHORT).show();
+                    //break;
+                }
                     direccion_uno.setFocusableInTouchMode(true);
                     direccion_uno.setFocusable(true);
                     direccion_uno.requestFocus();
@@ -887,11 +885,9 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
 
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.RESULT_HIDDEN);
-
                     direccion_uno.setImeActionLabel("Pedir", EditorInfo.IME_ACTION_DONE);
-
                     screenShotMap(0);
-                }
+
                 break;
 
             case R.id.btn_cancelar:
@@ -906,7 +902,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                 if (isNewAddress) {
                     // disable view newAddress
                     mNewAddress.setVisibility(View.GONE);
-
                     mHandleLayout.setVisibility(View.VISIBLE);
                 } else {
 
@@ -1261,8 +1256,9 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                     uuid = conf.getUuid();
                     getService();
                 } else {
+                    hideControls();
+                    contendorWell.setVisibility(View.GONE);
                     mPref.setRootActivity("MapaActivitys");
-
                     Intent i = new Intent(MapaActivitys.this, RegistroActivity.class);
 
                     i.putExtra("index", indice);
@@ -2065,8 +2061,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         dialogo1.setTitle(getResources().getString(R.string.app_name));
         dialogo1.setMessage(getResources().getString(R.string.confirm_cancel));
         dialogo1.setCancelable(false);
-        dialogo1.setPositiveButton("Si",
-                new DialogInterface.OnClickListener() {
+        dialogo1.setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
 
                         hideControls();
@@ -2109,6 +2104,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     private void cancelarService() {
 
         cancelService(getResources().getString(R.string.cancel_service, id_user));
+        finish();
 
     }
 
@@ -2129,7 +2125,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         url_cancel_current = Url;
         this.sendBroadcast(new Intent("com.google.android.intent.action.GTALK_HEARTBEAT"));
         this.sendBroadcast(new Intent("com.google.android.intent.action.MCS_HEARTBEAT"));
-        MiddleConnect.cancelService(Url, new AsyncHttpResponseHandler() {
+            MiddleConnect.cancelService(Url, new AsyncHttpResponseHandler() {
 
             @Override
             public void onStart() {
@@ -2371,19 +2367,28 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         // TODO: verifica si tiene
         // configurar mCardReference
 
-        String card = conf.getCardDefault();
-        if (card != null) {
-            if (card.length() > 0) {
-                mCardReference = card;
-            } else {
-                // llamar a la creacion de tarjeta
-                Intent i = new Intent(MapaActivitys.this, PaymentsActivity.class);
-                startActivity(i);
+
+        if (conf.getLogin()) {
+            mPref.setRootActivity("MapaActivitys");
+            Intent in = new Intent(MapaActivitys.this, PaymentsActivity.class);
+            startActivity(in);
+
+            String card = conf.getCardDefault();
+            if (card != null) {
+                if (card.length() > 0) {
+                    mCardReference = card;
+                } else {
+                    // llamar a la creacion de tarjeta
+                    Intent i = new Intent(MapaActivitys.this, PaymentsActivity.class);
+                    startActivity(i);
+                }
             }
         }
         else {
-            Intent i = new Intent(MapaActivitys.this, PaymentsActivity.class);
-            startActivity(i);
+            mPref.setRootActivity("MapaActivitys");
+            Intent in = new Intent(MapaActivitys.this, RegistroActivity.class);
+            in.putExtra("target", Target.HISTORY_TARGET);
+            startActivity(in);
         }
 
     }
