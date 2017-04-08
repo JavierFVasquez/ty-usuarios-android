@@ -1,11 +1,13 @@
 package com.imaginamos.usuariofinal.taxisya.activities;
 
-import android.app.Activity;
+
 import android.content.Context;
 import android.graphics.Rect;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -18,7 +20,6 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -57,7 +58,6 @@ public class MapNewAddressActivity extends FragmentActivity implements View.OnCl
     private EditText edt_new_direccion;
     private EditText edt_new_comentario;
     private Button btnGuardar;
-    private ImageView mBack;
 
     private String id_user;
     private String direccion;
@@ -65,6 +65,10 @@ public class MapNewAddressActivity extends FragmentActivity implements View.OnCl
     private String strLat;
     private String strLng;
     private Conf conf;
+    private GoogleApiClient mGoogleApiClient;
+
+    private double latitud;
+    private double longitud;
 
     private boolean keyboardShown = false;
 
@@ -84,10 +88,6 @@ public class MapNewAddressActivity extends FragmentActivity implements View.OnCl
 
         btnGuardar = (Button) findViewById(R.id.btn_nueva_direccion);
 
-
-        mBack = (ImageView) findViewById(R.id.btn_volver);
-
-        mBack.setOnClickListener(this);
         btnGuardar.setOnClickListener(this);
 
 
@@ -176,6 +176,15 @@ public class MapNewAddressActivity extends FragmentActivity implements View.OnCl
                 return false;
             }
         });
+
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+
+        Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
+        if (location != null) {
+            latitud = location.getLatitude();
+            longitud = location.getLongitude();
+        }
 
     }
 
@@ -294,8 +303,7 @@ public class MapNewAddressActivity extends FragmentActivity implements View.OnCl
 //        }
         // Initialize map options. For example:
         // mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        SupportMapFragment fragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        SupportMapFragment fragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         fragment.getMapAsync(this);
 
     }
@@ -310,6 +318,7 @@ public class MapNewAddressActivity extends FragmentActivity implements View.OnCl
         mMap.getUiSettings().setCompassEnabled(false);
         mMap.setMyLocationEnabled(true);
 
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitud, longitud), 15));
         mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
             /*
              * (non-Javadoc)
@@ -324,12 +333,16 @@ public class MapNewAddressActivity extends FragmentActivity implements View.OnCl
                 searchByLocation(l);
             }
         });
+
     }
 
     @Override
     public void onConnected(Bundle bundle) {
+        Log.e("LOG", "onConnected");
+        Log.v("SEGUIMIENTO", "onConnected -- ");
         startLocationUpdates();
     }
+
 
     @Override
     public void onConnectionSuspended(int i) {
@@ -353,7 +366,6 @@ public class MapNewAddressActivity extends FragmentActivity implements View.OnCl
 
     }
 
-
     private synchronized void buildGoogleApiClient() {
         client = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -363,6 +375,14 @@ public class MapNewAddressActivity extends FragmentActivity implements View.OnCl
 
         if (!client.isConnected()) {
             client.connect();
+        }
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API).build();
+        if (!mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.connect();
         }
     }
 
@@ -375,8 +395,8 @@ public class MapNewAddressActivity extends FragmentActivity implements View.OnCl
     }
 
     protected void startLocationUpdates() {
-        LocationServices.FusedLocationApi.requestLocationUpdates(
-                client, locationRequest, this);
+       // LocationServices.FusedLocationApi.requestLocationUpdates(
+        //        client, locationRequest, this);
     }
 
     protected void stopLocationUpdates() {
@@ -385,8 +405,6 @@ public class MapNewAddressActivity extends FragmentActivity implements View.OnCl
                     client, this);
         }
     }
-
-
     //Location Related Methods
     private void searchByLocation(final Location location) {
         AsyncTask<Void, Void, List<Address>> task = new AsyncTask<Void, Void,

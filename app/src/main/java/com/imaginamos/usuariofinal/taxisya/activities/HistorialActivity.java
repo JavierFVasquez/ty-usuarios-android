@@ -95,7 +95,6 @@ public class HistorialActivity extends Activity implements OnClickListener {
 
 		lista_dias = (HorizontalListView) findViewById(R.id.listview_dias);
 
-		bt_back = (ImageView) findViewById(R.id.bt_back);
 		servicios = new ArrayList<Historico>();
 		dias = new ArrayList<DiaMes>();
 		adaptador = new HistoricoAdapter(servicios);
@@ -140,8 +139,7 @@ public class HistorialActivity extends Activity implements OnClickListener {
 			  public void handleMessage(Message msg)
 			  {
 				  HistorialActivity.this.setContentView(R.layout.activity_sin_historial);
-				  bt_back = (ImageView) findViewById(R.id.bt_back);
-				  bt_back.setOnClickListener(HistorialActivity.this);
+
 			  }
 		};
 
@@ -182,8 +180,6 @@ public class HistorialActivity extends Activity implements OnClickListener {
 
 
 		cargarHistorial(String.valueOf(mMonth));
-
-		bt_back.setOnClickListener(this);
 
 		DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
         .cacheInMemory(true)
@@ -657,9 +653,7 @@ public class HistorialActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 
 		switch (v.getId()) {
-		case R.id.bt_back:
-			finish();
-			break;
+
 		}
 
 	}

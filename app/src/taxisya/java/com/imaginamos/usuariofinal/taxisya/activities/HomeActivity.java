@@ -236,7 +236,7 @@ public class HomeActivity extends Activity {
         }else{
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             alertDialog.setTitle("No tiene una conexión a internet");
-            alertDialog.setMessage(getString(R.string.aceptar));
+            alertDialog.setMessage(getString(R.string.enable_internet));
             alertDialog.setPositiveButton("Habilitar",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
@@ -341,15 +341,12 @@ public class HomeActivity extends Activity {
                                     Log.v("Carousel", "position 0");
 
                                     if (conf.getLogin()) {
-
                                         mPref.setRootActivity("HomeActivity");
-
                                         Intent in2 = new Intent(HomeActivity.this, AgendarActivity.class);
                                         startActivity(in2);
 
                                     } else {
                                         mPref.setRootActivity("HomeActivity");
-
                                         Intent in = new Intent(HomeActivity.this, RegistroActivity.class);
                                         in.putExtra("target", Target.AGEND_TARGET);
                                         startActivity(in);
@@ -363,7 +360,7 @@ public class HomeActivity extends Activity {
                                     else {
                                         mPref.setRootActivity("HomeActivity");
                                         Intent in3 = new Intent(HomeActivity.this, MapaActivitys.class);
-                                        startActivity(in3);                                    //}
+                                        startActivity(in3);
                                     }
                                     break;
 
@@ -374,13 +371,11 @@ public class HomeActivity extends Activity {
                                     else {
                                         if (conf.getLogin()) {
                                             mPref.setRootActivity("HomeActivity");
-
                                             Intent in = new Intent(HomeActivity.this, HistorialActivity.class);
                                             startActivity(in);
 
                                         } else {
                                             mPref.setRootActivity("HomeActivity");
-
                                             Intent in = new Intent(HomeActivity.this, RegistroActivity.class);
                                             in.putExtra("target", Target.HISTORY_TARGET);
                                             startActivity(in);
@@ -394,7 +389,18 @@ public class HomeActivity extends Activity {
                                     if (updateAvailable)
                                         showDialog();
                                     else {
+                                        if (conf.getLogin()) {
+                                            mPref.setRootActivity("HomeActivity");
+                                            Intent in = new Intent(HomeActivity.this, PerfilActivity.class);
+                                            startActivity(in);
 
+                                        } else {
+                                            mPref.setRootActivity("HomeActivity");
+                                            Intent in = new Intent(HomeActivity.this, RegistroActivity.class);
+                                            in.putExtra("target", Target.HISTORY_TARGET);
+                                            startActivity(in);
+
+                                        }
                                     }
                                     break;
                             }
@@ -569,39 +575,36 @@ public class HomeActivity extends Activity {
                 String response = new String(responseBody);
                 try {
                     JSONObject responsejson = new JSONObject(response);
-
+                    String qualy = Integer.toString(qualification);
                     status_service = responsejson.getInt("status_id");
-
                     Log.v("checkService", "status_id: " + String.valueOf(status_service));
                     // si hay un servicio asignado lo recupera
                     if ((status_service == 2) || (status_service == 4)) {
 
                         service_id = responsejson.getString("id");
                         conf.setServiceId(service_id);
-
                         Log.v("HomeActivity", "checkService() servicio recuperado - status_service " + String.valueOf(status_service) + " service_id=" + service_id);
                         Log.v("HomeActivity", "checkService() servicio recuperado - driver " + responsejson.getJSONObject("driver").toString());
-
                         Log.v("CNF_SRV1", "HomeActivity before call ConfirmacionActivity.class");
-
                         mPref.setRootActivity("HomeActivity");
-
                         Intent mIntent = new Intent(getApplicationContext(), ConfirmacionActivity.class);
                         mIntent.putExtra("driver", responsejson.getJSONObject("driver").toString());
-                        //if (responsejson.isNull("qualification")) {
-                        if (status_service == 5) {
-                            mIntent.putExtra("qualification", "1");
-                            mIntent = new Intent(getApplicationContext(), CalificarActivity.class);
-                            mIntent.putExtra("driver", responsejson.getJSONObject("driver").toString());
-                        } else {
-                            mIntent.putExtra("qualification", "0");
-                        }
                         startActivity(mIntent);
-                    } else {
+
+                    } else if (qualy.equals("0")) {
+
+                        Log.v("HomeActivity", "checkService() servicio recuperado - status_service " + String.valueOf(qualification) + " service_id=" + qualification);
+                        Log.v("HomeActivity", "checkService() servicio recuperado - driver " + responsejson.getJSONObject("driver").toString());
+                        Log.v("CNF_SRV1", "HomeActivity before call ConfirmacionActivity.class");
+                        mPref.setRootActivity("HomeActivity");
+                        Intent mIntent = new Intent(getApplicationContext(), CalificarActivity.class);
+                        mIntent.putExtra("qualification", "1");
+                        startActivity(mIntent);
+                    }
                         Log.v("HomeActivity", "checkService() no tenia servicio para recuperar");
                         Log.v("HomeActivity", "responsejson = " + responsejson.getJSONObject("driver").toString());
-                    }
-                    if(status_service == 7 ||status_service == 8 || status_service == 9){
+
+                    if(status_service == 7 || status_service == 8 || status_service == 9){
                         Toast.makeText(getApplicationContext(), getString(R.string.servicio_cancelado), Toast.LENGTH_SHORT).show();
                     }
 

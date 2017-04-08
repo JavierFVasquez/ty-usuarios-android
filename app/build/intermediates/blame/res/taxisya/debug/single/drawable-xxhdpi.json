@@ -96,12 +96,12 @@
         "source": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/src/taxisya/res/drawable-xxhdpi/pestana.png"
     },
     {
-        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/drawable-xxhdpi/btn_add_p.png",
-        "source": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/src/taxisya/res/drawable-xxhdpi/btn_add_p.png"
-    },
-    {
         "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/drawable-xxhdpi/ic_clear_24dp.png",
         "source": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/generated/res/pngs/taxisya/debug/drawable-xxhdpi/ic_clear_24dp.png"
+    },
+    {
+        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/drawable-xxhdpi/btn_add_p.png",
+        "source": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/src/taxisya/res/drawable-xxhdpi/btn_add_p.png"
     },
     {
         "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/drawable-xxhdpi/mensajeria_over.png",

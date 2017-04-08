@@ -14,6 +14,7 @@
     <string name="cancel_service">v2/user/%1$s/cancelservice</string>
     <string name="cancel_service_system">service/systemcancel</string>
     <string name="request_service">v2/user/%1$s/requestservice</string>
+    <string name="enable_internet">Please enable an Internet connection</string>
     <string name="request_service_address">v2/user/%1$s/requestservice_address</string>
     <string name="getlatlngaddress">http://maps.googleapis.com/maps/api/geocode/json?</string>
     <string name="checkstatuservice">service/status</string>

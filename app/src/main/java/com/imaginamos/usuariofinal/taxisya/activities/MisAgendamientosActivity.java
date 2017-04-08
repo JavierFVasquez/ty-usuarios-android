@@ -42,7 +42,7 @@ public class MisAgendamientosActivity extends Activity{
 	private AgendadoAdapter adapter;
 	private ProgressDialog pDialog;
 	private JSONObject json_schedule;
-	private ImageView btn_atras;
+
 	private Conf conf;
 	private BroadcastReceiver mReceiver;
 
@@ -57,29 +57,13 @@ public class MisAgendamientosActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-
 		overridePendingTransition(R.anim.pull_in_from_right, R.anim.hold);
-
         setContentView(R.layout.activity_misagendamientos);
 
         conf = new Conf(this);
-
 		agenda = (ListView) findViewById(R.id.lista_agendados);
-
 		id_user = conf.getIdUser();
-
 		uuid = Utils.uuid(this);
-
-        btn_atras = (ImageView) findViewById(R.id.btn_volver);
-
-        btn_atras.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
-
 
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(Actions.ACTION_USER_CLOSE_SESSION);

@@ -70,6 +70,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -94,7 +95,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.imaginamos.usuariofinal.taxisya.activities.AgendarActivity;
 import com.imaginamos.usuariofinal.taxisya.activities.ConfirmacionActivity;
 import com.imaginamos.usuariofinal.taxisya.activities.HistorialActivity;
@@ -104,7 +104,6 @@ import com.imaginamos.usuariofinal.taxisya.activities.MyAddressesActivity;
 import com.imaginamos.usuariofinal.taxisya.activities.NotificationActivity;
 import com.imaginamos.usuariofinal.taxisya.activities.PaymentsActivity;
 import com.imaginamos.usuariofinal.taxisya.activities.PerfilActivity;
-import com.imaginamos.usuariofinal.taxisya.activities.HistorialActivity;
 import com.imaginamos.usuariofinal.taxisya.activities.RegistroActivity;
 import com.imaginamos.usuariofinal.taxisya.adapter.BDAdapter;
 import com.imaginamos.usuariofinal.taxisya.comm.NetworkChangeReceiver;
@@ -127,17 +126,16 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MapaActivitys extends FragmentActivity implements OnClickListener,
-        ConnectionCallbacks, OnConnectionFailedListener, LocationListener, NetworkChangeReceiver.NetworkReceiverListener,
-        Connectivity.ConnectivityQualityCheckListener, OnMapReadyCallback {
-    //public class MapaActivitys extends Activity implements OnClickListener,
-//		 ConnectionCallbacks, OnConnectionFailedListener,LocationListener {
+import static com.imaginamos.usuariofinal.taxisya.R.id.ticketValue;
+
+public class MapaActivitys extends FragmentActivity implements OnClickListener, ConnectionCallbacks, OnConnectionFailedListener, LocationListener, NetworkChangeReceiver.NetworkReceiverListener, Connectivity.ConnectivityQualityCheckListener, OnMapReadyCallback {
+
     public static final int NOTIFICATION_ID = 1;
     private Animation traslation;
     private boolean isAddressFocus = false;
     private Fragment mFragment;
-    private double latitud = 4.598889;
-    private double longitud = -74.080833;
+    private double latitud;
+    private double longitud;
     private LinearLayout mHandleLayout;
     private LinearLayout mNewAddress;
     private LinearLayout mLayoutMap;
@@ -151,11 +149,12 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
     private int reintent = 3;
     private RelativeLayout contendorWell;
     private GoogleMap map;
-    private ImageView bt_back, bg_shadow;
+    private ImageView bg_shadow;
     private ImageView imageHeader;
     private EditText direccion_uno;
     private EditText mAddress;
     private Button btnAddAddress;
+    private Button btn_menu;
     private Button btnSolicitar;
     private Button bt_direcc;
     private Button btnCancelar;
@@ -166,6 +165,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
     private ImageView mConnectivityLoaderImage;
     private Connectivity mConnectivityChecker = new Connectivity(this);
     private boolean mFromScheduling = false;
+    public String card;
 
     private Spinner sp;
     ArrayAdapter<?> myAdapter;
@@ -178,7 +178,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
     private String url_cancel_current;
     private boolean isError = false;
     private String barrio = " no especifica ";
-    //    private ImageButton marker;
     private static final int TWO_MINUTES = 1000 * 60 * 2;
     private static final int MILLISECONDS_PER_SECOND = 1000;
     private static final int FASTEST_INTERVAL_IN_SECONDS = 1;
@@ -187,24 +186,17 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
     private static final long NORMAL_INTERVAL = MILLISECONDS_PER_SECOND * NORMAL_INTERVAL_IN_SECONDS;
     private int indice_posicion = 2;
     private SupportMapFragment fm;
-    //private MapFragment fm;
     private ProgressDialog pd;
     private ProgressDialog pDialog;
     private Conf conf;
     private Timer timer;
     private GetPosition gp;
     private BroadcastReceiver mReceiver;
-    Marker melbourne;
-
     private NetworkChangeReceiver mNetworkMonitor;
-
     private CircleImageView imageMap;
     private ProgressBar circleProgressBar;
     private boolean isReceiverRegistered = false;
-
-    // new +
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 1000;
-
     private Location mLastLocation;
 
     // Google client to interact with Google API
@@ -219,7 +211,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
     private static int UPDATE_INTERVAL = 1000; //10000; // 10 sec
     private static int FATEST_INTERVAL = 1000; // 5000; // 5 sec
     private static int DISPLACEMENT = 10; // 10 meters
-    // new -
     private boolean firstTime = true;
 
     private String mServiceId;
@@ -228,7 +219,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
 
     private BDAdapter mySQLiteAdapter;
     private Cursor mCursor;
-
     private Preferencias mPref;
 
     // 1= efectivo, 2=tc,3=vale
@@ -242,24 +232,322 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
     private boolean isTicketValid = false;
 
     @Override
-    protected void onDestroy() {
-        Log.v("CNF_SRV1", "MainActivity onDestroy 1");
-        Log.v("onDestroy", "MapActivity");
-        Log.v("SEGUIMIENTO", "onDestroy - MainActivity");
-        super.onDestroy();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        if (mySQLiteAdapter != null) {
-            mySQLiteAdapter.close();
+        mFromScheduling = getIntent().getStringExtra("FromActivity") != null && getIntent().getStringExtra("FromActivity").equals("Schedule");
+        overridePendingTransition(R.anim.pull_in_from_right, R.anim.hold);
+        setContentView(R.layout.activity_pedir);
+
+        final ListView menuLateral = (ListView) findViewById(R.id.menuLateral);
+        final ListaAdapter adapter;
+        String[] titulos = {"", "Perfil", "Agendamientos", "Reclamos"};
+        int[] imagenes = {
+                R.drawable.navbar_logo,
+                R.drawable.perfil_over,
+                R.drawable.agendar_over,
+                R.drawable.reclamos_over
+        };
+
+        adapter = new ListaAdapter(this, titulos, imagenes);
+
+        menuLateral.setAdapter(adapter);
+        menuLateral.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                if (i == 1) {
+                    if (conf.getLogin()) {
+                        mPref.setRootActivity("MapaActivitys");
+                        Intent in = new Intent(MapaActivitys.this, PerfilActivity.class);
+                        startActivity(in);
+                    } else {
+                        mPref.setRootActivity("MapaActivitys");
+                        Intent in = new Intent(MapaActivitys.this, RegistroActivity.class);
+                        in.putExtra("target", Target.HISTORY_TARGET);
+                        startActivity(in);
+                    }
+                } else if (i == 2) {
+                    Toast.makeText(MapaActivitys.this, "Agendamiento", Toast.LENGTH_SHORT).show();
+                    Intent intmenu = new Intent(MapaActivitys.this, AgendarActivity.class);
+                    startActivity(intmenu);
+                } else if (i == 3) {
+                    Toast.makeText(MapaActivitys.this, "Reclamos", Toast.LENGTH_SHORT).show();
+                    Intent intmenu = new Intent(MapaActivitys.this, HistorialActivity.class);
+                    startActivity(intmenu);
+                }
+            }
+        });
+
+        conf = new Conf(this);
+        mHandleLayout = (LinearLayout) findViewById(R.id.handle);
+        mNewAddress = (LinearLayout) findViewById(R.id.add_new);
+        mLayoutMap = (LinearLayout) findViewById(R.id.layout_map);
+        imageMapView = (ImageView) findViewById(R.id.image_map);
+        imageMapMarker = (ImageView) findViewById(R.id.ivMarker2);
+        mPayType1 = (RadioButton) findViewById(R.id.payType1);
+        mPayType2 = (RadioButton) findViewById(R.id.payType2);
+        mPayType3 = (RadioButton) findViewById(R.id.payType3);
+        mTicket = (EditText) findViewById(ticketValue);
+        mTicket.addTextChangedListener(new TextWatcher() {
+            private String current = "";
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                if (!charSequence.toString().equals(current)) {
+
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                //Log.v("LOG1","mTicket afterTextChanged " + mTicket.getText().toString());
+
+                final String stk = mTicket.getText().toString();
+
+                if ((stk != null) && stk.length() >= 7) {
+                    Log.v("LOG1","mTicket afterTextChanged " + stk);
+                    isTicketValid = false;
+
+                    MiddleConnect.confirmTicker(getApplicationContext(), stk, new AsyncHttpResponseHandler() {
+
+                        @Override
+                        public void onStart() {
+                            Log.v("LOG1", "confirmTicket onStart");
+                        }
+
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                            String response = new String(responseBody);
+                            isTicketValid = true;
+                            Log.v("LOG1","onSuccess response = " + response);
+                            try {
+                                Log.v("LOG1", "SUCCES: " + response);
+                                JSONObject responsejson = new JSONObject(response);
+                                Log.v("LOG1", "SUCCES json: " + responsejson.toString());
+
+                                if (responsejson.getString("error").equals("0")) {
+                                    Log.v("LOG1", "SUCCES vale correcto: ");
+                                    btnSolicitar.setEnabled(true);
+                                    btnSolicitar.setBackgroundResource(R.drawable.btn_request);
+                                    isTicketValid = true;
+                                }
+                                if (responsejson.getString("error").equals("1")) {
+                                    btnSolicitar.setEnabled(false);
+                                    btnSolicitar.setBackgroundResource(R.drawable.btn_gray);
+                                    Toast.makeText(MapaActivitys.this, R.string.ticket_unauthorized, Toast.LENGTH_SHORT).show();
+                                }
+
+                            } catch (Exception e) {
+                                Log.v("checkService", "Problema json" + e.toString());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                            Log.v("LOG1", "confirmTicket onFailure");
+                            String response = new String(responseBody);
+                            Log.v("LOG1","failure response = " + response);
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            Log.v("LOG1","confirmTicket onFinish =  ");
+                        }
+
+                    });
+                }
+            }
+
+        });
+
+
+        mPayType1.setChecked(true);
+
+        imageMap = (CircleImageView) findViewById(R.id.imageMap);
+        circleProgressBar = (ProgressBar) findViewById(R.id.circleProgressBar);
+
+        isNewAddress = false;
+        btnCancelar = (Button) findViewById(R.id.btn_cancelar);
+        textTotal = (TextView) findViewById(R.id.text_total);
+        imageHeader = (ImageView) findViewById(R.id.banner_arriba);
+        textSearch = (TextView) findViewById(R.id.text_search);
+        contendorWell = (RelativeLayout) findViewById(R.id.contenedor_rueda);
+
+        mTextYaFaltaPoco = (TextView) findViewById(R.id.text_falta);
+        String fontPath = "fonts/WCManoNegraBoldBta.otf";
+        Typeface tf = Typeface.createFromAsset(MapaActivitys.this.getResources().getAssets(), fontPath);
+        mTextYaFaltaPoco.setTypeface(tf);
+        mySQLiteAdapter = new BDAdapter(this);
+        mySQLiteAdapter.openToWrite();
+        mConnectivityChecker.setConnectivityCheckInterval(5000);
+        mConnectivityChecker.setConnectivityIndicator(1500);
+
+        buildView();
+        btnSolicitar.setBackgroundResource(R.drawable.btn_request);
+
+        mPayType1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPayType = 1;
+                btnSolicitar.setEnabled(true);
+                btnSolicitar.setBackgroundResource(R.drawable.btn_request);
+                mTicket.setVisibility(View.GONE);
+            }
+        });
+
+        mPayType2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPayType = 2;
+                mTicket.setVisibility(View.GONE);
+                btnSolicitar.setBackgroundResource(R.drawable.btn_request);
+                btnSolicitar.setEnabled(true);
+                // TODO: check tipo servicio
+                checkCreditCards();
+            }
+        });
+
+        mPayType3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPayType = 3;
+                mTicket.setVisibility(View.VISIBLE);
+                btnSolicitar.setEnabled(false);
+                btnSolicitar.setBackgroundResource(R.drawable.btn_gray);
+                // TODO:
+                //checkCreditCards();
+            }
+        });
+
+        setListeners();
+///		activeLocation();
+        hideControls();
+
+///		if (Utils.checkPlayServices(this))
+        Log.v("SEGUIMIENTO", "onCreate - 1 - MainActivity before checkPlayServices");
+        if (checkPlayServices()) {
+            Log.e("checkPlayServices", "checkPlayServices");
+            Log.v("SEGUIMIENTO", "onCreate - 1 - MainActivity after checkPlayServices ok ");
+
+            // Building the GoogleApi client
+            buildGoogleApiClient();
+
+            fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+            fm.getMapAsync(this);
+            if (!Connectivity.isConnectedFast(this)) {
+                Toast.makeText(this, getResources().getString(R.string.error_speed), Toast.LENGTH_LONG).show();
+            }
         }
 
-        if (mReceiver != null) {
-            unregisterReceiver(mReceiver);
+        Log.e("checkPlayServices", "antes de register intentFilter");
+        Log.v("SEGUIMIENTO", "onCreate - 1 - MainActivity after checkPlayServices 2");
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Actions.ACTION_USER_CLOSE_SESSION);
+        intentFilter.addAction(Actions.ACTION_MESSAGE_MASSIVE);
+        intentFilter.addAction(Actions.CONFIRM_NEW_SERVICES);
+
+        Log.v("MAP1", "camera1");
+
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+
+        Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
+        if (location != null) {
+            latitud = location.getLatitude();
+            longitud = location.getLongitude();
         }
+
+        mReceiver = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(Actions.ACTION_USER_CLOSE_SESSION)) {
+                    Log.v("USER_CLOSE_SESSION", "Sesión cerrada - confirmación");
+                    Conf conf = new Conf(getApplicationContext());
+                    conf.setLogin(false);
+
+                    //Intent in3 = new Intent(MapaActivitys.this,LoginActivity.class);
+                    //in3.putExtra("target", 1);
+                    //startActivity(in3);
+                    finish();
+                } else if (intent.getAction().equals(Actions.ACTION_MESSAGE_MASSIVE)) {
+
+                    Log.v("MESSAGE_MASSIVE", "mensaje global recibido");
+                    String message = intent.getExtras().getString("message");
+                    mostrarMensaje(message);
+
+                }
+                // status services
+                // validate +
+                else if (intent.getAction().equals(Actions.CONFIRM_NEW_SERVICES)) {
+                    Log.v("SOLICITANDO_ACTION", "CONFIRM_NEW_SERVICES");
+                    Log.e("SERVICE_CMS", "GCM MAP CONFIRM_SERVICE service_id= " + intent.getExtras().getString("service_id"));
+
+                    try {
+                        if (myTimer != null) {
+                            myTimer.cancel();
+                            myTimer.purge();
+                            myTimer = null;
+                        }
+                        mPref.setRootActivity("MapaActivitys");
+                        mServiceId = intent.getExtras().getString("service_id");
+                        conf.setServiceId(mServiceId);
+
+                        Intent mIntent = new Intent(getApplicationContext(), ConfirmacionActivity.class);
+                        mIntent.putExtra("driver", intent.getExtras().getString("driver"));
+                        mIntent.putExtra("pay_type", mPayType);
+                        startActivity(mIntent);
+                        finish();
+
+                    } catch (Exception e) {
+                        Log.v("CNF_SRV", "err_request 2 " + e.toString());
+                        err_request();
+                        finish();
+                    }
+                } else if (intent.getAction().equals(Actions.ACTION_USER_CLOSE_SESSION)) {
+
+                    Log.v("SOLICITANDO_ACTION", "ACTION_CANCEL_DRIVER_SERVICE");
+                    Log.v("CNF_SRV", "requestServiceAddress ACTION_CANCEL_DRIVER_SERVICE");
+                    Conf conf = new Conf(getApplicationContext());
+                    conf.setLogin(false);
+                    mPref.setRootActivity("MapaActivitys");
+                    Intent in3 = new Intent(MapaActivitys.this, HomeActivity.class);
+                    startActivity(in3);
+                    finish();
+
+                }
+                // validate -
+
+            }
+        };
 
         try {
-            timer.purge();
-            timer.cancel();
+            registerReceiver(mReceiver, intentFilter);
         } catch (Exception e) {
+
+        }
+
+        Log.e("sendEmptyMessage", "sendEmptyMessage");
+        Log.v("SEGUIMIENTO", "onCreate - 1 - MainActivity after sendEmptyMessage ");
+        Log.v("CNF_SRV", "onCreate");
+        hand.sendEmptyMessage(2);
+
+
+        mPref = new Preferencias(this);
+        //mPref.setRootActivity("HomeActivity");
+        if (!isLocationEnabled(this)) {
+            Log.v("TEST_GPS", "disabled");
+            hand.sendEmptyMessage(1);
+        } else {
+            Log.v("TEST_GPS", "enabled");
         }
 
     }
@@ -276,15 +564,8 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
     /* Threshold size: dp to pixels, multiply with display density */
         boolean isKeyboardShown = heightDiff > SOFT_KEYBOARD_HEIGHT_DP_THRESHOLD * dm.density;
 
-        Log.d("TECLADO", "isKeyboardShown ? " + isKeyboardShown + ", heightDiff:" + heightDiff + ", density:" + dm.density
-                + "root view height:" + rootView.getHeight() + ", rect:" + r);
-        // mIntent.putExtra("driver", responsejson.getJSONObject("driver").toString());
+        Log.d("TECLADO", "isKeyboardShown ? " + isKeyboardShown + ", heightDiff:" + heightDiff + ", density:" + dm.density + "root view height:" + rootView.getHeight() + ", rect:" + r);
 
-        // if (status == 5) {
-        //     mIntent.putExtra("qualification", "1");
-        // } else {
-        //     mIntent.putExtra("qualification", "0");
-        // }
         if (!isKeyboardShown) {
             if (isAddressFocus) {
                 map.getUiSettings().setScrollGesturesEnabled(true);
@@ -334,6 +615,9 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
         mNetworkMonitor = new NetworkChangeReceiver(this);
         registerReceiver(mNetworkMonitor, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
+        /*if(card.equals(null)){
+            btnCancelar.setEnabled(false);
+        }*/
     }
 
     @Override
@@ -344,14 +628,11 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
         unregisterReceiver(mNetworkMonitor);
     }
 
-
     @Override
     public void onRestart() {
         super.onRestart();
         Log.e("onRestart", "onRestart");
-
         overridePendingTransition(R.anim.hold, R.anim.pull_out_to_right);
-
         displayLocation();
 
         try {
@@ -365,361 +646,28 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onDestroy() {
+        Log.v("CNF_SRV1", "MainActivity onDestroy 1");
+        Log.v("onDestroy", "MapActivity");
+        Log.v("SEGUIMIENTO", "onDestroy - MainActivity");
+        super.onDestroy();
 
-        mFromScheduling = getIntent().getStringExtra("FromActivity") != null && getIntent().getStringExtra("FromActivity").equals("Schedule");
-        overridePendingTransition(R.anim.pull_in_from_right, R.anim.hold);
-
-        setContentView(R.layout.activity_pedir);
-
-        final ListView menuLateral = (ListView) findViewById(R.id.menuLateral);
-        ListaAdapter adapter;
-
-        String[] titulos = {"","Perfil", "Agendamientos", "Reclamos"};
-
-        int[] imagenes = {
-                R.drawable.navbar_logo,
-                R.drawable.perfil_over,
-                R.drawable.agendar_over,
-                R.drawable.reclamos_over
-        };
-
-        //ArrayAdapter<String> adp = new ArrayAdapter<String>(MapaActivitys.this, android.R.layout.simple_list_item_1, opciones);
-        adapter = new ListaAdapter (this,titulos,imagenes);
-        menuLateral.setAdapter(adapter);
-
-        menuLateral.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //  String opcSeleccionado = (String) menuLateral.getAdapter().getItem(i);
-                //Toast.makeText(MapaActivitys.this, "click sobre " + i, Toast.LENGTH_SHORT).show();
-
-                if (i == 1) {
-                    Toast.makeText(MapaActivitys.this, "Perfil", Toast.LENGTH_SHORT).show();
-                    Intent intmenu = new Intent(MapaActivitys.this, PerfilActivity.class);
-                    startActivity(intmenu);
-                }
-                else if (i == 2){
-                    Toast.makeText(MapaActivitys.this, "Agendamiento", Toast.LENGTH_SHORT).show();
-                    Intent intmenu = new Intent(MapaActivitys.this, AgendarActivity.class);
-                    startActivity(intmenu);
-                }
-
-                else if (i == 3){
-                    Toast.makeText(MapaActivitys.this, "Reclamos", Toast.LENGTH_SHORT).show();
-                    Intent intmenu = new Intent(MapaActivitys.this, HistorialActivity.class);
-                    startActivity(intmenu);
-                }
-
-            }
-        });
-
-        conf = new Conf(this);
-
-        mHandleLayout = (LinearLayout) findViewById(R.id.handle);
-        mNewAddress = (LinearLayout) findViewById(R.id.add_new);
-        mLayoutMap = (LinearLayout) findViewById(R.id.layout_map);
-        imageMapView = (ImageView) findViewById(R.id.image_map);
-        imageMapMarker = (ImageView) findViewById(R.id.ivMarker2);
-
-        mPayType1 = (RadioButton) findViewById(R.id.payType1);
-        mPayType2 = (RadioButton) findViewById(R.id.payType2);
-        mPayType3 = (RadioButton) findViewById(R.id.payType3);
-
-        mTicket = (EditText) findViewById(R.id.ticketValue);
-
-        mTicket.addTextChangedListener(new TextWatcher() {
-            private String current = "";
-
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                if (!charSequence.toString().equals(current)) {
-
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                //Log.v("LOG1","mTicket afterTextChanged " + mTicket.getText().toString());
-
-                String stk = mTicket.getText().toString();
-
-                if ((stk != null) && stk.length() >= 7) {
-                    Log.v("LOG1","mTicket afterTextChanged " + stk);
-                    isTicketValid = false;
-
-                    MiddleConnect.confirmTicker(getApplicationContext(), stk, new AsyncHttpResponseHandler() {
-
-                        @Override
-                        public void onStart() {
-                            Log.v("LOG1", "confirmTicket onStart");
-                        }
-
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                            String response = new String(responseBody);
-                            isTicketValid = true;
-                            Log.v("LOG1","onSuccess response = " + response);
-                            try {
-                                Log.v("LOG1", "SUCCES: " + response);
-                                JSONObject responsejson = new JSONObject(response);
-                                Log.v("LOG1", "SUCCES json: " + responsejson.toString());
-                                if (responsejson.getString("error").equals("0")) {
-                                    Log.v("LOG1", "SUCCES vale correcto: ");
-                                    btnSolicitar.setEnabled(true);
-                                    btnSolicitar.setBackgroundResource(R.drawable.btn_request);
-                                    isTicketValid = true;
-                                }
-                                else if (responsejson.getString("error").equals("1")) {
-                                    btnSolicitar.setEnabled(false);
-                                    btnSolicitar.setBackgroundResource(R.drawable.btn_gray);
-                                }
-
-                            } catch (Exception e) {
-                                Log.v("checkService", "Problema json" + e.toString());
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-                            Log.v("LOG1", "confirmTicket onFailure");
-                            String response = new String(responseBody);
-                            Log.v("LOG1","failure response = " + response);
-                        }
-
-                        @Override
-                        public void onFinish() {
-                            Log.v("LOG1","confirmTicket onFinish =  ");
-                        }
-
-                    });
-                }
-            }
-        });
-
-
-        mPayType1.setChecked(true);
-
-        imageMap = (CircleImageView) findViewById(R.id.imageMap);
-        circleProgressBar = (ProgressBar) findViewById(R.id.circleProgressBar);
-
-
-        isNewAddress = false;
-        btnCancelar = (Button) findViewById(R.id.btn_cancelar);
-        textTotal = (TextView) findViewById(R.id.text_total);
-        imageHeader = (ImageView) findViewById(R.id.banner_arriba);
-        textSearch = (TextView) findViewById(R.id.text_search);
-        contendorWell = (RelativeLayout) findViewById(R.id.contenedor_rueda);
-
-        mTextYaFaltaPoco = (TextView) findViewById(R.id.text_falta);
-        String fontPath = "fonts/WCManoNegraBoldBta.otf";
-        Typeface tf = Typeface.createFromAsset(MapaActivitys.this.getResources().getAssets(), fontPath);
-        mTextYaFaltaPoco.setTypeface(tf);
-
-        mySQLiteAdapter = new BDAdapter(this);
-        mySQLiteAdapter.openToWrite();
-
-        mConnectivityChecker.setConnectivityCheckInterval(5000);
-        mConnectivityChecker.setConnectivityIndicator(1500);
-
-        buildView();
-        btnSolicitar.setBackgroundResource(R.drawable.btn_request);
-
-        mPayType1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPayType = 1;
-                btnSolicitar.setEnabled(true);
-                btnSolicitar.setBackgroundResource(R.drawable.btn_request);
-                mTicket.setVisibility(View.GONE);
-            }
-        });
-
-
-        mPayType2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPayType = 2;
-                mTicket.setVisibility(View.GONE);
-                btnSolicitar.setBackgroundResource(R.drawable.btn_request);
-                btnSolicitar.setEnabled(true);
-
-                // TODO: check tipo servicio
-                checkCreditCards();
-            }
-        });
-
-        mPayType3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPayType = 3;
-                mTicket.setVisibility(View.VISIBLE);
-                btnSolicitar.setEnabled(false);
-                btnSolicitar.setBackgroundResource(R.drawable.btn_gray);
-                // TODO:
-                //checkCreditCards();
-            }
-        });
-
-
-
-        setListeners();
-
-///		activeLocation();
-
-        hideControls();
-
-///		if (Utils.checkPlayServices(this))
-        Log.v("SEGUIMIENTO", "onCreate - 1 - MainActivity before checkPlayServices");
-        if (checkPlayServices()) {
-            Log.e("checkPlayServices", "checkPlayServices");
-            Log.v("SEGUIMIENTO", "onCreate - 1 - MainActivity after checkPlayServices ok ");
-
-            // Building the GoogleApi client
-            buildGoogleApiClient();
-
-            fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-//            fm = (MapFragment)  getFragmentManager().findFragmentById(R.id.map);
-            //map = fm.getMap();
-            fm.getMapAsync(this);
-
-            if (!Connectivity.isConnectedFast(this)) {
-                Toast.makeText(this,
-                        getResources().getString(R.string.error_speed),
-                        Toast.LENGTH_LONG).show();
-            }
+        if (mySQLiteAdapter != null) {
+            mySQLiteAdapter.close();
         }
 
-        Log.e("checkPlayServices", "antes de register intentFilter");
-        Log.v("SEGUIMIENTO", "onCreate - 1 - MainActivity after checkPlayServices 2");
-
-
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(Actions.ACTION_USER_CLOSE_SESSION);
-        intentFilter.addAction(Actions.ACTION_MESSAGE_MASSIVE);
-        intentFilter.addAction(Actions.CONFIRM_NEW_SERVICES);
-
-
-        Log.v("MAP1", "camera1");
-
-
-        LocationManager locationManager = (LocationManager)
-                getSystemService(Context.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-
-        Location location = locationManager.getLastKnownLocation(locationManager
-                .getBestProvider(criteria, false));
-        if (location != null) {
-            latitud = location.getLatitude();
-            longitud = location.getLongitude();
+        if (mReceiver != null) {
+            unregisterReceiver(mReceiver);
         }
-
-//        //map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitud, longitud), map.getCameraPosition().zoom), 15, null);
-//        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-//        if (mLastLocation != null) {
-//            latitud = mLastLocation.getLatitude();
-//            longitud = mLastLocation.getLongitude();
-//            Log.v("MAP1", "se obtuvo mLastLocation");
-//        }
-//        map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitud, longitud), 15));
-
-
-        mReceiver = new BroadcastReceiver() {
-
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (intent.getAction().equals(Actions.ACTION_USER_CLOSE_SESSION)) {
-                    Log.v("USER_CLOSE_SESSION", "Sesión cerrada - confirmación");
-                    Conf conf = new Conf(getApplicationContext());
-                    conf.setLogin(false);
-
-                    //                Intent in3 = new Intent(MapaActivitys.this,LoginActivity.class);
-                    //                in3.putExtra("target", 1);
-                    // startActivity(in3);
-                    finish();
-                } else if (intent.getAction().equals(Actions.ACTION_MESSAGE_MASSIVE)) {
-
-                    Log.v("MESSAGE_MASSIVE", "mensaje global recibido");
-                    String message = intent.getExtras().getString("message");
-                    mostrarMensaje(message);
-
-                }
-                // status services
-                // validate +
-                else if (intent.getAction().equals(Actions.CONFIRM_NEW_SERVICES)) {
-                    Log.v("SOLICITANDO_ACTION", "CONFIRM_NEW_SERVICES");
-                    Log.e("SERVICE_CMS", "GCM MAP CONFIRM_SERVICE service_id= " + intent.getExtras().getString("service_id"));
-
-                    try {
-                        if (myTimer != null) {
-                            myTimer.cancel();
-                            myTimer.purge();
-                            myTimer = null;
-                        }
-                        mPref.setRootActivity("MapaActivitys");
-                        mServiceId = intent.getExtras().getString("service_id");
-                        conf.setServiceId(mServiceId);
-
-                        Intent mIntent = new Intent(getApplicationContext(), ConfirmacionActivity.class);
-                        mIntent.putExtra("driver", intent.getExtras().getString("driver"));
-                        mIntent.putExtra("pay_type", mPayType);
-                        startActivity(mIntent);
-                        finish();
-
-                    } catch (Exception e) {
-                        Log.v("CNF_SRV", "err_request 2 " + e.toString());
-                        err_request();
-                        finish();
-                    }
-                } else if (intent.getAction().equals(Actions.ACTION_USER_CLOSE_SESSION)) {
-                    Log.v("SOLICITANDO_ACTION", "ACTION_CANCEL_DRIVER_SERVICE");
-
-                    Log.v("CNF_SRV", "requestServiceAddress ACTION_CANCEL_DRIVER_SERVICE");
-                    Conf conf = new Conf(getApplicationContext());
-                    conf.setLogin(false);
-
-                    mPref.setRootActivity("MapaActivitys");
-
-                    Intent in3 = new Intent(MapaActivitys.this, HomeActivity.class);
-                    startActivity(in3);
-                    finish();
-
-                }
-                // validate -
-
-            }
-        };
 
         try {
-            registerReceiver(mReceiver, intentFilter);
+            timer.purge();
+            timer.cancel();
         } catch (Exception e) {
-
         }
 
-        Log.e("sendEmptyMessage", "sendEmptyMessage");
-        Log.v("SEGUIMIENTO", "onCreate - 1 - MainActivity after sendEmptyMessage ");
-        Log.v("CNF_SRV", "onCreate");
-        hand.sendEmptyMessage(2);
-
-
-        mPref = new Preferencias(this);
-        //mPref.setRootActivity("HomeActivity");
-        if (!isLocationEnabled(this)) {
-            Log.v("TEST_GPS", "disabled");
-            hand.sendEmptyMessage(1);
-        } else {
-            Log.v("TEST_GPS", "enabled");
-        }
-
+        finish();
     }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -735,7 +683,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
         }
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitud, longitud), 15));
 
-
     }
 
 
@@ -744,11 +691,8 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
         btnSolicitar.setVisibility(View.GONE);
         bt_direcc.setVisibility(View.GONE);
         imageHeader.setVisibility(View.GONE);
-
-        // solicitando
         textSearch.setVisibility(View.VISIBLE);
         contendorWell.setVisibility(View.VISIBLE);
-
         textTotal.setVisibility(View.VISIBLE);
         btnCancelar.setVisibility(View.VISIBLE);
 
@@ -759,14 +703,11 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
         // solicitando
         textTotal.setVisibility(View.GONE);
         btnCancelar.setVisibility(View.GONE);
-
         contendorWell.setVisibility(View.GONE);
         textSearch.setVisibility(View.GONE);
-
         btnSolicitar.setVisibility(View.VISIBLE);
         bt_direcc.setVisibility(View.VISIBLE);
         imageHeader.setVisibility(View.VISIBLE);
-
         direccion_uno.setFocusableInTouchMode(true);
         direccion_uno.setFocusable(false);
 
@@ -788,17 +729,14 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
     }
 
     private void setListeners() {
-
-        bt_back.setOnClickListener(this);
         btnSolicitar.setOnClickListener(this);
         bt_direcc.setOnClickListener(this);
         btnCancelar.setOnClickListener(this);
         btnAddAddress.setOnClickListener(this);
-
+//        btn_menu.setOnClickListener(this);
     }
 
     private void buildView() {
-        //botonpedirna = (ImageView) findViewById(R.id.solictaxi);
         btnSolicitar = (Button) findViewById(R.id.btnSolicitar);
         btnAddAddress = (Button) findViewById(R.id.btn_add);
         if(mFromScheduling && getIntent().getStringExtra("FromActivity").equals("Schedule")){
@@ -806,22 +744,14 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
         }
 
         direccion_uno = (EditText) findViewById(R.id.direccion_uno);
-
-        bt_back = (ImageView) findViewById(R.id.btn_volver);
         bt_direcc = (Button) findViewById(R.id.btn_direcc);
-
         bg_shadow = (ImageView) findViewById(R.id.bg_shadows);
 
         mNoConnectivityPanel = (RelativeLayout) findViewById(R.id.layout_no_connectivity);
         mConnectivityLoaderImage = (ImageView) findViewById(R.id.loader_icon);
 
-        //sp = (Spinner) findViewById(R.id.spinner);
-
         myAdapter = ArrayAdapter.createFromResource(this, R.array.opciones, android.R.layout.simple_spinner_item);
-
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-//        marker = (ImageButton) findViewById(R.id.marker);
 
         EditText SearchEditText = (EditText) findViewById(R.id.direccion_uno);
         SearchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -832,7 +762,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
                     Log.v("CUSTOM", "presionado");
                     // search pressed and perform your functionality.
                 }
-                return false;
+                return true;
             }
         });
 
@@ -846,12 +776,8 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
         direccion_uno.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Log.v("PULSADO", "direccion_uno");
                 direccion_uno.setFocusableInTouchMode(true);
                 direccion_uno.setFocusable(true);
-
-                screenShotMap(0);
-
                 return false;
             }
         });
@@ -859,8 +785,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
         direccion_uno.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
-            public boolean onEditorAction(TextView arg0, int actionId,
-                                          KeyEvent arg2) {
+            public boolean onEditorAction(TextView arg0, int actionId, KeyEvent arg2) {
                 // hide the keyboard and search the web when the enter key
                 // button is pressed
                 if (actionId == EditorInfo.IME_ACTION_GO
@@ -875,14 +800,12 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
                     //map.getUiSettings().setScrollGesturesEnabled(true);
                     imageMapView.setVisibility(View.GONE);
                     imageMapMarker.setVisibility(View.GONE);
-
                     imm.hideSoftInputFromWindow(direccion_uno.getWindowToken(), 0);
 
                     if (actionId == EditorInfo.IME_ACTION_DONE) {
                         Log.v("PREPARE", "------");
 
                         // check if addres finaliza con "-"
-
                         //if (addressCorret())
                         prepareForRequestService();
                         //else {
@@ -915,9 +838,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
 
             if (list != null && !list.isEmpty()) {
                 String full_address = "";
-
                 Address address = list.get(0);
-
                 String dir_full = address.getAddressLine(0);
                 String partes[] = dir_full.split(" ");
                 full_address = full_address.concat(partes[0] + " ");
@@ -955,15 +876,21 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
         switch (v.getId()) {
             case R.id.btnSolicitar:
 
+                final String stk = mTicket.getText().toString();
+
+                if (stk.equals("")){
+                    isTicketValid = false;
+                    Toast.makeText(MapaActivitys.this, "Completa el campo para continuar", Toast.LENGTH_SHORT).show();
+                    //break;
+                }
                 direccion_uno.setFocusableInTouchMode(true);
                 direccion_uno.setFocusable(true);
                 direccion_uno.requestFocus();
+                btnSolicitar.setBackgroundResource(R.drawable.btn_gray);
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.RESULT_HIDDEN);
-
                 direccion_uno.setImeActionLabel("Pedir", EditorInfo.IME_ACTION_DONE);
-
                 screenShotMap(0);
 
                 break;
@@ -980,7 +907,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
                 if (isNewAddress) {
                     // disable view newAddress
                     mNewAddress.setVisibility(View.GONE);
-
                     mHandleLayout.setVisibility(View.VISIBLE);
                 } else {
 
@@ -1002,7 +928,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
 //            case R.id.marker:
 //                moveToLocation();
 //                break;
-
             case R.id.btn_add:
 
                 direccion_uno.setFocusableInTouchMode(true);
@@ -1026,12 +951,9 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
                                 // saveToInternalSorage(bitmap);
 
                                 saveImage(getApplicationContext(), bitmap, "foto", "png");
-
                                 String strLatitud = String.valueOf(latitud);
                                 String strLongitud = String.valueOf(longitud);
-
                                 mPref.setRootActivity("MapaActivitys");
-
                                 Intent i2 = new Intent(MapaActivitys.this, NewAddressActivity.class);
                                 i2.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                 i2.putExtra("direccion", direccion_uno.getText().toString());
@@ -1049,7 +971,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
         }
 
     }
-
 
     public void screenShotMap(final int i) {
         map.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
@@ -1165,6 +1086,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
                         direccion_uno.requestFocus();
                         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.RESULT_HIDDEN);
+
                     }
                 });
         builder.setCancelable(false);
@@ -1204,7 +1126,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
                     finish();
                 } else {
                     showControls();
-
                     map.getUiSettings().setScrollGesturesEnabled(false);
                     direccion_uno.clearFocus();
                     direccion_uno.setFocusableInTouchMode(false);
@@ -1215,19 +1136,16 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
                 }
             } else {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(
-                        MapaActivitys.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MapaActivitys.this);
                 builder.setTitle("Información");
                 builder.setMessage("Verifica los datos de la dirección");
-                builder.setNeutralButton("OK",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,
-                                                int which) {
-                                //slider.open();
-                                btnSolicitar.setEnabled(true);
-                                hideLoader();
-                            }
-                        });
+                builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        btnSolicitar.setEnabled(true);
+                        //     btnSolicitar.setBackgroundResource(R.drawable.btn_gray);
+                        hideLoader();
+                    }
+                });
                 builder.setCancelable(false);
                 builder.create();
                 builder.show();
@@ -1316,7 +1234,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
 
         if (conf.getLogin()) {
             Intent in2 = new Intent(MapaActivitys.this, MyAddressesActivity.class);
-
             startActivityForResult(in2, 1);
         } else {
             Intent i = new Intent(this, RegistroActivity.class);
@@ -1327,76 +1244,63 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
 
     private void getTaxi() {
         btnSolicitar.setEnabled(false);
+
         if (Connectivity.isConnected(this)) {
+
             if (verificarDireccion(direccion_uno.getText().toString())) {
 
                 String dir_full = direccion_uno.getText().toString();
-
                 Pattern mPattern = Pattern.compile("^(.*)\\ (.*)\\#(.*)\\-(.*)");
                 Matcher matcher = mPattern.matcher(dir_full.toString());
-
                 comp1 = direccion_uno.getText().toString();
                 comp1 = comp1.replaceAll("[^0-9 ]", "") + " " + comp1.replaceAll("[^A-Z a-z]", "");
 
                 if (conf.getLogin()) {
                     btnSolicitar.setEnabled(true);
-
                     id_user = conf.getIdUser();
-
                     uuid = conf.getUuid();
-
                     getService();
                 } else {
-
+                    hideControls();
+                    contendorWell.setVisibility(View.GONE);
                     mPref.setRootActivity("MapaActivitys");
-
                     Intent i = new Intent(MapaActivitys.this, RegistroActivity.class);
 
                     i.putExtra("index", indice);
                     i.putExtra("position", String.valueOf(indice_posicion));
                     i.putExtra("comp1", comp1);
                     i.putExtra("comp2", comp2);
-                    //i.putExtra("no", dir_tres.getText().toString());
                     i.putExtra("no", direccion_uno.getText().toString());
                     i.putExtra("barrio", barrio);
-                    //i.putExtra("obs", dir_observaciones.getText().toString());
                     i.putExtra("obs", "");
                     i.putExtra("latitud", String.valueOf(latitud));
                     i.putExtra("longitud", String.valueOf(longitud));
                     i.putExtra("target", Target.TAXI_TARGET);
-
                     startActivity(i);
-
-//					botonpedirna.setEnabled(true);
                     btnSolicitar.setEnabled(true);
-
                     hideLoader();
                 }
 
             } else {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(
-                        MapaActivitys.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MapaActivitys.this);
                 builder.setTitle("Información");
                 builder.setMessage("Verifica los datos de la dirección");
-                builder.setNeutralButton("OK",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,
-                                                int which) {
-                                //slider.open();
-                                btnSolicitar.setEnabled(true);
-                                hideLoader();
-                            }
-                        });
+                builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //slider.open();
+                        btnSolicitar.setEnabled(true);
+                        hideLoader();
+                    }
+                });
                 builder.setCancelable(false);
                 builder.create();
                 builder.show();
             }
-        } else {
+        }
+        else {
             new Dialogos(MapaActivitys.this, R.string.error_net);
-
             btnSolicitar.setEnabled(true);
-
             hideLoader();
         }
 
@@ -1421,7 +1325,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
                 } else {
                     dir_completa = indice1 + " " + comp1 + " #" + comp2 + "-" + no;
                 }
-
 
                 //String dir_completa = indice1 + " " + comp1 + " #" + comp2 + "-" + no;
                 Log.v("SEGUIMIENTO", "onActivityResult - data " + dir_completa);
@@ -1621,17 +1524,11 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
 
     private void scheduleTryAgain() {
         Log.v("CNF_SRV1", "MapaActivitys scheduleTryAgain ");
-
 //        marker.setEnabled(false);
-
         count = 10;
-
         timer = new Timer();
-
         TimerTask scanTask;
-
         final Handler handler = new Handler();
-
         scanTask = new TimerTask() {
             public void run() {
                 handler.post(new Runnable() {
@@ -1653,17 +1550,13 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
 
             switch (msg.what) {
                 case 1:
-
-                    //Toast.makeText(getApplicationContext(), getResources().getString(R.string.enable_gps), Toast.LENGTH_LONG).show();
                     showSettingsAlert();
-
                     break;
                 case 2:
                     Log.v("SEGUIMIENTO", "Handle updateAddress -- " + getString(R.string.sd));
                     break;
 
                 case 3:
-
                     if (count <= 0) {
 
                         if (!activeRequest) {
@@ -1678,6 +1571,9 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
 ///					direccion_completar_uno.setText("Buscando dirección en "+ count + " segundos..");
                         count--;
                     }
+                case 4:
+                    showInternetAlert();
+                    break;
 
                 default:
                     break;
@@ -1689,23 +1585,43 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
 
     public void showSettingsAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("GPS is settings");
+        alertDialog.setTitle("El GPS no está habilitado");
         alertDialog.setMessage(getString(R.string.enable_gps));
-        alertDialog.setPositiveButton("Settings",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(
-                                Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-        alertDialog.setNegativeButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
+        alertDialog.setPositiveButton("Habilitar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        alertDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+        alertDialog.show();
+    }
+
+    public void showInternetAlert() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("No tiene una conexión a internet");
+        alertDialog.setMessage(getString(R.string.aceptar));
+        alertDialog.setPositiveButton("Habilitar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                startActivity(intent);
+                //finish();
+            }
+        });
+
+        alertDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
+            }
+        });
         alertDialog.show();
     }
 
@@ -1728,9 +1644,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
                 GooglePlayServicesUtil.getErrorDialog(resultCode, this,
                         PLAY_SERVICES_RESOLUTION_REQUEST).show();
             } else {
-                Toast.makeText(getApplicationContext(),
-                        "This device is not supported.", Toast.LENGTH_LONG)
-                        .show();
+                Toast.makeText(getApplicationContext(), "This device is not supported.", Toast.LENGTH_LONG).show();
                 // Intent in3 = new Intent(MapaActivitys.this,HomeActivity.class);
                 // startActivity(in3);
 
@@ -1743,8 +1657,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
 
     private void displayLocation() {
 
-        mLastLocation = LocationServices.FusedLocationApi
-                .getLastLocation(mGoogleApiClient);
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
         Log.v("SEGUIMIENTO", "displayLocation -- ");
 
@@ -1753,15 +1666,8 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
             longitud = mLastLocation.getLongitude();
             Log.v("SEGUIMIENTO", " displayLocation ok lat=" + String.valueOf(latitud) + " lng=" + String.valueOf(longitud));
 
-            //map = fm.getMap();
-///			map.setMyLocationEnabled(false);
-///         map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitud, longitud), 10f), 40, null);
-///            moveToLocation();
             map.getUiSettings().setMyLocationButtonEnabled(true);
-            //map.getUiSettings().setZoomControlsEnabled(false);
-            //map.getUiSettings().setCompassEnabled(false);
             map.setMyLocationEnabled(true);
-
             map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
                 @Override
                 public void onCameraChange(CameraPosition cameraPosition) {
@@ -1776,7 +1682,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
         } else {
             Log.v("displayLocation", "bad lat=" + String.valueOf(latitud) + " lng=" + String.valueOf(longitud));
             Log.v("TEST_GPS", "displayLocation");
-            //hand.sendEmptyMessage(1);
         }
     }
 
@@ -1835,7 +1740,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitud, longitud), 15));
             firstTime = false;
         }
-
     }
 
     public List<Address> returnAddress(double latitude, double longitude) {
@@ -1844,8 +1748,8 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
         try {
 
             if (Geocoder.isPresent()) {
-                Geocoder geocoder = new Geocoder(this, Locale.getDefault());
 
+                Geocoder geocoder = new Geocoder(this, Locale.getDefault());
                 addresses = geocoder.getFromLocation(latitude, longitude, 2);
 
                 if (addresses.isEmpty() || addresses == null) {
@@ -1865,7 +1769,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
         return addresses;
     }
 
-
     public LocationRequest createLocationRequest() {
         LocationRequest locationRequest = new LocationRequest();
         locationRequest.setInterval(10000);
@@ -1883,8 +1786,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
 
     protected void stopLocationUpdates() {
         if (mGoogleApiClient.isConnected()) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(
-                    mGoogleApiClient, this);
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
     }
 
@@ -1907,7 +1809,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
 
             } else if (msg.what == 3) {
 
-
                 try {
 
                     Log.v("CNF_SRV", "no driver 1");
@@ -1921,15 +1822,13 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
 
                     //                Intent in3 = new Intent(MapaActivitys.this,HomeActivity.class);
                     // startActivity(in3);
-
                     finish();
                 }
             } else if (msg.what == 1500) {
-                //Log.v("SolicitandoActivity","msg.what = 1500");
-                //Toast.makeText(getApplicationContext(),getString(R.string.error_no_driver), Toast.LENGTH_SHORT).show();
-                //Toast.makeText(getApplicationContext(),"msg.what = 1500", Toast.LENGTH_SHORT).show();
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(MapaActivitys.this);
+                Toast.makeText(getApplicationContext(), getString(R.string.cancel_service), Toast.LENGTH_SHORT).show();
+
+               /* AlertDialog.Builder builder = new AlertDialog.Builder(MapaActivitys.this);
                 builder.setTitle(getString(R.string.important));
                 builder.setMessage(R.string.nocancel)
                         .setPositiveButton(R.string.retry,
@@ -1952,9 +1851,10 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
                     alert.show();
                 } catch (Exception e) {
 
-                }
+                }*/
 
-            } else if (msg.what == 2000) {
+            }
+            else if (msg.what == 2000) {
 
                 cancelByService(getResources().getString(R.string.cancel_service, id_user));
                 Log.v("SolicitandoActivity", "msg.what = 2000");
@@ -1998,7 +1898,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
 
         }
         animation.start();
-
 
         isRequestService = true;
         String address = direccion_uno.getText().toString();
@@ -2047,7 +1946,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
                 try {
                     Log.e("solicitando", "SUCCES: " + response);
                     Log.v("SOLICITANDO_SERVICIO", "onSucces " + String.valueOf(new Date()));
-
                     JSONObject responsejson = new JSONObject(response);
 
                     if (myTimer == null) {
@@ -2067,9 +1965,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
                         long actualDate = c.getTimeInMillis();
 
                         mySQLiteAdapter.insertService(mServiceId, String.valueOf(mStatusNew), "", id_user, "", actualDate);
-
                         reintento = 0;
-
                         myTimer.schedule(new TimerTask() {
                             @Override
                             public void run() {
@@ -2093,9 +1989,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
 
 
                                     isReceiverRegistered = false;
-
                                     puente.sendEmptyMessage(2000);
-
                                     myTimer.cancel();
                                     myTimer.purge();
                                     myTimer = null;
@@ -2110,12 +2004,10 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
                         if (responsejson.getInt("error") == Error.NO_DRIVER_ENABLE) {
 
                             Log.v("SOLICITANDO_SERVICIO", "error - Error.NO_DRIVER_ENABLE " + String.valueOf(new Date()));
-
                             Toast.makeText(getApplicationContext(), getString(R.string.error_no_driver), Toast.LENGTH_LONG).show();
 
                         } else {
                             Log.v("SOLICITANDO_SERVICIO", "error_request - " + String.valueOf(new Date()));
-
                             err_request();
 
                         }
@@ -2133,7 +2025,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
                     hideControls();
 
                     map.getUiSettings().setScrollGesturesEnabled(true);
-
                 }
             }
 
@@ -2145,9 +2036,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
                 err_request();
 
                 isRequestService = false;
-
                 puente.sendEmptyMessage(2000);
-
             }
 
             @Override
@@ -2163,36 +2052,33 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
 
     }
 
-
     private void showDialogCancel() {
         AlertDialog.Builder dialogo1 = new AlertDialog.Builder(this);
 
         dialogo1.setTitle(getResources().getString(R.string.app_name));
         dialogo1.setMessage(getResources().getString(R.string.confirm_cancel));
         dialogo1.setCancelable(false);
-        dialogo1.setPositiveButton("Si",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogo1, int id) {
-                        hideControls();
+        dialogo1.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
 
-                        map.getUiSettings().setScrollGesturesEnabled(true);
+                hideControls();
+                map.getUiSettings().setScrollGesturesEnabled(true);
 
-                        if (myTimer != null) {
-                            myTimer.cancel();
-                            myTimer.purge();
-                            myTimer = null;
-                        }
-                        isRequestService = false;
+                if (myTimer != null) {
+                    myTimer.cancel();
+                    myTimer.purge();
+                    myTimer = null;
+                }
 
-                        cancelarService();
-                    }
-                });
-        dialogo1.setNegativeButton("No",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogo1, int id) {
-                        dialogo1.cancel();
-                    }
-                });
+                isRequestService = false;
+                cancelarService();
+            }
+        });
+        dialogo1.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+                dialogo1.cancel();
+            }
+        });
         dialogo1.show();
     }
 
@@ -2204,26 +2090,18 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
         Log.e("SERVICE_CMS", "    CHECK_SERVICE");
         Log.v("CHECK1","checkService service_id =  " + service_id);
 
-
         Log.v("checkService", "id_user=" + id_user + " service_id=" + service_id);
         this.sendBroadcast(new Intent("com.google.android.intent.action.GTALK_HEARTBEAT"));
         this.sendBroadcast(new Intent("com.google.android.intent.action.MCS_HEARTBEAT"));
 
-
         Log.v("CHECK1","checkService 2 service_id =  " + service_id);
-
-
-
-
-    }
-
-    private void callConfirmation() {
 
     }
 
     private void cancelarService() {
 
         cancelService(getResources().getString(R.string.cancel_service, id_user));
+        finish();
 
     }
 
@@ -2294,7 +2172,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
                             }
 
                             finish();
-
                             isError = false;
 
                         } else {
@@ -2351,10 +2228,9 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
     }
 
     public void cancelByService(final String Url) {
+
         service_cancel();
-
         url_cancel_current = Url;
-
         MiddleConnect.cancelServiceBySystem(Url, new AsyncHttpResponseHandler() {
 
             @Override
@@ -2386,16 +2262,13 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
                     if (responsejson.getBoolean("success")) {
                         try {
                             isError = false;
-
                             pDialog.dismiss();
 
                         } catch (Exception e) {
                         }
 
                         hideControls();
-
                         map.getUiSettings().setScrollGesturesEnabled(true);
-
                         //finish();
 
                     } else {
@@ -2405,13 +2278,10 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
                                 pDialog.dismiss();
                             } catch (Exception e) {
                             }
-
                             //finish();
                             hideControls();
 
                             map.getUiSettings().setScrollGesturesEnabled(true);
-
-
                             isError = false;
 
                         } else {
@@ -2456,29 +2326,20 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
     public void service_cancel() {
 
         NotificationManager mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-
         mPref.setRootActivity("MapaActivitys");
-
         Intent intent = new Intent(this, NotificationActivity.class);
-
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
-
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle(getString(R.string.app_name))
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(getResources().getString(R.string.error_no_driver)))
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(getResources().getString(R.string.error_no_driver)))
                 .setAutoCancel(true)
                 .setContentText(getResources().getString(R.string.error_no_driver));
 
         mBuilder.setContentIntent(contentIntent);
-
         mBuilder.setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.audio2), 1);
-
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
-
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-
         vibrator.vibrate(250);
 
     }
@@ -2503,19 +2364,30 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener,
         // TODO: verifica si tiene
         // configurar mCardReference
 
-        String card = conf.getCardDefault();
-        if (card != null) {
-            if (card.length() > 0) {
-                mCardReference = card;
-            } else {
-                // llamar a la creacion de tarjeta
-                Intent i = new Intent(MapaActivitys.this, PaymentsActivity.class);
-                startActivity(i);
+
+        if (conf.getLogin()) {
+            mPref.setRootActivity("MapaActivitys");
+            Intent in = new Intent(MapaActivitys.this, PaymentsActivity.class);
+            startActivity(in);
+
+            card = conf.getCardDefault();
+
+            if (card != null) {
+                if (card.length() > 0) {
+                    mCardReference = card;
+                }
+
+                else {
+                    Intent i = new Intent(MapaActivitys.this, PaymentsActivity.class);
+                    startActivity(i);
+                }
             }
         }
         else {
-            Intent i = new Intent(MapaActivitys.this, PaymentsActivity.class);
-            startActivity(i);
+            mPref.setRootActivity("MapaActivitys");
+            Intent in = new Intent(MapaActivitys.this, RegistroActivity.class);
+            in.putExtra("target", Target.HISTORY_TARGET);
+            startActivity(in);
         }
 
     }

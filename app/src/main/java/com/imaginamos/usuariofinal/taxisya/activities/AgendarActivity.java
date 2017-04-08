@@ -68,7 +68,7 @@ public class AgendarActivity extends Activity implements OnClickListener, Google
     private Button btnDropOffAddress;
     private LinearLayout layoutDestination;
 
-    private ImageView btn_clear1, btn_clear2, btn_clear3, btn_clear4, btn_clear5, bt_back;
+    private ImageView btn_clear1, btn_clear2, btn_clear3, btn_clear4, btn_clear5;
     private TextView fecha, hora;
     //private EditText dir_uno, dir_dos, dir_tres, dir_barrio, dir_observaciones;
     private EditText dir_barrio, dir_observaciones;
@@ -220,7 +220,6 @@ public class AgendarActivity extends Activity implements OnClickListener, Google
 
         mensajeria = (ImageView) findViewById(R.id.servicio_mensajeria);
         aeropuerto = (ImageView) findViewById(R.id.aeropuerto_uno);
-        bt_back = (ImageView) findViewById(R.id.bt_back);
         fecha = (TextView) findViewById(R.id.fechayhora);
         hora = (TextView) findViewById(R.id.hora);
         mAddress = (EditText) findViewById(R.id.text_address);
@@ -331,8 +330,6 @@ public class AgendarActivity extends Activity implements OnClickListener, Google
 
         fecha.setOnClickListener(this);
         hora.setOnClickListener(this);
-
-        bt_back.setOnClickListener(this);
 
 //        sp = (Spinner) findViewById(R.id.spinner);
 //
@@ -641,29 +638,7 @@ public class AgendarActivity extends Activity implements OnClickListener, Google
                 motivo = 3;
                 break;
 
-//            case R.id.clear1:
-//                dir_dos.setText("");
-//                break;
-//
-//            case R.id.clear2:
-//                dir_uno.setText("");
-//                break;
-//
-//            case R.id.clear3:
-//                dir_tres.setText("");
-//                break;
-//
-//            case R.id.clear4:
-//                dir_observaciones.setText("");
-//                break;
-//
-//            case R.id.clear5:
-//                dir_barrio.setText("");
-//                break;
 
-            case R.id.bt_back:
-                finish();
-                break;
         }
         layoutDestination.setVisibility((motivo == 3 || motivo == 2) ? View.VISIBLE : View.INVISIBLE);
     }

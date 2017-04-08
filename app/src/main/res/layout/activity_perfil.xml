@@ -21,15 +21,6 @@
             android:paddingTop="10dp"
             android:src="@drawable/logo" />
 
-        <ImageView
-            android:id="@+id/btn_volver"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/textimageview"
-            android:src="@drawable/btn_back" />
     </RelativeLayout>
 
     <LinearLayout

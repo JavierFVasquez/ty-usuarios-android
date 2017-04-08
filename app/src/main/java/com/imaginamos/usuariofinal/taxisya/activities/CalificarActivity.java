@@ -89,7 +89,7 @@ public class CalificarActivity extends Activity implements OnClickListener {
                     Intent in3 = new Intent(CalificarActivity.this, LoginActivity.class);
                     in3.putExtra("target", 1);
                     startActivity(in3);
-                    finish();
+                    //finish();
                 } else if (intent.getAction().equals(Actions.ACTION_MESSAGE_MASSIVE)) {
                     String message = intent.getExtras().getString("message");
                     mostrarMensaje(message);
@@ -176,6 +176,7 @@ public class CalificarActivity extends Activity implements OnClickListener {
                         Toast toast = Toast.makeText(getApplicationContext(), "Haz elegido la opcion: " + items[item] , Toast.LENGTH_SHORT);
                         toast.show();
                         dialog.cancel();
+                        closeCalification();
                     }
                 });
                 AlertDialog alert = builder.create();
@@ -206,7 +207,7 @@ public class CalificarActivity extends Activity implements OnClickListener {
             @Override
             public void onFinish() {
                 Log.v("CALIFICAR1", "onFinish ");
-                closeCalification();
+
             }
         });
 
@@ -217,7 +218,7 @@ public class CalificarActivity extends Activity implements OnClickListener {
         mPref.setRootActivity("MapaActivitys");
         Intent i = new Intent(CalificarActivity.this, MapaActivitys.class);
         startActivity(i);
-        finish();
+       // finish();
     }
 
     public void errorCalification() {

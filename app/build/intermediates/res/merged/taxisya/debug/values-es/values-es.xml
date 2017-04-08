@@ -105,6 +105,7 @@
     <string name="driver">driver/view</string>
     <string name="driver_arrived_message">Ya llego tu conductor. Gracias por utilizar TaxisYa</string>
     <string name="enable_gps">Por favor habilite su GPS.</string>
+    <string name="enable_internet">Por favor habilite una conexión a Internet</string>
     <string name="enviando">Enviando...</string>
     <string name="enviando_calificacion">Enviando Calificacion...</string>
     <string name="error_cancel_service">Hubo un error al cancelar el servicio</string>
@@ -284,6 +285,7 @@
     <string name="thank_r">¡Gracias! Hemos recibido su informacion.</string>
     <string name="ticket_data">Ingresa datos del vale</string>
     <string name="ticket_invalid">El vale no se ingresó o es inválido</string>
+    <string name="ticket_unauthorized">El vale no está autorizado</string>
     <string name="title_activity_calificar">Calificar</string>
     <string name="title_activity_end_agendamiento">EndAgendamiento</string>
     <string name="title_activity_main">MainActivity</string>

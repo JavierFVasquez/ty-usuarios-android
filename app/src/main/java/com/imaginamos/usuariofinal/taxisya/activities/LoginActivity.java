@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.imaginamos.usuariofinal.taxisya.models.Conf;
@@ -26,7 +25,6 @@ import cz.msebera.android.httpclient.Header;
 
 public class LoginActivity extends Activity implements OnClickListener {
 
-    private ImageView volver;
     private EditText user, pass;
     private String uuid, id_user;
     private Button reset_pass;
@@ -52,8 +50,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 
         setContentView(R.layout.activity_login);
 
-        volver = (ImageView) findViewById(R.id.btn_volver);
-
         reset_pass = (Button) findViewById(R.id.reset_pass);
 
         btnIngresar = (Button) findViewById(R.id.btnIngresar);
@@ -62,8 +58,6 @@ public class LoginActivity extends Activity implements OnClickListener {
         reset_pass.setOnClickListener(this);
         btnIngresar.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
-
-        volver.setOnClickListener(this);
 
         user = (EditText) findViewById(R.id.usuario);
         pass = (EditText) findViewById(R.id.contrasena);
@@ -82,15 +76,13 @@ public class LoginActivity extends Activity implements OnClickListener {
                 break;
 
             case R.id.btnRegister:
-                finish();
+                Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(i);
                 break;
 
-            case R.id.btn_volver:
-                finish();
-                break;
             case R.id.reset_pass:
-                Intent i = new Intent(getApplicationContext(), ResetPassActivity.class);
-                startActivity(i);
+                Intent j = new Intent(getApplicationContext(), ResetPassActivity.class);
+                startActivity(j);
                 break;
         }
     }

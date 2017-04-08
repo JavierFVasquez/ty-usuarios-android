@@ -12,12 +12,12 @@
         "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/anim/abc_slide_out_top.xml"
     },
     {
-        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/anim/pull_from_out.xml",
-        "source": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/src/taxisya/res/anim/pull_from_out.xml"
-    },
-    {
         "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/anim/abc_shrink_fade_out_from_bottom.xml",
         "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/anim/abc_shrink_fade_out_from_bottom.xml"
+    },
+    {
+        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/anim/pull_from_out.xml",
+        "source": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/src/taxisya/res/anim/pull_from_out.xml"
     },
     {
         "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/anim/connection_loader.xml",

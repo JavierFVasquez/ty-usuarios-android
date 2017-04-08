@@ -24,12 +24,12 @@
         "source": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/src/taxisya/res/drawable-xxxhdpi/agendar_box.9.png"
     },
     {
-        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/drawable-xxxhdpi/btn_gray_p.9.png",
-        "source": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/src/taxisya/res/drawable-xxxhdpi/btn_gray_p.9.png"
-    },
-    {
         "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/drawable-xxxhdpi/btn_gray_n.9.png",
         "source": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/src/taxisya/res/drawable-xxxhdpi/btn_gray_n.9.png"
+    },
+    {
+        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/drawable-xxxhdpi/btn_gray_p.9.png",
+        "source": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/src/taxisya/res/drawable-xxxhdpi/btn_gray_p.9.png"
     },
     {
         "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/drawable-xxxhdpi/perfil_over.png",

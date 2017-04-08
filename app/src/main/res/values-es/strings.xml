@@ -7,6 +7,8 @@
     <string name="addaddress">address/create</string>
     <string name="address">Dirección</string>
     <string name="agend">schedule/create</string>
+    <string name="enable_internet">Por favor habilite una conexión a Internet</string>
+    <string name="ticket_unauthorized">El vale no está autorizado</string>
     <string name="driver_arrived_message">Ya llego tu conductor. Gracias por utilizar TaxisYa</string>
     <string name="agradecimiento_uso_taxisya">Gracias por utilizar TaxisYa, lo invitamos a calificar nuestro servicio</string>
     <string name="app_versions">app/versions</string>

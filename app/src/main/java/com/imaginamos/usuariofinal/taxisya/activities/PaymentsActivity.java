@@ -70,9 +70,6 @@ public class PaymentsActivity extends Activity {
         super.onCreate(savedInstanceState);
         //setTheme(R.style.AppThemeCard);
         setContentView(R.layout.activity_payments);
-
-
-
         conf = new Conf(this);
 
         //Desarrollo true
@@ -116,8 +113,6 @@ public class PaymentsActivity extends Activity {
             }
         });
 
-
-
     }
 
     public void getCards(){
@@ -147,7 +142,7 @@ public class PaymentsActivity extends Activity {
                 Log.v("TCPY","getCards 2");
 
                 for (int i = 0; i < response.getCards().size(); i++) {
-                   Log.v("TCPY","getCards 3 " + response.getCards().size());
+                    Log.v("TCPY","getCards 3 " + response.getCards().size());
 
                     PaymentezCard card = response.getCards().get(i);
 //                    values.add("nombre:" + card.getCardHolder() + "\ncard_reference:" + card.getCardReference());
@@ -155,7 +150,6 @@ public class PaymentsActivity extends Activity {
                     values.add(card.getCardHolder() + "\n**** **** **** " + card.getTermination() + "\nVencimiento: " + card.getExpiryMonth() + "/" + card.getExpiryYear() );
 
                     boolean defCard = false;
-
 
                     try {
 
@@ -183,7 +177,6 @@ public class PaymentsActivity extends Activity {
 //                    c.setType(card.getType());
 
                     Log.v("TARJETA ", " c" + c.toString());
-
                     Log.v("TARJETA ", " c " + c.getName());
                     Log.v("TARJETA ", " c " + c.getNumber());
                     Log.v("TARJETA ", " c " + c.getType());
@@ -207,9 +200,6 @@ public class PaymentsActivity extends Activity {
 
         });
     }
-
-
-
 
     @Override
     protected void onResume() {
@@ -237,14 +227,14 @@ public class PaymentsActivity extends Activity {
         setUpItemTouchHelper();
         setUpAnimationDecoratorHelper();
         mRecyclerView.addOnItemTouchListener(
-            new RecyclerItemClickListener(PaymentsActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
-                @Override
-                public void onItemClick(View view, int position) {
-                    Log.v("TCPY","tc selected " + position + " " + mCards.get(position).getReference() + " " + mCards.get(position).getNumber());
-                    conf.setCardDefault(mCards.get(position).getReference());
-                    finish();
-                }
-            })
+                new RecyclerItemClickListener(PaymentsActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Log.v("TCPY","tc selected " + position + " " + mCards.get(position).getReference() + " " + mCards.get(position).getNumber());
+                        conf.setCardDefault(mCards.get(position).getReference());
+                        finish();
+                    }
+                })
         );
 
     }
@@ -267,7 +257,7 @@ public class PaymentsActivity extends Activity {
                 initiated = true;
             }
 
-           // not important, we don't want drag & drop
+            // not important, we don't want drag & drop
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 return false;
@@ -446,7 +436,7 @@ public class PaymentsActivity extends Activity {
                         mCards.get(i).getExpireMonth(),
                         mCards.get(i).getExpireYear(),
                         mCards.get(i).isPrefered()
-                        );
+                );
                 Log.v("CARD_INFO","mCard 2 " + mCards.get(i).getNumber());
 
                 items.add(c);
@@ -484,7 +474,7 @@ public class PaymentsActivity extends Activity {
                         if (pendingRemovalRunnable != null) handler.removeCallbacks(pendingRemovalRunnable);
                         //itemsPendingRemoval.remove(item);
                         // this will rebind the row in "normal" state
-                       // notifyItemChanged(items.indexOf(item));
+                        // notifyItemChanged(items.indexOf(item));
                     }
                 });
             } else {

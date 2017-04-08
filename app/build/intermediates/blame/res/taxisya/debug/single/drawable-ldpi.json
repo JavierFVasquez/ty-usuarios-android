@@ -1,11 +1,11 @@
 [
     {
-        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/drawable-ldpi/btn_p.9.png",
-        "source": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/src/taxisya/res/drawable-ldpi/btn_p.9.png"
-    },
-    {
         "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/drawable-ldpi/lugar.png",
         "source": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/src/taxisya/res/drawable-ldpi/lugar.png"
+    },
+    {
+        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/drawable-ldpi/btn_p.9.png",
+        "source": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/src/taxisya/res/drawable-ldpi/btn_p.9.png"
     },
     {
         "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/drawable-ldpi/gps_p.png",
@@ -16,12 +16,12 @@
         "source": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/src/taxisya/res/drawable-ldpi/navbar_copy.9.png"
     },
     {
-        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/drawable-ldpi/btn_gray_n.9.png",
-        "source": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/src/taxisya/res/drawable-ldpi/btn_gray_n.9.png"
-    },
-    {
         "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/drawable-ldpi/btn_n.9.png",
         "source": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/src/taxisya/res/drawable-ldpi/btn_n.9.png"
+    },
+    {
+        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/drawable-ldpi/btn_gray_n.9.png",
+        "source": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/src/taxisya/res/drawable-ldpi/btn_gray_n.9.png"
     },
     {
         "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/drawable-ldpi/detail_p.png",

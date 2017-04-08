@@ -56,7 +56,6 @@ public class MyAddressesActivity extends Activity implements OnClickListener, Ca
 
     private BroadcastReceiver mReceiver;
 
-    private ImageView mBack;
     private Button mAddAddress;
     private LinearLayout mNewAddress;
     private EditText edt_new_name;
@@ -64,7 +63,6 @@ public class MyAddressesActivity extends Activity implements OnClickListener, Ca
     private EditText edt_new_comentario;
     private Button btnGuardar;
     private boolean keyboardShown = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,26 +74,18 @@ public class MyAddressesActivity extends Activity implements OnClickListener, Ca
         uuid = Utils.uuid(this);
 
         mNewAddress = (LinearLayout) findViewById(R.id.add_new);
-
         edt_new_name = (EditText) findViewById(R.id.new_nombre);
         edt_new_direccion = (EditText) findViewById(R.id.new_direccion);
         edt_new_comentario = (EditText) findViewById(R.id.new_comentario);
-
         btnGuardar = (Button) findViewById(R.id.btn_nueva_direccion);
-
-
-        mBack = (ImageView) findViewById(R.id.btn_volver);
         mAddAddress = (Button) findViewById(R.id.btn_add);
 
-        mBack.setOnClickListener(this);
         mAddAddress.setOnClickListener(this);
         btnGuardar.setOnClickListener(this);
 
         edt_new_name.setImeActionLabel(getString(R.string.text_agregar), EditorInfo.IME_ACTION_DONE);
         edt_new_direccion.setImeActionLabel(getString(R.string.text_agregar), EditorInfo.IME_ACTION_DONE);
         edt_new_comentario.setImeActionLabel(getString(R.string.text_agregar), EditorInfo.IME_ACTION_DONE);
-
-
         edt_new_direccion.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -115,8 +105,6 @@ public class MyAddressesActivity extends Activity implements OnClickListener, Ca
                 isKeyboardShown(edt_new_comentario.getRootView());
             }
         });
-
-
 
         edt_new_name.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
@@ -177,11 +165,6 @@ public class MyAddressesActivity extends Activity implements OnClickListener, Ca
             }
         });
 
-
-
-
-
-
         addressList = (RecyclerView) findViewById(R.id.addresses_list);
         addressAdapter = new AddressAdapter(this);
         addressList.setLayoutManager(new GridLayoutManager(this, 1));
@@ -195,7 +178,6 @@ public class MyAddressesActivity extends Activity implements OnClickListener, Ca
                         Log.v("ADDRESS1", "item selccionado");
                         Direccion dir = addressAdapter.getItem(position);
                         Log.v("ADDRESS1", "   id = " + String.valueOf(dir.getId()));
-
 
                         Intent returnIntent = new Intent(MyAddressesActivity.this, MapaActivitys.class);
 
@@ -216,8 +198,7 @@ public class MyAddressesActivity extends Activity implements OnClickListener, Ca
                 })
         );
 
-        ItemTouchHelper.Callback callback =
-                new SimpleItemTouchHelperCallback(addressAdapter);
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(addressAdapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(addressList);
 
@@ -257,7 +238,6 @@ public class MyAddressesActivity extends Activity implements OnClickListener, Ca
 
     }
 
-
      private boolean isKeyboardShown(View rootView) {
     /* 128dp = 32dp * 4, minimum button height 32dp and generic 4 rows soft keyboard */
         final int SOFT_KEYBOARD_HEIGHT_DP_THRESHOLD = 128;
@@ -296,9 +276,7 @@ public class MyAddressesActivity extends Activity implements OnClickListener, Ca
 
     @Override
     public void onItemClick(AddressAdapter.AddressHolder item, int position) {
-        Toast.makeText(this,
-                "Remove " + position + " : " + item.getItemName(),
-                Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Remove " + position + " : " + item.getItemName(), Toast.LENGTH_SHORT).show();
         //addressAdapter.onItemDismiss(position);
     }
 
@@ -316,10 +294,6 @@ public class MyAddressesActivity extends Activity implements OnClickListener, Ca
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_volver:
-                Log.v("SEGUIMIENTO","button btn_volver");
-                finish();
-                break;
 
             case R.id.btn_add:
                 Log.v("SEGUIMIENTO","button add_dir");
@@ -415,7 +389,6 @@ public class MyAddressesActivity extends Activity implements OnClickListener, Ca
             Log.v("ADDRESS1"," " + String.valueOf(addressResponse.getAddress().size()));
             addressAdapter.removeAll();
             addressAdapter.addAll(addressResponse.getAddress());
-
             addressAdapter.notifyDataSetChanged();
         }
     }
@@ -427,6 +400,5 @@ public class MyAddressesActivity extends Activity implements OnClickListener, Ca
             Toast.makeText(this,"Error de red", Toast.LENGTH_LONG).show();
         }
     }
-
 
 }
