@@ -1,42 +1,6 @@
 [
     {
-        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/color-v23/abc_tint_edittext.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/color-v23/abc_tint_edittext.xml"
-    },
-    {
-        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/color-v23/abc_tint_switch_thumb.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/color-v23/abc_tint_switch_thumb.xml"
-    },
-    {
-        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/color-v23/abc_tint_btn_checkable.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/color-v23/abc_tint_btn_checkable.xml"
-    },
-    {
-        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/color-v23/abc_tint_default.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/color-v23/abc_tint_default.xml"
-    },
-    {
-        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/color-v23/abc_color_highlight_material.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/color-v23/abc_color_highlight_material.xml"
-    },
-    {
-        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/color-v23/abc_tint_spinner.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/color-v23/abc_tint_spinner.xml"
-    },
-    {
-        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/color-v23/abc_tint_switch_track.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/color-v23/abc_tint_switch_track.xml"
-    },
-    {
-        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/color-v23/abc_tint_seek_thumb.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/color-v23/abc_tint_seek_thumb.xml"
-    },
-    {
-        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/color-v23/design_tint_password_toggle.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/aa48038458c76f0953554faaca5ccd272b090569/output/res/color-v23/design_tint_password_toggle.xml"
-    },
-    {
-        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/color-v23/abc_btn_colored_borderless_text_material.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/color-v23/abc_btn_colored_borderless_text_material.xml"
+        "merged": "/Users/developer_celuvans/Documents/workspace/android/ty-conductor-android-/app/build/intermediates/res/merged/taxisya/debug/color-v23/abc_color_highlight_material.xml",
+        "source": "/Users/developer_celuvans/.android/build-cache/7d977dc08e3fc59f7307ad2086fbe57d03c10f2a/output/res/color-v23/abc_color_highlight_material.xml"
     }
 ]

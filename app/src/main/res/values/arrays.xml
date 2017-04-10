@@ -8,15 +8,13 @@
 		<item>Avenida</item>
 	</string-array>
 	<array name="entries">
-	    <item>@drawable/reclamos_normal</item>
-		<item>@drawable/pedir_over</item>
-		<item>@drawable/agendar_uno</item>
-		<item>@drawable/perfil_normal</item>
-	</array>
+	    <item>@drawable/cerrar_normal</item>	
+		<item>@drawable/habilitarme_over</item> 		
+		<item>@drawable/historial_normal</item>
+	</array>	
 	<array name="names">
 	    <item>The cat</item>
 	    <item>The hippo</item>
 	    <item>The monkey</item>
-	    <item>The monkey2</item>
 	</array>
 </resources>

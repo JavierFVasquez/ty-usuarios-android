@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/incremental/mergeTaxisyaDebugResources/merged.dir/values-v14/values-v14.xml",
+        "outputFile": "/Users/developer_celuvans/Documents/workspace/android/ty-conductor-android-/app/build/intermediates/incremental/mergeTaxisyaDebugResources/merged.dir/values-v14/values-v14.xml",
         "map": [
             {
                 "to": {
@@ -12,7 +12,7 @@
                     "endOffset": 326
                 },
                 "from": {
-                    "file": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/values-v14/values-v14.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/7d977dc08e3fc59f7307ad2086fbe57d03c10f2a/output/res/values-v14/values-v14.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -32,7 +32,7 @@
                     "endOffset": 397
                 },
                 "from": {
-                    "file": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/values-v14/values-v14.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/7d977dc08e3fc59f7307ad2086fbe57d03c10f2a/output/res/values-v14/values-v14.xml",
                     "position": {
                         "startLine": 7,
                         "startColumn": 4,
@@ -51,7 +51,7 @@
                     "endOffset": 480
                 },
                 "from": {
-                    "file": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/values-v14/values-v14.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/7d977dc08e3fc59f7307ad2086fbe57d03c10f2a/output/res/values-v14/values-v14.xml",
                     "position": {
                         "startLine": 8,
                         "startColumn": 4,
@@ -71,7 +71,7 @@
                     "endOffset": 890
                 },
                 "from": {
-                    "file": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/values-v14/values-v14.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/7d977dc08e3fc59f7307ad2086fbe57d03c10f2a/output/res/values-v14/values-v14.xml",
                     "position": {
                         "startLine": 9,
                         "startColumn": 4,
@@ -92,7 +92,7 @@
                     "endOffset": 1312
                 },
                 "from": {
-                    "file": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/values-v14/values-v14.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/7d977dc08e3fc59f7307ad2086fbe57d03c10f2a/output/res/values-v14/values-v14.xml",
                     "position": {
                         "startLine": 15,
                         "startColumn": 4,
@@ -112,7 +112,7 @@
                     "endOffset": 1432
                 },
                 "from": {
-                    "file": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/values-v14/values-v14.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/7d977dc08e3fc59f7307ad2086fbe57d03c10f2a/output/res/values-v14/values-v14.xml",
                     "position": {
                         "startLine": 21,
                         "startColumn": 4,
@@ -127,17 +127,17 @@
                     "startLine": 22,
                     "startColumn": 4,
                     "startOffset": 1437,
-                    "endColumn": 131,
-                    "endOffset": 1564
+                    "endColumn": 62,
+                    "endOffset": 1495
                 },
                 "from": {
-                    "file": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/values-v14/values-v14.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/7d977dc08e3fc59f7307ad2086fbe57d03c10f2a/output/res/values-v14/values-v14.xml",
                     "position": {
                         "startLine": 22,
                         "startColumn": 4,
                         "startOffset": 1437,
-                        "endColumn": 131,
-                        "endOffset": 1564
+                        "endColumn": 62,
+                        "endOffset": 1495
                     }
                 }
             },
@@ -145,58 +145,58 @@
                 "to": {
                     "startLine": 23,
                     "startColumn": 4,
-                    "startOffset": 1569,
-                    "endColumn": 119,
-                    "endOffset": 1684
+                    "startOffset": 1500,
+                    "endLine": 25,
+                    "endColumn": 12,
+                    "endOffset": 1649
                 },
                 "from": {
-                    "file": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/values-v14/values-v14.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/7d977dc08e3fc59f7307ad2086fbe57d03c10f2a/output/res/values-v14/values-v14.xml",
                     "position": {
                         "startLine": 23,
                         "startColumn": 4,
-                        "startOffset": 1569,
-                        "endColumn": 119,
-                        "endOffset": 1684
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 24,
-                    "startColumn": 4,
-                    "startOffset": 1689,
-                    "endColumn": 62,
-                    "endOffset": 1747
-                },
-                "from": {
-                    "file": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/values-v14/values-v14.xml",
-                    "position": {
-                        "startLine": 24,
-                        "startColumn": 4,
-                        "startOffset": 1689,
-                        "endColumn": 62,
-                        "endOffset": 1747
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 25,
-                    "startColumn": 4,
-                    "startOffset": 1752,
-                    "endLine": 27,
-                    "endColumn": 12,
-                    "endOffset": 1901
-                },
-                "from": {
-                    "file": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/values-v14/values-v14.xml",
-                    "position": {
-                        "startLine": 25,
-                        "startColumn": 4,
-                        "startOffset": 1752,
-                        "endLine": 27,
+                        "startOffset": 1500,
+                        "endLine": 25,
                         "endColumn": 12,
-                        "endOffset": 1901
+                        "endOffset": 1649
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 26,
+                    "startColumn": 4,
+                    "startOffset": 1654,
+                    "endColumn": 62,
+                    "endOffset": 1712
+                },
+                "from": {
+                    "file": "/Users/developer_celuvans/.android/build-cache/7d977dc08e3fc59f7307ad2086fbe57d03c10f2a/output/res/values-v14/values-v14.xml",
+                    "position": {
+                        "startLine": 26,
+                        "startColumn": 4,
+                        "startOffset": 1654,
+                        "endColumn": 62,
+                        "endOffset": 1712
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 27,
+                    "startColumn": 4,
+                    "startOffset": 1717,
+                    "endColumn": 131,
+                    "endOffset": 1844
+                },
+                "from": {
+                    "file": "/Users/developer_celuvans/.android/build-cache/7d977dc08e3fc59f7307ad2086fbe57d03c10f2a/output/res/values-v14/values-v14.xml",
+                    "position": {
+                        "startLine": 27,
+                        "startColumn": 4,
+                        "startOffset": 1717,
+                        "endColumn": 131,
+                        "endOffset": 1844
                     }
                 }
             },
@@ -204,37 +204,20 @@
                 "to": {
                     "startLine": 28,
                     "startColumn": 4,
-                    "startOffset": 1906,
-                    "endColumn": 62,
-                    "endOffset": 1964
+                    "startOffset": 1849,
+                    "endLine": 29,
+                    "endColumn": 12,
+                    "endOffset": 1943
                 },
                 "from": {
-                    "file": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/values-v14/values-v14.xml",
+                    "file": "/Users/developer_celuvans/Documents/workspace/android/ty-conductor-android-/app/src/taxisya/res/values-v14/theme.xml",
                     "position": {
-                        "startLine": 28,
+                        "startLine": 3,
                         "startColumn": 4,
-                        "startOffset": 1906,
-                        "endColumn": 62,
-                        "endOffset": 1964
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 29,
-                    "startColumn": 4,
-                    "startOffset": 1969,
-                    "endColumn": 131,
-                    "endOffset": 2096
-                },
-                "from": {
-                    "file": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/values-v14/values-v14.xml",
-                    "position": {
-                        "startLine": 29,
-                        "startColumn": 4,
-                        "startOffset": 1969,
-                        "endColumn": 131,
-                        "endOffset": 2096
+                        "startOffset": 59,
+                        "endLine": 6,
+                        "endColumn": 12,
+                        "endOffset": 173
                     }
                 }
             }

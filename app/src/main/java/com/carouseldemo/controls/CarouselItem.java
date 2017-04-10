@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.imaginamos.usuariofinal.taxisya.R;
+import com.imaginamos.taxisya.taxista.R;
 
 
 public class CarouselItem extends FrameLayout implements Comparable<CarouselItem> {
@@ -67,46 +67,37 @@ public class CarouselItem extends FrameLayout implements Comparable<CarouselItem
 
 		this.currentAngle = currentAngle;
 	}
+	public void setOverItem()
+	{
+		try {
+			if(index == 0)
+			{
+				this.mImage.setImageResource(R.drawable.cerrar_over);
 
-    public void setOverItem()
-    {
-        try {
-            if(index == 0)
-            {
-                this.mImage.setImageResource(R.drawable.agendar_over);
+			}else if(index == 1)
+			{
+				this.mImage.setImageResource(R.drawable.habilitarme_over);
+			}else if(index == 2){
+				this.mImage.setImageResource(R.drawable.habilitarme_over);
+			}
+		} catch (Exception e) {
 
-            }else if(index == 1)
-            {
-                this.mImage.setImageResource(R.drawable.pedir_over);
-            }else if(index == 2){
-                this.mImage.setImageResource(R.drawable.reclamos_over);
-            }
-            else if (index == 3) {
-                this.mImage.setImageResource(R.drawable.perfil_over);
-            }
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
+		}
 
+	}
+	public void setNormalItem()
+	{
+		if(index == 0)
+		{
+			this.mImage.setImageResource(R.drawable.cerrar_normal);
 
-    }
-    public void setNormalItem()
-    {
-        if(index == 0)
-        {
-            this.mImage.setImageResource(R.drawable.agendar_normal);
-
-        }else if(index == 1)
-        {
-            this.mImage.setImageResource(R.drawable.pedir_normal);
-        }else if(index == 2){
-            this.mImage.setImageResource(R.drawable.reclamos_normal);
-        }
-        else if(index == 3){
-            this.mImage.setImageResource(R.drawable.perfil_normal);
-        }
-    }
-
+		}else if(index == 1)
+		{
+			this.mImage.setImageResource(R.drawable.habilitarme_normal);
+		}else if(index == 2){
+			this.mImage.setImageResource(R.drawable.historial_normal);
+		}
+	}
 	public float getCurrentAngle() {
 		return currentAngle;
 	}

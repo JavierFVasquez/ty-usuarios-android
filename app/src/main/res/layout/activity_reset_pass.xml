@@ -21,6 +21,16 @@
             android:contentDescription="@string/app_name"
             android:src="@drawable/logo" />
 
+        <!--ImageView
+            android:id="@+id/btn_volver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/btn_back"
+            android:tag="3" /-->
     </RelativeLayout>
 
     <LinearLayout
@@ -51,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="50dp"
-                android:text="@string/recuperar_contrase_a"
+                android:text="@string/recover_password"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#f05525" />
 
@@ -76,7 +86,7 @@
                 android:layout_marginTop="50dp"
                 android:visibility="gone"
                 android:hint="@string/codigo_de_confirmaci_n"
-                 android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal" />
 
             <EditText
                 android:id="@+id/pass"
@@ -85,7 +95,7 @@
                 android:ems="10"
                 android:layout_marginTop="20dp"
                 android:visibility="gone"
-                android:inputType="textPassword" 
+                android:inputType="textPassword"
                 android:hint="@string/digita_nueva_contrase_a"/>
 
             <Button

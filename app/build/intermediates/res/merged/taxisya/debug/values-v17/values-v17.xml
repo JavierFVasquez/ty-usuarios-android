@@ -48,4 +48,6 @@
         <item name="android:paddingStart">@dimen/abc_action_bar_overflow_padding_start_material</item>
         <item name="android:paddingEnd">@dimen/abc_action_bar_overflow_padding_end_material</item>
     </style>
+    <style name="Theme.Chainfire.NoTitleBar" parent="android:style/Theme.NoTitleBar">
+    </style>
 </resources>
