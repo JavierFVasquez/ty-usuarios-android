@@ -15,12 +15,11 @@
             android:layout_gravity="center|top"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
-            android:contentDescription="@string/aceptar"
-            android:src="@drawable/historial_normal" />
-        
+            android:contentDescription="@string/selecciona"
+            android:src="@drawable/agendar_over" />
         <ImageView
             android:id="@+id/imageView1"
-            android:contentDescription="@string/aceptar"
+            android:contentDescription="@string/textimageview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

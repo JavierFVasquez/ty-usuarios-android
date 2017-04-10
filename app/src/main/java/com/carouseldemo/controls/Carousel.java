@@ -3,7 +3,6 @@ package com.carouseldemo.controls;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import com.imaginamos.taxisya.taxista.R;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
@@ -35,6 +34,8 @@ import android.view.ViewGroup;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.animation.Transformation;
 import android.widget.BaseAdapter;
+
+import com.imaginamos.usuariofinal.taxisya.R;
 
 /**
  * 

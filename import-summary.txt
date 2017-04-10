@@ -18,22 +18,17 @@ so manually move them:
 
 * .DS_Store
 * .gitignore
-* README.md
+* AndroidUnusedResources1.6.2.jar
 * build.xml
-* build_leo.xml
-* confirmado_over.png
+* build_cus.xml
 * custom_rules.xml
 * debug.properties
-* gradlew
-* gradlew.bat
 * ic_launcher-web.png
 * proguard-project.txt
 * release.properties
-* sinconfirmar_normal.png
-* taxisyaconductor-android.iml
-* taxisyaconductor.sublime-project
-* taxisyaconductor.sublime-workspace
-* texto_seract.png
+* sonar-project.properties
+* taxisyausuarios.sublime-project
+* taxisyausuarios.sublime-workspace
 
 Replaced Jars with Dependencies:
 --------------------------------
@@ -45,7 +40,7 @@ the .jar file in your project was of an older version than the
 dependency we picked, which could render the project not compileable.
 You can disable the jar replacement in the import wizard and try again:
 
-android-support-v4.jar => com.android.support:support-v4:18.0.0
+android-support-v4.jar => com.android.support:support-v4:19.1.0
 gcm.jar => com.google.android.gms:play-services:+
 
 Replaced Libraries with Dependencies:
@@ -69,6 +64,7 @@ Eclipse projects. Here's how the projects were restructured:
 * AndroidManifest.xml => app/src/main/AndroidManifest.xml
 * assets/ => app/src/main/assets/
 * libs/android-async-http-1.4.3.jar => app/libs/android-async-http-1.4.3.jar
+* libs/universal-image-loader-1.8.6.jar => app/libs/universal-image-loader-1.8.6.jar
 * lint.xml => app/lint.xml
 * res/ => app/src/main/res/
 * src/ => app/src/main/java/
