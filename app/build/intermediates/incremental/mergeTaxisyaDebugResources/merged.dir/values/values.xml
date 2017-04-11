@@ -785,7 +785,7 @@
     <string name="close_session_error">There was an error logging out</string>
     <string name="code_pass">user/pwd/confirm</string>
     <string name="codigo_de_confirmaci_n">Confirmation code</string>
-    <string name="com.crashlytics.android.build_id" ns1:ignore="UnusedResources,TypographyDashes" translatable="false">76fd5b1e-32b5-4c90-a08d-a12419aa08ce</string>
+    <string name="com.crashlytics.android.build_id" ns1:ignore="UnusedResources,TypographyDashes" translatable="false">e8a3a008-8ff5-4238-bdbf-beda3174d88b</string>
     <string msgid="2523291102206661146" name="common_google_play_services_enable_button">Enable</string>
     <string msgid="227660514972886228" name="common_google_play_services_enable_text"><ns2:g id="app_name">%1$s</ns2:g> won\'t work unless you enable Google Play services.</string>
     <string msgid="5122002158466380389" name="common_google_play_services_enable_title">Enable Google Play services</string>
