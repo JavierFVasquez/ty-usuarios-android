@@ -2,5 +2,9 @@
     {
         "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/layout-sw600dp-v13/design_layout_snackbar.xml",
         "source": "/Users/developer_celuvans/.android/build-cache/aa48038458c76f0953554faaca5ccd272b090569/output/res/layout-sw600dp-v13/design_layout_snackbar.xml"
+    },
+    {
+        "merged": "/Users/developer_celuvans/Documents/workspace/android/ty-usuarios-android.git/app/build/intermediates/res/merged/taxisya/debug/layout-sw600dp-v13/design_layout_snackbar.xml",
+        "source": "/Users/developer_celuvans/.android/build-cache/aa48038458c76f0953554faaca5ccd272b090569/output/res/layout-sw600dp-v13/design_layout_snackbar.xml"
     }
 ]
