@@ -11,29 +11,11 @@ import com.imaginamos.usuariofinal.taxisya.R;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-/*
- EJEMPLO:
- 		MiddleConnect.login("usename","password",new AsyncHttpResponseHandler(){
-		     @Override
-		     public void onStart() { }
-
-		     @Override
-		     public void onSuccess(String response) {}
-
-		     @Override
-		     public void onFailure(Throwable e, String response) {}
-
-		     @Override
-		     public void onFinish() {}
-		});
-*/
-
 public class MiddleConnect {
 
 	public static byte LOGIN_FAIL = 1;
 
-	public static void getPlaces(AsyncHttpResponseHandler responseHandler)
-	{
+	public static void getPlaces(AsyncHttpResponseHandler responseHandler) {
 	     Log.v("USER_SERVICE", "        getPlaces: ");
 
 		Connect.post("archies/public/index.php/index.php/city", null, responseHandler);
@@ -73,11 +55,9 @@ public class MiddleConnect {
 
 	}
 
-	public static void update(Context context,String name, String password,String usuario,String uuid,String phone,AsyncHttpResponseHandler responseHandler)
-	{
+	public static void update(Context context,String name, String password,String usuario,String uuid,String phone,AsyncHttpResponseHandler responseHandler) {
 
 		RequestParams params = new RequestParams();
-
 		params.put("type", HomeActivity.TYPE_USER);
 		params.put("name", name);
 		params.put("lastname", ".");
@@ -87,164 +67,113 @@ public class MiddleConnect {
 		params.put("token", uuid);
 		params.put("cellphone", phone);
 		params.put("uuid", uuid);
-
 	    Log.v("USER_SERVICE", "        update: ");
-
 		Connect.post(context.getResources().getString(R.string.update), params, responseHandler);
 
 	}
 
-	public static void is_logued(Context context,String user, String uuid,AsyncHttpResponseHandler responseHandler)
-	{
-		RequestParams params = new RequestParams();
+	public static void is_logued(Context context,String user, String uuid,AsyncHttpResponseHandler responseHandler) {
 
+        RequestParams params = new RequestParams();
 		params.put("login", user);
-
 		params.put("uuid", uuid);
-
 	    Log.v("USER_SERVICE", "        is_logued: ");
-
 		Connect.post(context.getResources().getString(R.string.is_logued), params, responseHandler);
 	}
 
-	public static void logout(Context context , String user, String password, AsyncHttpResponseHandler responseHandler)
-	{
-	    RequestParams  params  = new RequestParams();
+	public static void logout(Context context , String user, String password, AsyncHttpResponseHandler responseHandler) {
 
+        RequestParams  params  = new RequestParams();
 	    params.put("login", user);
-
 	    params.put("pwd", password);
-
 	    Log.v("USER_SERVICE", "        logout: ");
-
 	    Connect.post(context.getResources().getString(R.string.logout), params, responseHandler);
 	}
 
-	public static void getServices(Context context , String user_id, String uuid,String month,AsyncHttpResponseHandler responseHandler)
-	{
-		RequestParams params = new RequestParams();
+	public static void getServices(Context context , String user_id, String uuid,String month,AsyncHttpResponseHandler responseHandler) {
 
+        RequestParams params = new RequestParams();
 		params.put("user_id", user_id);
-
 		params.put("uuid",uuid);
-
 		params.put("month",month);
-
 	    Log.v("USER_SERVICE", "        getServices: ");
-
 		Connect.post(context.getResources().getString(R.string.services_user), params, responseHandler);
 	}
 
-	public static void getServices(Context context , String user_id, String uuid,String year,String month,String day,AsyncHttpResponseHandler responseHandler)
-	{
-		RequestParams params = new RequestParams();
+	public static void getServices(Context context , String user_id, String uuid,String year,String month,String day,AsyncHttpResponseHandler responseHandler) {
 
+        RequestParams params = new RequestParams();
 		params.put("user_id", user_id);
-
 		params.put("uuid",uuid);
-
 		params.put("year",year);
-
 		params.put("month",month);
-
 		params.put("day",day);
-
 	    Log.v("USER_SERVICE", "        getServices: ");
-
 		Connect.post(context.getResources().getString(R.string.services_user), params, responseHandler);
 	}
 
-	public static void getAddress(Context context,String  user_id,String  uuid, AsyncHttpResponseHandler responseHandler)
-	{
-		RequestParams params = new RequestParams();
+	public static void getAddress(Context context,String  user_id,String  uuid, AsyncHttpResponseHandler responseHandler) {
 
+        RequestParams params = new RequestParams();
 		params.put("user_id", user_id);
-
 		params.put("uuid",uuid);
-
 	    Log.v("USER_SERVICE", "        getAddress: " + context.getResources().getString(R.string.getaddress) + " " + user_id + " " + uuid);
-
 		Connect.post(context.getResources().getString(R.string.getaddress), params, responseHandler);
 	}
 
-	public static void delAddress(Context context,String id, AsyncHttpResponseHandler responseHandler)
-	{
-		RequestParams params = new RequestParams();
+	public static void delAddress(Context context,String id, AsyncHttpResponseHandler responseHandler) {
 
+        RequestParams params = new RequestParams();
 		params.put("id", id);
-
 	    Log.v("USER_SERVICE", "        delAddress: " + context.getResources().getString(R.string.deladdress) + " " + id);
-
 		Connect.post(context.getResources().getString(R.string.deladdress), params, responseHandler);
 	}
 
 	public static void addAddress(Context context, String index_id, String comp1, String comp2, String no, String barrio, String obs, String user_id,
-		String user_pref_order, AsyncHttpResponseHandler responseHandler)
-	{
-		RequestParams params = new RequestParams();
+		                            String user_pref_order, AsyncHttpResponseHandler responseHandler) {
 
+        RequestParams params = new RequestParams();
 		params.put("index_id", index_id);
-
 		params.put("comp1", comp1);
-
 		params.put("comp2", comp2);
-
 		params.put("no", no);
-
 		params.put("barrio", barrio);
-
 		params.put("obs", obs);
-
 		params.put("user_id", user_id);
-
 		params.put("user_pref_order", user_pref_order);
-
 	    Log.v("USER_SERVICE", "        addAddress: " + context.getResources().getString(R.string.addaddress) + " " + params.toString());
 
 		Connect.post(context.getResources().getString(R.string.addaddress), params, responseHandler);
 	}
 
-	public static void cancelService(String url_cancel_current, AsyncHttpResponseHandler responseHandler)
-	{
-		Log.v("USER_SERVICE", "        cancelService: ");
+	public static void cancelService(String url_cancel_current, AsyncHttpResponseHandler responseHandler) {
 
+        Log.v("USER_SERVICE", "        cancelService: ");
 		Connect.post(url_cancel_current, null, responseHandler);
 	}
 
-	public static void cancelServiceBySystem(String url_cancel_current, AsyncHttpResponseHandler responseHandler)
-	{
-		RequestParams params = new RequestParams();
+	public static void cancelServiceBySystem(String url_cancel_current, AsyncHttpResponseHandler responseHandler) {
 
+        RequestParams params = new RequestParams();
 		params.put("by_system", "true");
-
 	    Log.v("USER_SERVICE", "        cancelServiceBySystem: ");
-
 		Connect.post(url_cancel_current, params, responseHandler);
 	}
 
 	public static void getService(Context context,String user_id,
-										String latitud, String longitud,String index,String comp1, String comp2 ,
-												String no,String barrio,String obs,String uuid,
-													 AsyncHttpResponseHandler responseHandler)
-	{
-		RequestParams params = new RequestParams();
+                                  String latitud, String longitud,String index,String comp1, String comp2 ,
+                                  String no,String barrio,String obs,String uuid, AsyncHttpResponseHandler responseHandler) {
+
+        RequestParams params = new RequestParams();
 
 		params.put("lat", latitud);
-
 		params.put("lng", longitud);
-
 		params.put("index_id", index);
-
 		params.put("comp1", comp1);
-
 		params.put("comp2", comp2);
-
 		params.put("no", no);
-
 		params.put("barrio", barrio);
-
 		params.put("obs", obs);
-
 		params.put("uuid", uuid);
 
 		Log.v("USER_SERVICE", "        params " + params.toString());
@@ -260,25 +189,15 @@ public class MiddleConnect {
 		RequestParams params = new RequestParams();
 
 		params.put("lat", latitud);
-
 		params.put("lng", longitud);
-
 		params.put("address", address);
-
 		params.put("barrio", barrio);
-
 		params.put("uuid", uuid);
-
 		params.put("pay_type",payType);
-
 		params.put("pay_reference",payReference);
-
 		params.put("user_email",userEmail);
-
 		params.put("user_card_reference",cardReference);
-
 		params.put("code",code);
-
 
 		Log.v("USER_SERVICE", "        params " + params.toString());
 
@@ -288,7 +207,7 @@ public class MiddleConnect {
 	}
 
 
-	public static void checkStatusService(Context context, String user_id,String service_id,String uuid, AsyncHttpResponseHandler responseHandler) throws JSONException {
+	public static void checkStatusService(Context context, String user_id, String service_id, String uuid, AsyncHttpResponseHandler responseHandler) throws JSONException {
 
 		RequestParams params = new RequestParams();
         Log.v("checkStatusService","service_id = " + service_id + " user_id = " + user_id);
@@ -311,8 +230,7 @@ public class MiddleConnect {
         }
 	}
 
-	public static void finishSchedule(Context context , String user_id, String id_schedule,String uuid,String score,AsyncHttpResponseHandler responseHandler)
-	{
+	public static void finishSchedule(Context context , String user_id, String id_schedule,String uuid,String score,AsyncHttpResponseHandler responseHandler) {
 		RequestParams params = new RequestParams();
 
 		params.put("user_id", user_id);
@@ -331,9 +249,7 @@ public class MiddleConnect {
 		RequestParams params = new RequestParams();
 
 		params.put("uuid", uuid);
-
 		params.put("service_id", service_id);
-
 		params.put("descript", description);
 
 	    Log.v("USER_SERVICE", "        reclamo:");
@@ -346,14 +262,11 @@ public class MiddleConnect {
 		RequestParams params = new RequestParams();
 
 		params.put("user_id", id_user);
-
 		params.put("service_id", service_id);
-
 		params.put("qualification", score);
-
 		params.put("uuid", uuid);
-		Log.v("CALIFICA","user_id="+id_user + " service_id=" + service_id + " qualification=" + score + " uuid=" + uuid);
 
+		Log.v("CALIFICA","user_id="+id_user + " service_id=" + service_id + " qualification=" + score + " uuid=" + uuid);
 	    Log.v("USER_SERVICE", "        activity_calificar: ");
 
 		Connect.post(context.getResources().getString(R.string.calificar), params, responseHandler);
@@ -366,35 +279,18 @@ public class MiddleConnect {
 //															destination,AsyncHttpResponseHandler responseHandler)
 	public static void agend(Context context,String user_id, String uuid,String fecha_hora,
 							 int motivo, String address,String Barrio ,String obs,String
-									 destination,String lat, String lng, AsyncHttpResponseHandler responseHandler)
+									 destination,String lat, String lng, AsyncHttpResponseHandler responseHandler) {
 
-	{
 		RequestParams params = new RequestParams();
 
 		params.put("user_id", user_id);
-
 		params.put("uuid", uuid);
-
 		params.put("service_date_time", fecha_hora);
-
 		params.put("schedule_type", String.valueOf(motivo));
-
-//		params.put("address_index", indice_direccion);
-//
-//		params.put("comp1", comp1);
-//
-//		params.put("comp2", comp2);
-//
-//		params.put("no", no);
-
 		params.put("address", address);
-
 		params.put("city_lat", lat);
-
 		params.put("city_lng", lng);
-
 		params.put("barrio", Barrio);
-
 		params.put("obs", obs);
 
 		if (motivo == 2 || motivo == 3)
@@ -410,16 +306,12 @@ public class MiddleConnect {
 		Connect.post(context.getResources().getString(R.string.agend), params, responseHandler);
 	}
 
-	public static void myAgend(Context context ,String user_id, String uuid,AsyncHttpResponseHandler responseHandler)
-	{
+	public static void myAgend(Context context ,String user_id, String uuid,AsyncHttpResponseHandler responseHandler) {
+
 		RequestParams params = new RequestParams();
-
 		params.put("user_id", user_id);
-
 		params.put("uuid",uuid);
-
 	    Log.i("USER_SERVICE", "        myAgend: "+uuid+" user_id: "+user_id);
-
 		Connect.post(context.getResources().getString(R.string.myanged), params, responseHandler);
 	}
 
@@ -506,15 +398,11 @@ public class MiddleConnect {
 		Connect.connectivityQualityTest(responseHandler);
 	}
 
-	public static void confirmTicker(Context context,String ticket,AsyncHttpResponseHandler responseHandler)
-	{
+	public static void confirmTicker(Context context,String ticket,AsyncHttpResponseHandler responseHandler) {
 
 		RequestParams params = new RequestParams();
-
 		params.put("ticket", ticket);
-
 		Log.v("USER_SERVICE", "        confirmTicket: ");
-
 		Connect.post(context.getResources().getString(R.string.confirm_ticket), params, responseHandler);
 	}
 

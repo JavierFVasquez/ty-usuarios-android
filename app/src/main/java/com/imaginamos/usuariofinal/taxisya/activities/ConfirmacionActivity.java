@@ -24,6 +24,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -684,6 +685,7 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
 
             nombre_taxista.setText(nombre);
             placa_taxi.setText(placa);
+            //placa_taxi.setTextSize(TypedValue.COMPLEX_UNIT_DIP,28);
             celular_taxista.setText(telefono);
             marca_taxi.setText(marca);
 

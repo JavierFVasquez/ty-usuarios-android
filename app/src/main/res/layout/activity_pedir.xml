@@ -62,7 +62,6 @@
                 android:background="@color/white"
                 android:text="@string/text_mis_direcciones"
                 android:textColor="@color/gray_text" />
-
         </RelativeLayout>
 
         <LinearLayout
@@ -248,7 +247,7 @@
                             android:maxLines="1"
                             android:visibility="gone"
                             android:hint="@string/ticket_data"
-                            />
+                            android:maxLength="7"/>
                     </LinearLayout>
 
                     <Button

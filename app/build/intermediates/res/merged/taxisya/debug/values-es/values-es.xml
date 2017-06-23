@@ -179,6 +179,7 @@
     <string name="se_ha_enviado_a_tu_correo_electronico_un_codigo_de_confirmaci_n">Se ha enviado a tu correo electrónico un codigo de confirmacion</string>
     <string msgid="146198913615257606" name="search_menu_title">"Buscar"</string>
     <string name="selecciona">Selecciona</string>
+    <string name="service_in_curse">Servicio en curso</string>
     <string name="services_user">service/user</string>
     <string name="servicio_agendado_correctamente">Servicio agendado correctamente</string>
     <string name="servicio_cancelado">El servicio fue cancelado</string>

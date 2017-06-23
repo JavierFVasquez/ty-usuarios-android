@@ -3,6 +3,7 @@
     <string name="app_name">Taxisya</string>
     <string name="_16">16</string>
     <string name="aceptar">Aceptar</string>
+    <string name="service_in_curse">Servicio en curso</string>
     <string name="action_settings">Ajustes</string>
     <string name="addaddress">address/create</string>
     <string name="address">Dirección</string>

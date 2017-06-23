@@ -359,10 +359,10 @@ public class HomeActivity extends Activity {
                                     if (updateAvailable)
                                         showDialog();
                                     else {
-                                        mPref.setRootActivity("HomeActivity");
-                                        Intent in3 = new Intent(HomeActivity.this, MapaActivitys.class);
-                                        startActivity(in3);
+                                        int i = 0;
+                                        verifyLogin(i);
                                     }
+                                    
                                     break;
 
                                 case 2:
@@ -404,6 +404,24 @@ public class HomeActivity extends Activity {
                                         }
                                     }
                                     break;
+                            }
+                        }
+
+                        private void verifyLogin(int i) {
+                            if (i == 0) {
+                                if (conf.getLogin()) {
+
+                                    mPref.setRootActivity("HomeActivity");
+                                    Intent in3 = new Intent(HomeActivity.this, MapaActivitys.class);
+                                    startActivity(in3);
+                                } else {
+
+                                    mPref.setRootActivity("MapaActivitys");
+                                    Intent in = new Intent(HomeActivity.this, RegistroActivity.class);
+                                    in.putExtra("target", Target.HISTORY_TARGET);
+                                    startActivity(in);
+
+                                }
                             }
                         }
 
@@ -463,79 +481,7 @@ public class HomeActivity extends Activity {
         }
 
     }
-
-    /*private void checkAppVersions() {
-
-        MiddleConnect.getAppVersions(this, new AsyncHttpResponseHandler() {
-
-            @Override
-            public void onStart() {
-                try {
-                    pDialog = new ProgressDialog(HomeActivity.this);
-                    pDialog.setMessage(getString(R.string.verificando));
-                    pDialog.setIndeterminate(false);
-                    pDialog.setCancelable(false);
-                    pDialog.show();
-
-                } catch (Exception e) {
-
-                }
-
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                String response = new String(responseBody);
-                Log.e(TAG, "" + response);
-
-                try {
-                    JSONObject repsonsejson = new JSONObject(response);
-                    Log.d(TAG, "appVersions = " + repsonsejson.toString());
-                    if (repsonsejson.has("userVersions")) {
-                        JSONArray arrayApp = repsonsejson.getJSONArray("userVersions");
-                        Float remote = 0.0f;
-                        for (int i = 0; i < arrayApp.length(); i++) {
-                            if (arrayApp.getJSONObject(i).getString("device_type").equals("Android")) {
-                                remote = Float.parseFloat(arrayApp.getJSONObject(i).getString("version"));
-                            }
-                        }
-
-                        // get versión app instalada
-                        PackageInfo pckginfo = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
-                        currentVersionName = pckginfo.versionName;
-                        float current = Float.valueOf(currentVersionName);
-                        Log.d(TAG, "current = " + String.valueOf(current) + " remote = " + remote);
-                        if (current < remote) {
-                            Log.d(TAG, "la versión instalada esta desactualizada");
-                            updateAvailable = true;
-
-                        } else {
-                            Log.d(TAG, "la versión instalada es la última");
-                        }
-                    }
-                } catch (Exception e) {
-
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                String response = new String(responseBody);
-                Log.e(TAG, "" + response);
-
-            }
-
-            @Override
-            public void onFinish() {
-                try {
-                    pDialog.dismiss();
-                } catch (Exception e) {
-                }
-            }
-        });
-
-    }*/
-
+    
     private void showDialog() {
         builder = new AlertDialog.Builder(HomeActivity.this);
         builder.setMessage(getString(R.string.message_app_version))
@@ -595,7 +541,7 @@ public class HomeActivity extends Activity {
                         startActivity(mIntent);
                     }
 
-                     else if ((status_service == 2) || (status_service == 4)) {
+                    else if ((status_service == 2) || (status_service == 4)) {
 
                         service_id = responsejson.getString("id");
                         conf.setServiceId(service_id);
@@ -608,8 +554,8 @@ public class HomeActivity extends Activity {
                         startActivity(mIntent);
                     }
 
-                        Log.v("HomeActivity", "checkService() no tenia servicio para recuperar");
-                        Log.v("HomeActivity", "responsejson = " + responsejson.getJSONObject("driver").toString());
+                    Log.v("HomeActivity", "checkService() no tenia servicio para recuperar");
+                    Log.v("HomeActivity", "responsejson = " + responsejson.getJSONObject("driver").toString());
 
                     if(status_service == 7 || status_service == 8 || status_service == 9){
                         Toast.makeText(getApplicationContext(), getString(R.string.servicio_cancelado), Toast.LENGTH_SHORT).show();

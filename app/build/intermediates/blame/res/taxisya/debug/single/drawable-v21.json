@@ -1,42 +1,22 @@
 [
     {
-        "merged": "/Users/developer_celuvans/Documents/workspace/android/ty-usuarios-android.git/app/build/intermediates/res/merged/taxisya/debug/drawable-v21/abc_btn_colored_material.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/drawable-v21/abc_btn_colored_material.xml"
+        "merged": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android/app/build/intermediates/res/merged/taxisya/debug/drawable-v21/notification_action_background.xml",
+        "source": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/drawable-v21/notification_action_background.xml"
     },
     {
-        "merged": "/Users/developer_celuvans/Documents/workspace/android/ty-usuarios-android.git/app/build/intermediates/res/merged/taxisya/debug/drawable-v21/design_bottom_navigation_item_background.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/aa48038458c76f0953554faaca5ccd272b090569/output/res/drawable-v21/design_bottom_navigation_item_background.xml"
+        "merged": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android/app/build/intermediates/res/merged/taxisya/debug/drawable-v21/abc_action_bar_item_background_material.xml",
+        "source": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/drawable-v21/abc_action_bar_item_background_material.xml"
     },
     {
-        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/drawable-v21/abc_btn_colored_material.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/drawable-v21/abc_btn_colored_material.xml"
+        "merged": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android/app/build/intermediates/res/merged/taxisya/debug/drawable-v21/abc_btn_colored_material.xml",
+        "source": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/drawable-v21/abc_btn_colored_material.xml"
     },
     {
-        "merged": "/Users/developer_celuvans/Documents/workspace/android/ty-usuarios-android.git/app/build/intermediates/res/merged/taxisya/debug/drawable-v21/notification_action_background.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/drawable-v21/notification_action_background.xml"
+        "merged": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android/app/build/intermediates/res/merged/taxisya/debug/drawable-v21/abc_edit_text_material.xml",
+        "source": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/drawable-v21/abc_edit_text_material.xml"
     },
     {
-        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/drawable-v21/notification_action_background.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/drawable-v21/notification_action_background.xml"
-    },
-    {
-        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/drawable-v21/design_bottom_navigation_item_background.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/aa48038458c76f0953554faaca5ccd272b090569/output/res/drawable-v21/design_bottom_navigation_item_background.xml"
-    },
-    {
-        "merged": "/Users/developer_celuvans/Documents/workspace/android/ty-usuarios-android.git/app/build/intermediates/res/merged/taxisya/debug/drawable-v21/abc_action_bar_item_background_material.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/drawable-v21/abc_action_bar_item_background_material.xml"
-    },
-    {
-        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/drawable-v21/abc_action_bar_item_background_material.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/drawable-v21/abc_action_bar_item_background_material.xml"
-    },
-    {
-        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/drawable-v21/abc_edit_text_material.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/drawable-v21/abc_edit_text_material.xml"
-    },
-    {
-        "merged": "/Users/developer_celuvans/Documents/workspace/android/ty-usuarios-android.git/app/build/intermediates/res/merged/taxisya/debug/drawable-v21/abc_edit_text_material.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/8523fdce81350b725abd6322458a1f617421fe74/output/res/drawable-v21/abc_edit_text_material.xml"
+        "merged": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android/app/build/intermediates/res/merged/taxisya/debug/drawable-v21/design_bottom_navigation_item_background.xml",
+        "source": "/Users/developer_celuvans/.android/build-cache/6d66d7870bb9b862461a7e8f6658f21f792bb48b/output/res/drawable-v21/design_bottom_navigation_item_background.xml"
     }
 ]

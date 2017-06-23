@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.imaginamos.usuariofinal.taxisya"
-    android:versionCode="66"
+    android:versionCode="22"
     android:versionName="5.4">
 
     <uses-feature
@@ -26,7 +26,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKM_ARKS"/>
@@ -39,8 +39,6 @@
 
     <uses-permission android:name="com.imaginamos.usuariofinal.taxisya.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-
-    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -121,11 +119,11 @@
             android:name=".activities.MisAgendamientosActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
-        <activity
+        <!--activity
             android:name="com.imaginamos.taxisya.Servicioagendado"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
-        <!-- android:noHistory="true" -->
+        < android:noHistory="true" -->
         <activity
             android:name=".activities.ConfirmacionActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -161,7 +159,7 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
 
-        <service android:name="com.imaginamos.taxisya.CheckStatusService" />
+        <!--service android:name="com.imaginamos.taxisya.CheckStatusService" /-->
 
         <activity
             android:name=".activities.ResetPassActivity"

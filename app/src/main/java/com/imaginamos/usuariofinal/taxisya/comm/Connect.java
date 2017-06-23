@@ -27,14 +27,12 @@ public class Connect {
 	  public static AsyncHttpClient syncHttpClient= new SyncHttpClient();
 	  public static AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
 
-	  public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler)
-	  {
+	  public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
 		  getClient().setTimeout(timeout * 1000);
 		  getClient().get(getAbsoluteUrl(url), params, responseHandler);
 	  }
 
-	  public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler)
-	  {
+	  public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
 		  getClient().setTimeout(timeout * 1000);
 		  getClient().post(getAbsoluteUrl(url), params, responseHandler);
 	  }
@@ -52,39 +50,33 @@ public class Connect {
 		}
 	  }
 
-	  public static void connectivityQualityTest(AsyncHttpResponseHandler responseHandler)
-	  {
+	  public static void connectivityQualityTest(AsyncHttpResponseHandler responseHandler) {
 		  getClient().setTimeout(timeout * 1500);
 		  getClient().get(CONNECTIVITY_QUALITY_CHECKING, null,responseHandler);
 	  }
 
-	  public static void postNode(String url, RequestParams params, AsyncHttpResponseHandler responseHandler)
-	  {
+	  public static void postNode(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
 		  getClient().setTimeout(timeout * 1000);
 		  getClient().post(getAbsoluteUrlNode(url), params, responseHandler);
 	  }
 
 
-	  private static String getAbsoluteUrlNode(String relativeUrl)
-	  {
+	  private static String getAbsoluteUrlNode(String relativeUrl) {
 		  Log.e("BASE_NODE", BASE_NODE + relativeUrl);
 	      return BASE_NODE + relativeUrl;
 	  }
 
-	  private static String getAbsoluteUrl(String relativeUrl)
-	  {
+	  private static String getAbsoluteUrl(String relativeUrl) {
 		  Log.e("BASE_URL", BASE_URL + relativeUrl);
 	      return BASE_URL + relativeUrl;
 	  }
 
-	  public static void getWithAbsoluteURl(String url, RequestParams params, AsyncHttpResponseHandler responseHandler)
-	  {
+	  public static void getWithAbsoluteURl(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
 		  getClient().setTimeout(timeout * 1000);
 		  getClient().get(url, params, responseHandler);
 	  }
 
-	private static AsyncHttpClient getClient()
-	{
+	private static AsyncHttpClient getClient() {
 		// Return the synchronous HTTP client when the thread is not prepared
 		if (Looper.myLooper() == null)
 			return syncHttpClient;

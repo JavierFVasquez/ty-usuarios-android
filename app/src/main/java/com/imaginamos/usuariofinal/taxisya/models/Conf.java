@@ -135,19 +135,16 @@ public class Conf {
 		return prefs.getInt(APPVERSION, 0);
 	}
 
-	public void setAppVersion(int appversion)
-	{
+	public void setAppVersion(int appversion) {
 		editor.putInt(APPVERSION, appversion);
 		editor.commit();
 	}
-	public String getDriverId()
-	{
+	public String getDriverId() {
 
 		return prefs.getString(IDDRIVER, null);
 	}
 
-	public void setDriverId(String iddriver)
-	{
+	public void setDriverId(String iddriver) {
 		editor.putString(IDDRIVER, iddriver);
 		editor.commit();
 	}

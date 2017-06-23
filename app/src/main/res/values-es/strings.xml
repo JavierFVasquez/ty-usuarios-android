@@ -3,6 +3,7 @@
     <string name="app_name">Taxisya</string>
     <string name="_16">16</string>
     <string name="aceptar">Aceptar</string>
+    <string name="service_in_curse">Servicio en curso</string>
     <string name="action_settings">Ajustes</string>
     <string name="addaddress">address/create</string>
     <string name="address">Dirección</string>
@@ -71,7 +72,7 @@
     <string name="getlatlngaddress">http://maps.googleapis.com/maps/api/geocode/json?</string>
     <string name="guion">-</string>
     <string name="has">#</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="hello_world">Hello worl!</string>
     <string name="hint_address">Dirección inicial…</string>
     <string name="hint_apto">Observaciones…</string>
     <string name="hint_barrio">Usaquén</string>

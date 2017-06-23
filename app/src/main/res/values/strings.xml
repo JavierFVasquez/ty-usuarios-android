@@ -45,6 +45,7 @@
     <string name="title_activity_end_agendamiento">EndAgendamiento</string>
     <string name="textimageview">link</string>
     <string name="aceptar">Accept</string>
+    <string name="service_in_curse">Service in progress</string>
     <string name="you_position">Your current position</string>
     <string name="noaddres">You have no addresses!</string>
     <string name="cancel">cancel</string>
@@ -272,6 +273,7 @@
     <string name="confirm_ticket">service/ticket</string>
     <string name="ticket_data">Input data of ticket</string>
     <string name="title_code_authorization">Code of authorization:</string>
+    <string name="ticket_unauthorized">The ticket is not authorized</string>
     <string name="ticket_invalid">The ticket is not filled or not authorized</string>
 
 </resources>

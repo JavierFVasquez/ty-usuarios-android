@@ -8,7 +8,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -134,8 +133,8 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     private Animation traslation;
     private boolean isAddressFocus = false;
     private Fragment mFragment;
-    private double latitud;
-    private double longitud;
+    private double latitud = 4.598889;
+    private double longitud = -74.080833;
     private LinearLayout mHandleLayout;
     private LinearLayout mNewAddress;
     private LinearLayout mLayoutMap;
@@ -165,7 +164,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     private ImageView mConnectivityLoaderImage;
     private Connectivity mConnectivityChecker = new Connectivity(this);
     private boolean mFromScheduling = false;
-    public String card;
 
     private Spinner sp;
     ArrayAdapter<?> myAdapter;
@@ -230,6 +228,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     private RadioButton mPayType3;
     private EditText mTicket;
     private boolean isTicketValid = false;
+    public String rTicket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -250,7 +249,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         };
 
         adapter = new ListaAdapter(this, titulos, imagenes);
-
         menuLateral.setAdapter(adapter);
         menuLateral.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -268,14 +266,17 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                         startActivity(in);
                     }
                 } else if (i == 2) {
+
                     Toast.makeText(MapaActivitys.this, "Agendamiento", Toast.LENGTH_SHORT).show();
                     Intent intmenu = new Intent(MapaActivitys.this, AgendarActivity.class);
                     startActivity(intmenu);
                 } else if (i == 3) {
+
                     Toast.makeText(MapaActivitys.this, "Reclamos", Toast.LENGTH_SHORT).show();
                     Intent intmenu = new Intent(MapaActivitys.this, HistorialActivity.class);
                     startActivity(intmenu);
                 }
+
             }
         });
 
@@ -309,7 +310,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                 //Log.v("LOG1","mTicket afterTextChanged " + mTicket.getText().toString());
 
                 final String stk = mTicket.getText().toString();
-
+                rTicket = new String(stk);
                 if ((stk != null) && stk.length() >= 7) {
                     Log.v("LOG1","mTicket afterTextChanged " + stk);
                     isTicketValid = false;
@@ -324,7 +325,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                             String response = new String(responseBody);
-                            isTicketValid = true;
+                            isTicketValid = false;
                             Log.v("LOG1","onSuccess response = " + response);
                             try {
                                 Log.v("LOG1", "SUCCES: " + response);
@@ -340,7 +341,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                                 if (responsejson.getString("error").equals("1")) {
                                     btnSolicitar.setEnabled(false);
                                     btnSolicitar.setBackgroundResource(R.drawable.btn_gray);
-                                    Toast.makeText(MapaActivitys.this, R.string.ticket_unauthorized, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MapaActivitys.this, "ticket no valido", Toast.LENGTH_SHORT).show();
                                 }
 
                             } catch (Exception e) {
@@ -362,6 +363,12 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                         }
 
                     });
+
+                } else {
+                    btnSolicitar.setEnabled(false);
+                    btnSolicitar.setBackgroundResource(R.drawable.btn_gray);
+                    isTicketValid = false;
+                    //Toast.makeText(MapaActivitys.this, "ticket no valido", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -407,8 +414,8 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
             public void onClick(View view) {
                 mPayType = 2;
                 mTicket.setVisibility(View.GONE);
-                btnSolicitar.setBackgroundResource(R.drawable.btn_gray);
-                btnSolicitar.setEnabled(false);
+                btnSolicitar.setBackgroundResource(R.drawable.btn_request);
+                btnSolicitar.setEnabled(true);
                 // TODO: check tipo servicio
                 checkCreditCards();
             }
@@ -421,7 +428,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                 mTicket.setVisibility(View.VISIBLE);
                 btnSolicitar.setEnabled(false);
                 btnSolicitar.setBackgroundResource(R.drawable.btn_gray);
-                Toast.makeText(getApplicationContext(), getString(R.string.ticket_data), Toast.LENGTH_SHORT).show();
                 // TODO:
                 //checkCreditCards();
             }
@@ -551,7 +557,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
             Log.v("TEST_GPS", "enabled");
         }
 
-
     }
 
     private boolean isKeyboardShown(View rootView) {
@@ -617,9 +622,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         mNetworkMonitor = new NetworkChangeReceiver(this);
         registerReceiver(mNetworkMonitor, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
-        /*if(card.equals(null)){
-            btnCancelar.setEnabled(false);
-        }*/
     }
 
     @Override
@@ -735,7 +737,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         bt_direcc.setOnClickListener(this);
         btnCancelar.setOnClickListener(this);
         btnAddAddress.setOnClickListener(this);
-//        btn_menu.setOnClickListener(this);
+
     }
 
     private void buildView() {
@@ -794,8 +796,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                         || actionId == EditorInfo.IME_ACTION_DONE
                         || actionId == EditorInfo.IME_ACTION_NEXT
                         || actionId == EditorInfo.IME_ACTION_SEND
-                        || actionId == EditorInfo.IME_ACTION_SEARCH
-                        || (arg2.getAction() == KeyEvent.KEYCODE_ENTER)) {
+                        || actionId == EditorInfo.IME_ACTION_SEARCH) {
                     InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                     Log.v("SEGUIMIENTO", "oculta teclado");
 
@@ -885,15 +886,17 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                     Toast.makeText(MapaActivitys.this, "Completa el campo para continuar", Toast.LENGTH_SHORT).show();
                     //break;
                 }
-                direccion_uno.setFocusableInTouchMode(true);
-                direccion_uno.setFocusable(true);
-                direccion_uno.requestFocus();
-                btnSolicitar.setBackgroundResource(R.drawable.btn_gray);
+                    direccion_uno.setFocusableInTouchMode(true);
+                    direccion_uno.setFocusable(true);
+                    direccion_uno.requestFocus();
+                    //btnSolicitar.setBackgroundResource(R.drawable.btn_gray);
 
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.RESULT_HIDDEN);
-                direccion_uno.setImeActionLabel("Pedir", EditorInfo.IME_ACTION_DONE);
-                screenShotMap(0);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.RESULT_HIDDEN);
+
+                    direccion_uno.setImeActionLabel("Pedir", EditorInfo.IME_ACTION_DONE);
+
+                    screenShotMap(0);
 
                 break;
 
@@ -909,6 +912,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                 if (isNewAddress) {
                     // disable view newAddress
                     mNewAddress.setVisibility(View.GONE);
+
                     mHandleLayout.setVisibility(View.VISIBLE);
                 } else {
 
@@ -1108,7 +1112,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                 Log.v("PAY_TYPE","forma de pago vale");
 
                 // verificar que el vale sea valido
-                if (!isTicketValid) {
+                if (!isTicketValid||rTicket.equals("")) {
                     // show toast
                     Toast.makeText(this, getResources().getString(R.string.ticket_invalid), Toast.LENGTH_LONG).show();
                     return;
@@ -1263,9 +1267,8 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                     uuid = conf.getUuid();
                     getService();
                 } else {
-                    hideControls();
-                    contendorWell.setVisibility(View.GONE);
                     mPref.setRootActivity("MapaActivitys");
+
                     Intent i = new Intent(MapaActivitys.this, RegistroActivity.class);
 
                     i.putExtra("index", indice);
@@ -1388,14 +1391,11 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         }
     }
 
-    private void displayConnectivityPanel(final boolean display) {
+    private void displayConnectivityPanel(boolean display) {
 
         mNoConnectivityPanel.setVisibility(display ? View.VISIBLE : View.GONE);
-        if(display) {
-            mConnectivityLoaderImage.startAnimation(AnimationUtils.loadAnimation(this, R.anim.connection_loader));
-            finish();
-            Toast.makeText(getApplicationContext(), getString(R.string.enable_internet), Toast.LENGTH_SHORT).show();
-        }
+        if(display)
+            mConnectivityLoaderImage.startAnimation(AnimationUtils.loadAnimation(this,R.anim.connection_loader));
     }
 
     @Override
@@ -1414,24 +1414,18 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     AsyncHttpResponseHandler connectivityMonitorResponseHandler = new AsyncHttpResponseHandler(){
         long beforeTime = -1;
         long afterTime = -1;
-
         @Override
         public void onStart() {
             beforeTime = System.currentTimeMillis();
         }
-
         @Override
         public void onSuccess(String s) {
             afterTime = System.currentTimeMillis();
         }
-
         @Override
         public void onFailure(Throwable throwable, String s) {
             connectivityMonitorHandler.sendEmptyMessage(-1);
         }
-
-
-
         @Override
         public void onFinish() {
             if (!(beforeTime < 0 && afterTime < 0)) {
@@ -1448,18 +1442,13 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
 /*    Thread connectivityQualityMonitor = new Thread(new Runnable() {
         @Override
         public void run() {
-
             while (true) {
-
-
                 MiddleConnect.testConnectivityQuality(connectivityMonitorResponseHandler);
-
                 try {
                     Thread.sleep(waitTime);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
             }
         }
     });*/
@@ -1612,7 +1601,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     public void showInternetAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle("No tiene una conexión a internet");
-        alertDialog.setMessage(getString(R.string.aceptar));
+        alertDialog.setMessage(getString(R.string.enable_internet));
         alertDialog.setPositiveButton("Habilitar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(Settings.ACTION_SETTINGS);
@@ -1671,8 +1660,15 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
             longitud = mLastLocation.getLongitude();
             Log.v("SEGUIMIENTO", " displayLocation ok lat=" + String.valueOf(latitud) + " lng=" + String.valueOf(longitud));
 
+            //map = fm.getMap();
+///			map.setMyLocationEnabled(false);
+///         map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitud, longitud), 10f), 40, null);
+///            moveToLocation();
             map.getUiSettings().setMyLocationButtonEnabled(true);
+            //map.getUiSettings().setZoomControlsEnabled(false);
+            //map.getUiSettings().setCompassEnabled(false);
             map.setMyLocationEnabled(true);
+
             map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
                 @Override
                 public void onCameraChange(CameraPosition cameraPosition) {
@@ -1687,6 +1683,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         } else {
             Log.v("displayLocation", "bad lat=" + String.valueOf(latitud) + " lng=" + String.valueOf(longitud));
             Log.v("TEST_GPS", "displayLocation");
+            //hand.sendEmptyMessage(1);
         }
     }
 
@@ -1850,12 +1847,10 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                                     }
                                 });
                 builder.setCancelable(false);
-
                 try {
                     alert = builder.create();
                     alert.show();
                 } catch (Exception e) {
-
                 }*/
 
             }
@@ -2063,22 +2058,23 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         dialogo1.setTitle(getResources().getString(R.string.app_name));
         dialogo1.setMessage(getResources().getString(R.string.confirm_cancel));
         dialogo1.setCancelable(false);
-        dialogo1.setPositiveButton("Si", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialogo1, int id) {
+        dialogo1.setPositiveButton("Si",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogo1, int id) {
 
-                hideControls();
-                map.getUiSettings().setScrollGesturesEnabled(true);
+                        hideControls();
+                        map.getUiSettings().setScrollGesturesEnabled(true);
 
-                if (myTimer != null) {
-                    myTimer.cancel();
-                    myTimer.purge();
-                    myTimer = null;
-                }
+                        if (myTimer != null) {
+                            myTimer.cancel();
+                            myTimer.purge();
+                            myTimer = null;
+                        }
 
-                isRequestService = false;
-                cancelarService();
-            }
-        });
+                        isRequestService = false;
+                        cancelarService();
+                    }
+                });
         dialogo1.setNegativeButton("No", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
                 dialogo1.cancel();
@@ -2106,7 +2102,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     private void cancelarService() {
 
         cancelService(getResources().getString(R.string.cancel_service, id_user));
-        finish();
 
     }
 
@@ -2369,29 +2364,19 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         // TODO: verifica si tiene
         // configurar mCardReference
 
-        if (conf.getLogin()) {
-            mPref.setRootActivity("MapaActivitys");
-            Intent in = new Intent(MapaActivitys.this, PaymentsActivity.class);
-            startActivity(in);
-            card = conf.getCardDefault();
-
-            if (card != null) {
-                if (card.length() > 0) {
-                    mCardReference = card;
-                    btnSolicitar.setBackgroundResource(R.drawable.btn_request);
-                    btnSolicitar.setEnabled(true);
-                } else {
-                    Intent i = new Intent(MapaActivitys.this, PaymentsActivity.class);
-                    startActivity(i);
-
-                }
+        String card = conf.getCardDefault();
+        if (card != null) {
+            if (card.length() > 0) {
+                mCardReference = card;
+            } else {
+                // llamar a la creacion de tarjeta
+                Intent i = new Intent(MapaActivitys.this, PaymentsActivity.class);
+                startActivity(i);
             }
-
-        } else {
-            mPref.setRootActivity("MapaActivitys");
-            Intent in = new Intent(MapaActivitys.this, RegistroActivity.class);
-            in.putExtra("target", Target.HISTORY_TARGET);
-            startActivity(in);
+        }
+        else {
+            Intent i = new Intent(MapaActivitys.this, PaymentsActivity.class);
+            startActivity(i);
         }
 
     }

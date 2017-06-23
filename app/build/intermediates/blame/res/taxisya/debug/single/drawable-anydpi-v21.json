@@ -1,10 +1,6 @@
 [
     {
-        "merged": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/res/merged/taxisya/debug/drawable-anydpi-v21/ic_clear_24dp.xml",
-        "source": "/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/generated/res/pngs/taxisya/debug/drawable-anydpi-v21/ic_clear_24dp.xml"
-    },
-    {
-        "merged": "/Users/developer_celuvans/Documents/workspace/android/ty-usuarios-android.git/app/build/intermediates/res/merged/taxisya/debug/drawable-anydpi-v21/ic_clear_24dp.xml",
-        "source": "/Users/developer_celuvans/Documents/workspace/android/ty-usuarios-android.git/app/build/generated/res/pngs/taxisya/debug/drawable-anydpi-v21/ic_clear_24dp.xml"
+        "merged": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android/app/build/intermediates/res/merged/taxisya/debug/drawable-anydpi-v21/ic_clear_24dp.xml",
+        "source": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android/app/build/generated/res/pngs/taxisya/debug/drawable-anydpi-v21/ic_clear_24dp.xml"
     }
 ]
