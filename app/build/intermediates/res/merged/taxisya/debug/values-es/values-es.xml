@@ -284,6 +284,7 @@
     <string name="texto_usuario_no_existe">¡Este usuario no existe!</string>
     <string name="texto_ya_tengo_mi_cuenta">Ya tengo mi cuenta</string>
     <string name="thank_r">¡Gracias! Hemos recibido su informacion.</string>
+    <string name="ticket_commit">Ingresa motivo del vale</string>
     <string name="ticket_data">Ingresa datos del vale</string>
     <string name="ticket_invalid">El vale no se ingresó o es inválido</string>
     <string name="ticket_unauthorized">El vale no está autorizado</string>

@@ -272,6 +272,7 @@
     <string name="pay_type3">Ticket</string>
     <string name="confirm_ticket">service/ticket</string>
     <string name="ticket_data">Input data of ticket</string>
+    <string name="ticket_commit">Input reason of ticket</string>
     <string name="title_code_authorization">Code of authorization:</string>
     <string name="ticket_unauthorized">The ticket is not authorized</string>
     <string name="ticket_invalid">The ticket is not filled or not authorized</string>

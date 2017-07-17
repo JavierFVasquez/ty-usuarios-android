@@ -91,7 +91,7 @@
 
     <com.carouseldemo.controls.Carousel
         android:id="@+id/carouseles"
-        
+
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:animationDuration="300"

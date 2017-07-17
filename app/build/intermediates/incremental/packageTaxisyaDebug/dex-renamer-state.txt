@@ -1,4 +1,4 @@
-#Fri Jun 23 11:58:39 COT 2017
+#Thu Jul 13 17:40:06 COT 2017
 base.0=/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android/app/build/intermediates/transforms/dex/taxisya/debug/folders/1000/1f/main
 renamed.0=classes.dex
 file.0=/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android/app/build/intermediates/transforms/dex/taxisya/debug/folders/1000/1f/main/classes.dex

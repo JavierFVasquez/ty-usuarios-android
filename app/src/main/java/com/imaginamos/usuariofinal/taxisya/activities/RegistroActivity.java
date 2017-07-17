@@ -28,7 +28,7 @@ import cz.msebera.android.httpclient.Header;
 public class RegistroActivity extends Activity implements OnClickListener {
 
 	private EditText name, user, pass, cellphone;
-	private String usuario,password,nombre,phone,uuid;
+	private String usuario,password,nombre,phone,uuid,commit;
 	private int target_option = 0;
 	private ProgressDialog pDialog;
 	private Conf conf;
@@ -80,6 +80,7 @@ public class RegistroActivity extends Activity implements OnClickListener {
 			obs = reicieveParams.getString("obs");
 			latitud = reicieveParams.getString("latitud");
 			longitud = reicieveParams.getString("longitud");
+			commit =  reicieveParams.getString("commit");
 		}
 
 	}

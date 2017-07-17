@@ -75,6 +75,7 @@ public class HomeActivity extends Activity {
     private int status_service;
     private int qualification = 0;
     private BroadcastReceiver mReceiver;
+    private Animation fade_out;
 
     private double latitud = 0;
     private double longitud = 0;
@@ -320,8 +321,9 @@ public class HomeActivity extends Activity {
                     position2 = selectedId;
 
                 if (carousel.getSelectedItemPosition() == position2) {
-                    Log.v("Carousel", "carousel.getSelectedItemPosition() == position");
+
                     final Animation fade_out_item = AnimationUtils.loadAnimation(HomeActivity.this, R.anim.fade_out_item);
+                    fade_out = AnimationUtils.loadAnimation(HomeActivity.this, R.anim.fade_out_item);
 
                     final CarouselItem item = (CarouselItem) parent.getChildAt(position2);
 
@@ -338,8 +340,7 @@ public class HomeActivity extends Activity {
 
                             switch (position2) {
 
-                                case 0:
-                                    Log.v("Carousel", "position 0");
+                                case 0: Log.v("Carousel", "position 0");
 
                                     if (conf.getLogin()) {
                                         mPref.setRootActivity("HomeActivity");

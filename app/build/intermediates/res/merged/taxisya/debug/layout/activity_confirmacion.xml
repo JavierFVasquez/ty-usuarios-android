@@ -132,7 +132,7 @@
                             android:textSize="17sp"
                             android:textStyle="bold" />
 
-                        <RelativeLayout
+                        <!--RelativeLayout
                             android:layout_width="fill_parent"
                             android:layout_height="match_parent">
 
@@ -151,6 +151,28 @@
                                 android:layout_alignParentTop="true"
                                 android:layout_toRightOf="@+id/placa"
                                 android:text=""
+                                android:textColor="#999999" />
+                        </RelativeLayout-->
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/placa"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentLeft="true"
+                                android:text="@string/placa_"
+                                android:textColor="#999999" />
+
+                            <TextView
+                                android:id="@+id/numero_placa"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/placa"
+                                android:textSize="32sp"
+                                android:text=""
+                                android:layout_centerHorizontal="true"
                                 android:textColor="#999999" />
                         </RelativeLayout>
 

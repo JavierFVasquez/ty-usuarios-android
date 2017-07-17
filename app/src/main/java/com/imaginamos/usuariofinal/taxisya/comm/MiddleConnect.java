@@ -162,7 +162,7 @@ public class MiddleConnect {
 
 	public static void getService(Context context,String user_id,
                                   String latitud, String longitud,String index,String comp1, String comp2 ,
-                                  String no,String barrio,String obs,String uuid, AsyncHttpResponseHandler responseHandler) {
+                                  String no,String barrio,String obs,String uuid,String commit, AsyncHttpResponseHandler responseHandler) {
 
         RequestParams params = new RequestParams();
 
@@ -175,29 +175,32 @@ public class MiddleConnect {
 		params.put("barrio", barrio);
 		params.put("obs", obs);
 		params.put("uuid", uuid);
+		params.put("commit", commit);
 
-		Log.v("USER_SERVICE", "        params " + params.toString());
+		Log.v("USER_SERVICE", "params " + params.toString());
 
-		Log.v("USER_SERVICE", "        getService: ");
+		Log.v("USER_SERVICE", "getService: ");
 
 		Connect.post(context.getResources().getString(R.string.request_service,user_id), params, responseHandler);
 	}
 
 
-	public static void getServiceAddress(Context context,String user_id,String latitud, String longitud,String address,String barrio,String uuid, String payType,String payReference,String userEmail, String cardReference, String code, AsyncHttpResponseHandler responseHandler)
-	{
+	public static void getServiceAddress(Context context,String user_id,String latitud,  String longitud,String address,String barrio,String uuid, String payType,String payReference,String userEmail, String cardReference, String code, String commit, AsyncHttpResponseHandler responseHandler) {
+
 		RequestParams params = new RequestParams();
 
 		params.put("lat", latitud);
 		params.put("lng", longitud);
 		params.put("address", address);
 		params.put("barrio", barrio);
+		//params.put("commit", commit);
 		params.put("uuid", uuid);
 		params.put("pay_type",payType);
 		params.put("pay_reference",payReference);
 		params.put("user_email",userEmail);
 		params.put("user_card_reference",cardReference);
 		params.put("code",code);
+        params.put("commit",commit);
 
 		Log.v("USER_SERVICE", "        params " + params.toString());
 

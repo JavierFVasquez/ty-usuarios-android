@@ -176,6 +176,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     private String url_cancel_current;
     private boolean isError = false;
     private String barrio = " no especifica ";
+    //private String commit = " ";
     private static final int TWO_MINUTES = 1000 * 60 * 2;
     private static final int MILLISECONDS_PER_SECOND = 1000;
     private static final int FASTEST_INTERVAL_IN_SECONDS = 1;
@@ -227,8 +228,10 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     private RadioButton mPayType2;
     private RadioButton mPayType3;
     private EditText mTicket;
+    //private EditText commit;
     private boolean isTicketValid = false;
     public String rTicket;
+    public String commitUser = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -289,6 +292,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         mPayType1 = (RadioButton) findViewById(R.id.payType1);
         mPayType2 = (RadioButton) findViewById(R.id.payType2);
         mPayType3 = (RadioButton) findViewById(R.id.payType3);
+        //commit = (EditText) findViewById(R.id.commit);
         mTicket = (EditText) findViewById(ticketValue);
         mTicket.addTextChangedListener(new TextWatcher() {
             private String current = "";
@@ -326,6 +330,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                             String response = new String(responseBody);
                             isTicketValid = false;
+
                             Log.v("LOG1","onSuccess response = " + response);
                             try {
                                 Log.v("LOG1", "SUCCES: " + response);
@@ -337,6 +342,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                                     btnSolicitar.setEnabled(true);
                                     btnSolicitar.setBackgroundResource(R.drawable.btn_request);
                                     isTicketValid = true;
+                                    //commit.setVisibility(View.VISIBLE);
                                 }
                                 if (responsejson.getString("error").equals("1")) {
                                     btnSolicitar.setEnabled(false);
@@ -365,6 +371,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                     });
 
                 } else {
+                    //commit.setVisibility(View.GONE);
                     btnSolicitar.setEnabled(false);
                     btnSolicitar.setBackgroundResource(R.drawable.btn_gray);
                     isTicketValid = false;
@@ -373,7 +380,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
             }
 
         });
-
 
         mPayType1.setChecked(true);
 
@@ -406,6 +412,8 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                 btnSolicitar.setEnabled(true);
                 btnSolicitar.setBackgroundResource(R.drawable.btn_request);
                 mTicket.setVisibility(View.GONE);
+                mTicket.getText().toString();
+                //commit.setVisibility(View.GONE);
             }
         });
 
@@ -414,6 +422,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
             public void onClick(View view) {
                 mPayType = 2;
                 mTicket.setVisibility(View.GONE);
+                //commit.setVisibility(View.GONE);
                 btnSolicitar.setBackgroundResource(R.drawable.btn_request);
                 btnSolicitar.setEnabled(true);
                 // TODO: check tipo servicio
@@ -428,16 +437,12 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                 mTicket.setVisibility(View.VISIBLE);
                 btnSolicitar.setEnabled(false);
                 btnSolicitar.setBackgroundResource(R.drawable.btn_gray);
-                // TODO:
-                //checkCreditCards();
             }
         });
 
         setListeners();
-///		activeLocation();
         hideControls();
 
-///		if (Utils.checkPlayServices(this))
         Log.v("SEGUIMIENTO", "onCreate - 1 - MainActivity before checkPlayServices");
         if (checkPlayServices()) {
             Log.e("checkPlayServices", "checkPlayServices");
@@ -1107,55 +1112,119 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
             hand.sendEmptyMessage(1);
 
         } else {
-            // valida el tipo de pago
-            if (mPayType == 3) {
+
+            if(mPayType == 1){
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+                alertDialog.setTitle("¿Desea Solicitar el servicio en efectivo?");
+                //alertDialog.setMessage(getString(R.string.enable_gps));
+                alertDialog.setPositiveButton("Solicitar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        if (verificarDireccion(direccion_uno.getText().toString())) {
+                            if (mFromScheduling) {
+                                Intent intent = new Intent(MapaActivitys.this, AgendarActivity.class);
+                                intent.putExtra("FromActivity", "MapaActivity");
+                                intent.putExtra("AddressFromMapa", direccion_uno.getText().toString());
+                                intent.putExtra("latitud",String.valueOf(latitud));
+                                intent.putExtra("longitud",String.valueOf(longitud));
+                                Log.i("ADDRESS TO SEND", "Lat: "+latitud+" Long: "+longitud);
+                                setResult(RESULT_OK, intent);
+                                finish();
+                            } else {
+                                showControls();
+                                map.getUiSettings().setScrollGesturesEnabled(false);
+                                direccion_uno.clearFocus();
+                                direccion_uno.setFocusableInTouchMode(false);
+                                direccion_uno.setFocusable(false);
+                                map.getUiSettings().setAllGesturesEnabled(false);
+                                screenShotMap(1);
+                                getTaxi();
+                            }
+                        } else {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(MapaActivitys.this);
+                            builder.setTitle("Información");
+                            builder.setMessage("Verifica los datos de la dirección");
+                            builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    btnSolicitar.setEnabled(true);
+
+                                    hideLoader();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                        }
+                    }
+                });
+
+                alertDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //finish();
+                    }
+                });
+                alertDialog.show();
+
+            } else if (mPayType == 3){
+
                 Log.v("PAY_TYPE","forma de pago vale");
 
-                // verificar que el vale sea valido
                 if (!isTicketValid||rTicket.equals("")) {
                     // show toast
                     Toast.makeText(this, getResources().getString(R.string.ticket_invalid), Toast.LENGTH_LONG).show();
                     return;
                 }
 
-            }
+                else if (isTicketValid) {
 
-            if (verificarDireccion(direccion_uno.getText().toString())) {
-                if (mFromScheduling) {
-                    Intent intent = new Intent(MapaActivitys.this, AgendarActivity.class);
-                    intent.putExtra("FromActivity", "MapaActivity");
-                    intent.putExtra("AddressFromMapa", direccion_uno.getText().toString());
-                    intent.putExtra("latitud",String.valueOf(latitud));
-                    intent.putExtra("longitud",String.valueOf(longitud));
-                    Log.i("ADDRESS TO SEND", "Lat: "+latitud+" Long: "+longitud);
-                    setResult(RESULT_OK, intent);
-                    finish();
-                } else {
-                    showControls();
-                    map.getUiSettings().setScrollGesturesEnabled(false);
-                    direccion_uno.clearFocus();
-                    direccion_uno.setFocusableInTouchMode(false);
-                    direccion_uno.setFocusable(false);
-                    map.getUiSettings().setAllGesturesEnabled(false);
-                    screenShotMap(1);
-                    getTaxi();
+                    final EditText txtUrl = new EditText(this);
+                    txtUrl.setHint("Motivo desplazamiento");
+
+                    new AlertDialog.Builder(this)
+                            .setTitle("¿Desea pedir un servicio con vale?")
+                            .setMessage("Digita el motivo del vale")
+                            .setView(txtUrl)
+                            .setPositiveButton("Pedir", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                   commitUser = txtUrl.getText().toString();
+                                    if(commitUser.equals("")){
+                                        Toast.makeText(getApplicationContext(), "El motivo no puede estar vacio", Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        if (verificarDireccion(direccion_uno.getText().toString())) {
+                                            if (mFromScheduling) {
+                                                Intent intent = new Intent(MapaActivitys.this, AgendarActivity.class);
+                                                intent.putExtra("FromActivity", "MapaActivity");
+                                                intent.putExtra("AddressFromMapa", direccion_uno.getText().toString());
+                                                intent.putExtra("latitud",String.valueOf(latitud));
+                                                intent.putExtra("longitud",String.valueOf(longitud));
+                                                Log.i("ADDRESS TO SEND", "Lat: "+latitud+" Long: "+longitud);
+                                                setResult(RESULT_OK, intent);
+                                                finish();
+                                            } else {
+                                                showControls();
+                                                map.getUiSettings().setScrollGesturesEnabled(false);
+                                                direccion_uno.clearFocus();
+                                                direccion_uno.setFocusableInTouchMode(false);
+                                                direccion_uno.setFocusable(false);
+                                                map.getUiSettings().setAllGesturesEnabled(false);
+                                                screenShotMap(1);
+                                                getTaxi();
+                                            }
+                                        }
+                                    }
+                                }
+                            })
+                            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+
+                                }
+                            })
+                            .show();
                 }
-            } else {
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(MapaActivitys.this);
-                builder.setTitle("Información");
-                builder.setMessage("Verifica los datos de la dirección");
-                builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        btnSolicitar.setEnabled(true);
-                        //     btnSolicitar.setBackgroundResource(R.drawable.btn_gray);
-                        hideLoader();
-                    }
-                });
-                builder.setCancelable(false);
-                builder.create();
-                builder.show();
             }
+
         }
     }
 
@@ -1925,9 +1994,10 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
 
         String strPhone = conf.getPhone();
         String strCode = strPhone.length() > 2 ? strPhone.substring(strPhone.length() - 2) : strPhone;
+        String commit = commitUser;
 
         Log.v("CODE1","strCode " + strCode);
-        MiddleConnect.getServiceAddress(this, id_user, strLatitud, strLongitud, address, barrio, uuid,  payType, "", userEmail,  mCardReference, strCode, new AsyncHttpResponseHandler() {
+        MiddleConnect.getServiceAddress(this, id_user, strLatitud, strLongitud, address, barrio,  uuid,  payType, "", userEmail,  mCardReference, strCode, commit, new AsyncHttpResponseHandler() {
 
             @Override
             public void onStart() {

@@ -181,6 +181,17 @@
                     android:layout_gravity="bottom"
                     android:orientation="vertical">
 
+                    <!--EditText
+                        android:id="@+id/commit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@android:color/white"
+                        android:visibility="gone"
+                        android:hint="@string/ticket_commit"
+                        android:text="" /-->
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

@@ -49,7 +49,7 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 
 	private ImageView volver;
 
-	private String id_user, uuid, service_id, index, comp1, comp2, no, barrio, obs, latitud, longitud;
+	private String id_user, uuid, service_id, index, comp1, comp2, no, barrio, obs, latitud, longitud, commit;
 
 	private ProgressDialog pDialog;
 
@@ -87,8 +87,7 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 
 				finish();
 
-			} else if (msg.what == 2)
-			{
+			} else if (msg.what == 2) {
 
 				err_request();
 
@@ -105,11 +104,7 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 					Toast.makeText(SolicitandoActivity.this,getString(R.string.error_no_driver),Toast.LENGTH_LONG).show();
 					finish();
 				}
-			} else if (msg.what == 1500)
-			{
-				//Log.v("SolicitandoActivity","msg.what = 1500");
-				//Toast.makeText(getApplicationContext(),getString(R.string.error_no_driver), Toast.LENGTH_SHORT).show();
-				//Toast.makeText(getApplicationContext(),"msg.what = 1500", Toast.LENGTH_SHORT).show();
+			} else if (msg.what == 1500) {
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(SolicitandoActivity.this);
 				builder.setTitle(getString(R.string.important));
@@ -137,8 +132,7 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 
 				}
 
-			}else if(msg.what ==  2000)
-			{
+			}else if(msg.what ==  2000) {
 
 				cancelByService(getResources().getString(R.string.cancel_service,id_user));
 				Log.v("SolicitandoActivity","msg.what = 2000");
@@ -155,8 +149,6 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 
 		overridePendingTransition(R.anim.pull_in_from_right, R.anim.hold);
-
-
 		setContentView(R.layout.activity_solicitando_servicio);
 
 		conf = new Conf(this);
@@ -165,8 +157,6 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 		ImageView load;
 		Button cancelar;
 
-
-		// cancelar = (ImageView) findViewById(R.id.btn_cancelar);
 		cancelar = (Button) findViewById(R.id.btn_cancelar);
 
 
@@ -177,8 +167,6 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 		volver.setOnClickListener(this);
 
 		load = (ImageView) findViewById(R.id.carga);
-
-		//load.setBackgroundResource(R.anim.carga_serv);
 
 		final AnimationDrawable frameAnimation = (AnimationDrawable) load.getBackground();
 
@@ -264,11 +252,9 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
 
-								if(!Connectivity.isConnected(SolicitandoActivity.this))
-								{
+								if(!Connectivity.isConnected(SolicitandoActivity.this)) {
 									showDialog();
-								}else
-								{
+								}else {
 									initWorkFlow();
 								}
 
@@ -289,19 +275,16 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 		alert.show();
 	}
 
-	private void initWorkFlow()
-	{
+	private void initWorkFlow() {
 
 		Bundle reicieveParams = getIntent().getExtras();
 
-		if (reicieveParams != null && reicieveParams.containsKey("service_id"))
-		{
-			service_id = reicieveParams.getString("service_id");
+		if (reicieveParams != null && reicieveParams.containsKey("service_id")) {
 
+			service_id = reicieveParams.getString("service_id");
 			conf.setServiceId(service_id);
 
-		} else
-		{
+		} else {
 			try {
 				index = reicieveParams.getString("index");
 				comp1 = reicieveParams.getString("comp1");
@@ -311,6 +294,7 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 				obs = reicieveParams.getString("obs");
 				latitud = reicieveParams.getString("latitud");
 				longitud = reicieveParams.getString("longitud");
+				//commit = reicieveParams.getString("commit");
 			} catch (Exception e)
 			{
 				Log.e("ERROR", "ERROR EN SOLICITANDO SERVICIO!");
@@ -332,8 +316,6 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 		try {
 
 			frameAnimation = (AnimationDrawable) findViewById(R.id.carga).getBackground();
-//			frameAnimation.addFrame(getResources().getDrawable(R.drawable.c_siete), 1000);
-//			frameAnimation.addFrame(getResources().getDrawable(R.drawable.c_ocho), 1000);
 			frameAnimation.start();
 
 		} catch (Exception e) {
@@ -433,7 +415,7 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 	private void getService() {
 
 //		MiddleConnect.getService(this, id_user, latitud, longitud, index, comp1, comp2, no, barrio, obs, uuid, new AsyncHttpResponseHandler() {
-		MiddleConnect.getService(this, id_user, latitud, longitud, "", comp1, comp2, no, barrio, obs, uuid, new AsyncHttpResponseHandler() {
+		MiddleConnect.getService(this, id_user, latitud, longitud, "", comp1, comp2, no, barrio, obs, uuid, commit,new AsyncHttpResponseHandler() {
 
 					@Override
 					public void onStart()
@@ -515,20 +497,6 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 
 								registerReceiver(mBroadCastReceiver, intent);
 
-								// myTimer.schedule(new TimerTask()
-								// {
-								// 	@Override
-								// 	public void run()
-								// 	{
-								// 		Log.e("TIMER EJECUTANDO", "EJECUTANDO ***");
-
-								// 		puente.sendEmptyMessage(2000);
-
-								// 		myTimer.cancel();
-								// 	}
-
-								// }, 60000, 60000);
-
                                 reintento = 0;
 								myTimer.schedule(new TimerTask()
 								{
@@ -561,21 +529,14 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 
 								}, 2000, 10000);
 
-
-
-							}else
-							{
-								if(responsejson.getInt("error") == Error.NO_DRIVER_ENABLE)
-								{
+							}else {
+								if(responsejson.getInt("error") == Error.NO_DRIVER_ENABLE) {
 
 					                Log.v("SOLICITANDO_SERVICIO","error - Error.NO_DRIVER_ENABLE " + String.valueOf(new Date()));
-
 									Toast.makeText(getApplicationContext(), getString(R.string.error_no_driver),Toast.LENGTH_LONG).show();
 
-								}else
-								{
+								}else {
 									Log.v("SOLICITANDO_SERVICIO","error_request - " + String.valueOf(new Date()));
-
 									err_request();
 
 								}
@@ -583,8 +544,7 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 								finish();
 							}
 
-						} catch (Exception e)
-						{
+						} catch (Exception e) {
 							Log.e("error_solicitando", "Problema json"+e.toString());
 							Log.v("SOLICITANDO_SERVICIO","error - problemas json " + String.valueOf(new Date()));
 
@@ -599,7 +559,6 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 
 						Log.e("error_solicitando", "FAILURE"+response);
 						Log.v("SOLICITANDO_SERVICIO","onFailure " + String.valueOf(new Date()));
-
 
 						err_request();
 
@@ -675,20 +634,7 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 					            	}
 					            }
 
-							//}
-
-
-                            /*
-							if (responsejson.getBoolean("success"))
-							{
-
-								conf.setServiceId(responsejson.getString("service_id"));
-
-							}
-							*/
-
-						} catch (Exception e)
-						{
+						} catch (Exception e) {
 							Log.v("checkService", "Problema json"+e.toString());
 						}
 					}
@@ -700,8 +646,7 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 					}
 
 					@Override
-					public void onFinish()
-					{
+					public void onFinish() {
 
 						Log.v("checkService", "onFinish");
 
@@ -718,15 +663,11 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 		Toast.makeText(getApplicationContext(),getString(R.string.error_no_procc), Toast.LENGTH_SHORT).show();
 	}
 
-	public void service_cancel()
-	{
+	public void service_cancel() {
 
 		NotificationManager mNotificationManager = (NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
-
         Intent intent = new Intent(this, NotificationActivity.class);
-
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
-
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
 													        .setSmallIcon(R.drawable.ic_launcher)
 													        .setContentTitle(getString(R.string.app_name))
@@ -747,8 +688,7 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 
 	}
 
-	public void err_cancel()
-	{
+	public void err_cancel() {
 		Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		vibrator.vibrate(200);
 		Toast.makeText(getApplicationContext(),getResources().getString(R.string.error_cancel_service),Toast.LENGTH_SHORT).show();
@@ -799,8 +739,7 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 
 					} else {
 
-						if(responsejson.getInt("error") == 404)
-						{
+						if(responsejson.getInt("error") == 404) {
 							try {
 								pDialog.dismiss();
 							} catch (Exception e) {}
@@ -809,8 +748,7 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 
 							isError = false;
 
-						}else
-						{
+						}else {
 							isError = true;
 						}
 
@@ -851,8 +789,7 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 
 	}
 
-	public void cancelByService(final String Url)
-	{
+	public void cancelByService(final String Url) {
 		service_cancel();
 
 		url_cancel_current = Url;
@@ -864,8 +801,7 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 
 				try {
 
-					if (!pDialog.isShowing())
-					{
+					if (!pDialog.isShowing()) {
 						pDialog = new ProgressDialog(SolicitandoActivity.this);
 						pDialog.setMessage(getString(R.string.texto_cancelando_servicio));
 						pDialog.setIndeterminate(false);
@@ -885,8 +821,7 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 
 					JSONObject responsejson = new JSONObject(response);
 
-					if (responsejson.getBoolean("success"))
-					{
+					if (responsejson.getBoolean("success")) {
 						try {
 
 							isError = false;
@@ -900,8 +835,7 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 
 					} else {
 
-						if(responsejson.getInt("error") == 404)
-						{
+						if(responsejson.getInt("error") == 404) {
 							try {
 								pDialog.dismiss();
 							} catch (Exception e) {}
@@ -910,8 +844,7 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 
 							isError = false;
 
-						}else
-						{
+						}else {
 							isError = true;
 						}
 					}
@@ -938,8 +871,7 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 			@Override
 			public void onFinish() {
 
-				if (isError)
-				{
+				if (isError) {
 					try {
 						pDialog.dismiss();
 					} catch (Exception e) {

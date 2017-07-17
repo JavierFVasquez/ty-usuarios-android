@@ -903,9 +903,9 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
             totValue.setVisibility(View.VISIBLE);
 
             totUnits.setText("Total unidades: " + mTotUnits);
-            totCharge.setText("Total recargos: " +
 
-                    (Integer.valueOf(mTotCharge1) +
+            totCharge.setText("Total recargos: " +
+                    (Integer.valueOf(mTotCharge1 ) +
                             (Integer.valueOf(mTotCharge2)) +
                             (Integer.valueOf(mTotCharge3)) +
                             (Integer.valueOf(mTotCharge4))
