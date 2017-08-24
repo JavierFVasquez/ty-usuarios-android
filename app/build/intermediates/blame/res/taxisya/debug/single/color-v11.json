@@ -1,10 +1,10 @@
 [
     {
-        "merged": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android/app/build/intermediates/res/merged/taxisya/debug/color-v11/abc_background_cache_hint_selector_material_light.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/color-v11/abc_background_cache_hint_selector_material_light.xml"
+        "merged": "/Users/TaxisYa/Documents/Aplicacion base/ty-usuarios-android/app/build/intermediates/res/merged/taxisya/debug/color-v11/abc_background_cache_hint_selector_material_dark.xml",
+        "source": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/color-v11/abc_background_cache_hint_selector_material_dark.xml"
     },
     {
-        "merged": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android/app/build/intermediates/res/merged/taxisya/debug/color-v11/abc_background_cache_hint_selector_material_dark.xml",
-        "source": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/color-v11/abc_background_cache_hint_selector_material_dark.xml"
+        "merged": "/Users/TaxisYa/Documents/Aplicacion base/ty-usuarios-android/app/build/intermediates/res/merged/taxisya/debug/color-v11/abc_background_cache_hint_selector_material_light.xml",
+        "source": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/color-v11/abc_background_cache_hint_selector_material_light.xml"
     }
 ]

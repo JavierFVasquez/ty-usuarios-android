@@ -3,6 +3,8 @@
 
     <!-- URL SERVICES -->
 
+    <string name="facebook_app_id">248161855705121</string>
+
     <string name="login">user/login</string>
     <string name="is_logued">user/islogued</string>
     <string name="logout">user/logout</string>

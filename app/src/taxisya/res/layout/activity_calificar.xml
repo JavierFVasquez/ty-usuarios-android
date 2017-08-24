@@ -60,7 +60,7 @@
         <LinearLayout
             android:id="@+id/layout_subtitle"
             android:layout_width="fill_parent"
-            android:layout_height="38dp"
+            android:layout_height="55dp"
             android:layout_below="@+id/layout_title"
             android:gravity="center_horizontal|bottom"
             android:orientation="vertical">
@@ -85,46 +85,108 @@
                 android:text="@string/titulo_agendar_por_favor_calificar"
                 android:textSize="15dp" />
 
+            <TextView
+                android:id="@+id/subtitulo_tipo"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingLeft="20sp"
+                android:paddingRight="20sp"
+                android:text="@string/titulo_tipo_calificacion"
+                android:textSize="15dp" />
+
+
+
         </LinearLayout>
+
+        <EditText
+            android:id="@+id/obs_calificar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="46dp"
+            android:ems="10"
+            android:hint="Observación Calificación"
+            android:layout_below="@+id/layout_subtitle"
+
+            />
 
         <Button
             android:id="@+id/btnMuyBueno"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_below="@+id/layout_subtitle"
-            android:layout_marginLeft="10dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_alignTop="@+id/btnRegular"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/btn_request"
-            android:text="@string/texto_boton_muy_bueno"
-            android:textColor="@color/white"
-            android:visibility="visible" />
+            android:layout_toLeftOf="@+id/btnBueno"
+            android:background="@android:drawable/star_off"
+            android:visibility="visible"
+            android:textColor="@color/text_orange"
+            android:text="5"
+            android:textSize="18sp"
+            android:onClick="@android:drawable/star_on"
+        />
 
         <Button
             android:id="@+id/btnBueno"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_below="@+id/btnMuyBueno"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_toLeftOf="@+id/btnRegular"
+            android:layout_alignTop="@+id/btnRegular"
+            android:background="@android:drawable/star_off"
+            android:textColor="@color/text_orange"
+            android:text="4"
+            android:textSize="18sp"
+            android:visibility="visible"
+            android:onClick="@android:drawable/star_on"
+            />
+
+        <Button
+            android:id="@+id/btnRegular"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/obs_calificar"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/btn_request"
-            android:text="@string/texto_boton_bueno"
-            android:textColor="@color/white"
-            android:visibility="visible" />
+            android:background="@android:drawable/star_off"
+            android:textColor="@color/text_orange"
+            android:text="3"
+            android:textSize="18sp"
+            android:visibility="visible"
+            android:onClick="@android:drawable/star_on"
+            />
 
         <Button
             android:id="@+id/btnMalo"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_below="@+id/btnBueno"
-            android:layout_marginLeft="10dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_toRightOf="@+id/btnRegular"
+            android:layout_alignTop="@+id/btnRegular"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/btn_request"
-            android:text="@string/texto_boton_malo"
-            android:textColor="@color/white"
-            android:visibility="visible" />
+            android:background="@android:drawable/star_off"
+            android:textColor="@color/text_orange"
+            android:text="2"
+            android:textSize="18sp"
+            android:visibility="visible"
+            android:onClick="@android:drawable/star_on"
+            />
+
+        <Button
+            android:id="@+id/btnMuyMalo"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_toRightOf="@+id/btnMalo"
+            android:layout_alignTop="@+id/btnRegular"
+            android:background="@android:drawable/star_off"
+            android:textColor="@color/text_orange"
+            android:text="1"
+            android:textSize="18sp"
+            android:visibility="visible"
+            android:onClick="@android:drawable/star_on"
+            />
+
+
 
     </RelativeLayout>
 

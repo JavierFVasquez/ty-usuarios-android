@@ -57,7 +57,7 @@ import cz.msebera.android.httpclient.Header;
 public class ConfirmacionActivity extends Activity implements OnClickListener, Connectivity.ConnectivityQualityCheckListener, NetworkReceiverListener {
 
     private String TAG = "ConfirmacionActivity";
-    private TextView nombre_taxista, celular_taxista, placa_taxi, marca_taxi;
+    private TextView nombre_taxista, celular_taxista, placa_taxi, marca_taxi, calificaciondriver;
     private TextView messageTextView;
     private TextView authorizationCodeTextView;
     private ImageButton quality;
@@ -87,6 +87,8 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
     private String mTotCharge4;
     private String mTotValue;
     private int mPayType;
+
+    public String scoreD , numscoreD, driver_id;
 
     private BDAdapter mySQLiteAdapter;
     private Cursor mCursor;
@@ -290,6 +292,7 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
         foto = (ImageView) findViewById(R.id.Globoperfil);
         messageTextView = (TextView) findViewById(R.id.message);
         authorizationCodeTextView = (TextView) findViewById(R.id.authorizationCode);
+        calificaciondriver = (TextView) findViewById(R.id.qua);
 
         //if (mPayType == 3) {
             String strPhone = conf.getPhone();
@@ -515,6 +518,10 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
                 myTimer = null;
 
                 Intent i = new Intent(ConfirmacionActivity.this, CalificarActivity.class);
+               // i.putExtra("driver", getIntent().getExtras().getString("driver"));
+                i.putExtra("scoreD", scoreD);
+                i.putExtra("numscoreD", numscoreD);
+                i.putExtra("driver_id", driver_id);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
                 finish();
@@ -637,6 +644,7 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
             Log.v("cargaTaxista", "taxi0 = " + driver.getJSONObject("car").toString());
 
             String nombre;
+            String score;
             String telefono;
             String foto;
             String latitud;
@@ -661,6 +669,10 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
                 longitud = driver.getString("crt_lng");
             }
             nombre = driver.getString("name");
+            score = driver.getString("score_driver");
+            driver_id = driver.getString("id");
+            scoreD = score;
+            numscoreD = driver.getString("num_score");
             foto = driver.getString("picture");
 
             //Log.v("cargaTaxista", "taxi1 = " + driver.getJSONObject("car").toString());
@@ -684,6 +696,7 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
             descargarFoto(Connect.BASE_URL_IP + foto);
 
             nombre_taxista.setText(nombre);
+            calificaciondriver.setText("Calificación: " + score + " estrellas");
             placa_taxi.setText(placa);
             //placa_taxi.setTextSize(TypedValue.COMPLEX_UNIT_DIP,28);
             celular_taxista.setText(telefono);
@@ -904,12 +917,16 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
 
             totUnits.setText("Total unidades: " + mTotUnits);
 
-            totCharge.setText("Total recargos: " +
+            totCharge.setText("Recargos: " + " Aeropuerto:" + (Integer.valueOf(mTotCharge1))+
+                    " Nocturno:" + (Integer.valueOf(mTotCharge2))+ " Mensajeria:" + (Integer.valueOf(mTotCharge3))+
+                    " Puerta a Puerta:" + (Integer.valueOf(mTotCharge4)) );
+
+                    /*" Total:" +
                     (Integer.valueOf(mTotCharge1 ) +
                             (Integer.valueOf(mTotCharge2)) +
                             (Integer.valueOf(mTotCharge3)) +
-                            (Integer.valueOf(mTotCharge4))
-                    ));
+                            (Integer.valueOf(mTotCharge4))) */
+
 
             totValue.setText("Total: COP " + mTotValue);
         }

@@ -2,22 +2,76 @@
 <items version="2" >
 
     <item
-        is-multidex="false"
-        jar="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android/app/libs/gcm.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="/Users/TaxisYa/Documents/Aplicacion base/ty-usuarios-android/app/libs/gcm.jar"
+        jumboMode="true"
         optimize="true"
         revision="25.0.0"
         sha1="f0e7f01db9f6cbc6e5bf47c10c7d74fd7a7052d0">
-        <dex dex="/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android/app/build/intermediates/pre-dexed/taxisya/debug/gcm_e46cc84c8128f6490242135b26ca3d06a0cce8c4.jar" />
+        <dex dex="/Users/TaxisYa/Documents/Aplicacion base/ty-usuarios-android/app/build/intermediates/transforms/dex/taxisya/debug/folders/1000/2/gcm_93c54fb1ad837ce001b0fb5faf88a0c67646c781/classes.dex" />
     </item>
     <item
-        is-multidex="false"
-        jar="/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/libs/gcm.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="/Users/TaxisYa/.android/build-cache/8abc4cb3996029af6ab6636d22e8f00c3bdbca14/output/jars/classes.jar"
+        jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="f0e7f01db9f6cbc6e5bf47c10c7d74fd7a7052d0">
-        <dex dex="/Users/developer_celuvans/Downloads/tyusuarios-android-master/app/build/intermediates/pre-dexed/taxisya/debug/gcm_a17c0eba78bd03a91fc2a900f653ae0d6041684d.jar" />
+        sha1="807751a24cf96566fd8675517c94d8463cf364db">
+        <dex dex="/Users/TaxisYa/Documents/Aplicacion base/ty-usuarios-android/app/build/intermediates/transforms/dex/taxisya/debug/folders/1000/10/classes_6b69a6471552f9cd658c887be6eecd0b9986a169/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/TaxisYa/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-applinks/1.4.0/8ad21bf21784dacce5f2043afb97218cc377e835/bolts-applinks-1.4.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="8ad21bf21784dacce5f2043afb97218cc377e835">
+        <dex dex="/Users/TaxisYa/Documents/Aplicacion base/ty-usuarios-android/app/build/intermediates/transforms/dex/taxisya/debug/folders/1000/10/bolts-applinks-1.4.0_2c50ae28cf9d8f42efe8005de1ed0a076ee09d4f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/TaxisYa/Documents/Aplicacion base/ty-usuarios-android/app/build/intermediates/incremental-classes/taxisya/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="8bdc73d25953e8e7507fb0768b427a4bee528390">
+        <dex dex="/Users/TaxisYa/Documents/Aplicacion base/ty-usuarios-android/app/build/intermediates/transforms/dex/taxisya/debug/folders/1000/10000/instant-run-bootstrap_36febc40f878b32f0f2004bd417cf4db44e602f7/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/TaxisYa/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-tasks/1.4.0/d85884acf6810a3bbbecb587f239005cbc846dc4/bolts-tasks-1.4.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
+        <dex dex="/Users/TaxisYa/Documents/Aplicacion base/ty-usuarios-android/app/build/intermediates/transforms/dex/taxisya/debug/folders/1000/10/bolts-tasks-1.4.0_b8202ab15e17da9f0ba80e99e334fc65e0ef4487/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/TaxisYa/.android/build-cache/1fe3ef15813750648f9ead56dbce99b1854fcbfa/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="914f5d3e3ace66080e59613708f06d129a222e25">
+        <dex dex="/Users/TaxisYa/Documents/Aplicacion base/ty-usuarios-android/app/build/intermediates/transforms/dex/taxisya/debug/folders/1000/10/classes_105cfd01c3189bafbcc86cd85115f5b9eddfd7e9/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="474cccf169297d49fff89fd35b7634a7a9d1031c">
+        <dex dex="/Users/TaxisYa/Documents/Aplicacion base/ty-usuarios-android/app/build/intermediates/transforms/dex/taxisya/debug/folders/1000/10/classes_ba4b516ddce8cee21934a74a6ef333cc771b13f7/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/TaxisYa/Documents/Aplicacion base/ty-usuarios-android/app/build/intermediates/incremental-runtime-classes/taxisya/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="/Users/TaxisYa/Documents/Aplicacion base/ty-usuarios-android/app/build/intermediates/transforms/dex/taxisya/debug/folders/1000/10000/instant-run_2bc47625e108a53642b24818e887b5ab1252f19d/classes.dex" />
     </item>
 
 </items>

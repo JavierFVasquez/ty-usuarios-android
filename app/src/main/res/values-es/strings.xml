@@ -238,7 +238,7 @@
     <string name="title_informacion">Información</string>
     <string name="title_informacion_importante_2">Información importante</string>
     <string name="titulo_agendar_agradecimiento">Gracias por utilizar nuestros servicios</string>
-    <string name="titulo_agendar_por_favor_calificar">Por favor califica a tu conductor</string>
+    <string name="titulo_agendar_por_favor_calificar">Por favor califica a tu conductor de 1 a 5, siendo 5 la calificación mas alta</string>
     <string name="titulo_agendar_title_1">Califica</string>
     <string name="titulo_agendar_title_2">Servicio</string>
     <string name="titulo_cargando_agendamientos">Cargando Agendamientos...</string>

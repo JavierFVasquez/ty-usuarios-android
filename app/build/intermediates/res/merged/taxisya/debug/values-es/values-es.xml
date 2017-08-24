@@ -76,6 +76,29 @@
     <string name="close_session_error">Hubo un error al cerrar sesión</string>
     <string name="code_pass">user/pwd/confirm</string>
     <string name="codigo_de_confirmaci_n">Codigo de confirmación</string>
+    <string gender="unknown" name="com_facebook_device_auth_instructions">Ve a &lt;b>facebook.com/device&lt;/b> e ingresa el código que se muestra arriba.</string>
+    <string gender="unknown" name="com_facebook_image_download_unknown_error">Se produjo un error inesperado al descargar una imagen.</string>
+    <string gender="unknown" name="com_facebook_internet_permission_error_message">El inicio de sesión de WebView requiere permisos de INTERNET</string>
+    <string gender="unknown" name="com_facebook_internet_permission_error_title">Error de AndroidManifest</string>
+    <string gender="unknown" name="com_facebook_like_button_liked">Te gusta</string>
+    <string gender="unknown" name="com_facebook_like_button_not_liked">Me gusta</string>
+    <string gender="unknown" name="com_facebook_loading">Cargando...</string>
+    <string gender="unknown" name="com_facebook_loginview_cancel_action">Cancelar</string>
+    <string gender="unknown" name="com_facebook_loginview_log_in_button">Entrar</string>
+    <string gender="unknown" name="com_facebook_loginview_log_in_button_continue">Continuar con Facebook</string>
+    <string gender="unknown" name="com_facebook_loginview_log_in_button_long">Iniciar sesión con Facebook</string>
+    <string gender="unknown" name="com_facebook_loginview_log_out_action">Salir</string>
+    <string gender="unknown" name="com_facebook_loginview_log_out_button">Salir</string>
+    <string gender="unknown" name="com_facebook_loginview_logged_in_as">Sesión iniciada como: %1$s</string>
+    <string gender="unknown" name="com_facebook_loginview_logged_in_using_facebook">Iniciaste sesión con Facebook</string>
+    <string gender="unknown" name="com_facebook_send_button_text">Enviar</string>
+    <string gender="unknown" name="com_facebook_share_button_text">Compartir</string>
+    <string gender="unknown" name="com_facebook_smart_device_instructions">Para conectar tu cuenta, abre la aplicación de Facebook en tu dispositivo móvil y comprueba las notificaciones.</string>
+    <string gender="unknown" name="com_facebook_smart_device_instructions_or">o</string>
+    <string gender="unknown" name="com_facebook_smart_login_confirmation_cancel">¿No eres tú?</string>
+    <string gender="unknown" name="com_facebook_smart_login_confirmation_continue_as">Continuar como %1$s</string>
+    <string gender="unknown" name="com_facebook_smart_login_confirmation_title">Confirmar inicio de sesión</string>
+    <string gender="unknown" name="com_facebook_tooltip_default">Tú decides qué información quieres compartir con las aplicaciones.</string>
     <string msgid="8585111718777012708" name="common_google_play_services_enable_button">"Habilitar"</string>
     <string msgid="7045129128108380659" name="common_google_play_services_enable_text">"<ns1:g id="APP_NAME">%1$s</ns1:g> no funcionará hasta que no habilites Servicios de Google Play."</string>
     <string msgid="3147157405986503375" name="common_google_play_services_enable_title">"Habilita Servicios de Google Play"</string>
@@ -119,6 +142,7 @@
     <string name="error_position">No fue posible obtener su ubicación, espere unos segundos e intente otra vez!</string>
     <string name="error_q_service">Hubo un error al calificar el servicio</string>
     <string name="error_speed">Su conexión a internet presenta problemas de velocidad!</string>
+    <string name="facebook_app_id">248161855705121</string>
     <string name="finish_schedule">schedule/finish</string>
     <string name="getaddress">address/byuser</string>
     <string name="getdriverinfo">Hubo un error al cargar los datos del conductor</string>
@@ -149,6 +173,7 @@
     <string name="mensaje_servicio_tomado">El servicio ha sido tomado en otro dispositivo diferente con su usuario. Se deshabilitará esté dispositivo</string>
     <string name="mensaje_session_cerrada_con_exito">Sesión cerrada con éxito</string>
     <string name="message_app_version">Hay una nueva versión de Taxisya disponible; esta versión ya no es compatible. Para continuar debes actualizar la aplicación</string>
+    <string name="messenger_send_button_text">Enviar</string>
     <string name="myanged">schedule/user</string>
     <string name="network_connectivity_message">Verificando...</string>
     <string name="new_address_hint">Dirección</string>
@@ -247,7 +272,7 @@
     <string name="textimageview">link</string>
     <string name="texto_actualizar_datos">Actualizar datos</string>
     <string name="texto_agregar_nueva">Agregar nueva</string>
-    <string name="texto_aviso_confirmacion">hola dentro de pocos minutos estaré a tu disposición para llevarte seguro en tu destino</string>
+    <string name="texto_aviso_confirmacion">Hola, dentro de pocos minutos estaré a tu disposición para llevarte seguro en a destino</string>
     <string name="texto_barrio_1">Barrio:</string>
     <string name="texto_boton_bueno">Bueno</string>
     <string name="texto_boton_malo">Malo</string>
@@ -304,11 +329,12 @@
     <string name="title_informacion">Información</string>
     <string name="title_informacion_importante_2">Información importante</string>
     <string name="titulo_agendar_agradecimiento">Gracias por utilizar nuestros servicios</string>
-    <string name="titulo_agendar_por_favor_calificar">Por favor califica a tu conductor</string>
+    <string name="titulo_agendar_por_favor_calificar">Por favor califica a tu conductor de 1 a 5</string>
     <string name="titulo_agendar_title_1">Califica</string>
     <string name="titulo_agendar_title_2">Servicio</string>
     <string name="titulo_cargando_agendamientos">Cargando Agendamientos...</string>
     <string name="titulo_cierre_sesion">Cierre sesión</string>
+    <string name="titulo_tipo_calificacion">siendo 5 la calificación mas alta</string>
     <string name="tu_contrase_a">Contraseña</string>
     <string name="tu_e_mail_correo_electr_nico_">Correo electrónico</string>
     <string name="tu_n_mero_celular">Celular</string>

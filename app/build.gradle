@@ -1,6 +1,7 @@
 buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
+        mavenCentral()
     }
 
     dependencies {
@@ -19,8 +20,8 @@ android {
         applicationId "co.taxisya.usuarioandroid"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 0
-        versionName "1.9.9"
+        versionCode 1
+        versionName "1.9.11"
     }
 //    signingConfigs {
 //        release {
@@ -134,6 +135,8 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:9.8.0'
     compile 'com.paymentez.paymentezsdk:paymentezsdk:1.0.4'
     compile 'info.hoang8f:android-segmented:1.0.6'
+
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
 
 }
 

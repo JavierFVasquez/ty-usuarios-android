@@ -233,13 +233,15 @@ public class MiddleConnect {
         }
 	}
 
-	public static void finishSchedule(Context context , String user_id, String id_schedule,String uuid,String score,AsyncHttpResponseHandler responseHandler) {
+	public static void finishSchedule(Context context , String user_id, String id_schedule,String uuid,String score, String obs_score, String score_driver, AsyncHttpResponseHandler responseHandler) {
 		RequestParams params = new RequestParams();
 
 		params.put("user_id", user_id);
 		params.put("schedule_id", id_schedule);
 		params.put("uuid", uuid);
 		params.put("qualification", score);
+		params.put("reason_qualification", obs_score);
+		params.put("score_driver", score_driver);
 
 	    Log.v("USER_SERVICE", "        finishSchedule: ");
 
@@ -260,13 +262,17 @@ public class MiddleConnect {
 		Connect.post(context.getResources().getString(R.string.reclamo), params, responseHandler);
 	}
 
-	public static void calificar(Context context,String uuid,String id_user,String service_id,String score, AsyncHttpResponseHandler responseHandler)
+	public static void calificar(Context context,String uuid,String id_user,String service_id,String score,String obs_score, String score_driver, String num_score_driver, String driver_id, AsyncHttpResponseHandler responseHandler)
 	{
 		RequestParams params = new RequestParams();
 
 		params.put("user_id", id_user);
 		params.put("service_id", service_id);
 		params.put("qualification", score);
+		params.put("reason_qualification", obs_score);
+		params.put("score_driver", score_driver);
+		params.put("num_score_driver", num_score_driver);
+		params.put("driver_id", driver_id);
 		params.put("uuid", uuid);
 
 		Log.v("CALIFICA","user_id="+id_user + " service_id=" + service_id + " qualification=" + score + " uuid=" + uuid);

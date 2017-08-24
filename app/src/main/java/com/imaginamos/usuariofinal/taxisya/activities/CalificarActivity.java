@@ -14,7 +14,12 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
+
+import org.json.JSONObject;
+import org.json.JSONException;
+
 
 import com.imaginamos.taxisya.activities.MapaActivitys;
 import com.imaginamos.usuariofinal.taxisya.adapter.BDAdapter;
@@ -34,16 +39,24 @@ import retrofit.client.Response;
 
 public class CalificarActivity extends Activity implements OnClickListener {
 
-    private String mIdUser, mUuid, mServiceId;
-    private Button mBtnMuyBueno, mBtnBueno, mBtnMalo;
+    private String mIdUser, mUuid, mServiceId, mNumScore, mDriverId;
+
+    private Button mBtnMuyBueno, mBtnBueno, mBtnMalo, mBtnRegular, mBtnMuyMalo;
+    private EditText mEditobsScore;
 
 
     private String mScore;
+    private String mObsscore;
+    private String mScoreDriver;
+    private double NumScore;
     private Conf mConf;
     private BroadcastReceiver mReceiver;
 
     private BDAdapter mySQLiteAdapter;
     private Preferencias mPref;
+
+    private double scoreD;
+    private double numscoreD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +66,16 @@ public class CalificarActivity extends Activity implements OnClickListener {
 
         mBtnMuyBueno = (Button) findViewById(R.id.btnMuyBueno);
         mBtnBueno = (Button) findViewById(R.id.btnBueno);
+        mBtnRegular = (Button) findViewById(R.id.btnRegular);
         mBtnMalo = (Button) findViewById(R.id.btnMalo);
+        mBtnMuyMalo = (Button) findViewById(R.id.btnMuyMalo);
+        mEditobsScore = (EditText) findViewById(R.id.obs_calificar);
 
         mBtnMuyBueno.setOnClickListener(this);
         mBtnBueno.setOnClickListener(this);
+        mBtnRegular.setOnClickListener(this);
         mBtnMalo.setOnClickListener(this);
+        mBtnMuyMalo.setOnClickListener(this);
 
         mConf = new Conf(this);
 
@@ -69,6 +87,14 @@ public class CalificarActivity extends Activity implements OnClickListener {
         mySQLiteAdapter.openToWrite();
 
         mPref = new Preferencias(this);
+
+            scoreD = Double.parseDouble(getIntent().getExtras().getString("scoreD"));
+            numscoreD = Double.parseDouble(getIntent().getExtras().getString("numscoreD"));
+            mDriverId = getIntent().getExtras().getString("driver_id");
+
+          //  Log.v("Driver", "scoreD: " + scoreD + "numScoreD: " + numscoreD);
+
+
 
         Log.v("Confimacion", "id_user=" + mIdUser);
         Log.v("Confimacion", "uuid" + mUuid);
@@ -159,17 +185,49 @@ public class CalificarActivity extends Activity implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnMuyBueno:
-                mScore = "1";
+                mBtnBueno.getBackground();
+                mScore = "5";
+                DriverCalification();
+                mObsscore = mEditobsScore.getText().toString();
+                Log.v("CALIFICAR1", "obsScore: " + mObsscore);
+                Toast toast5 = Toast.makeText(getApplicationContext(), "5 estrellas: Muy buena Calificación " , Toast.LENGTH_SHORT);
+                toast5.show();
                 closeCalification();
                 break;
 
             case R.id.btnBueno:
-                mScore = "2";
+                mScore = "4";
+                DriverCalification();
+                mObsscore = mEditobsScore.getText().toString();
+                Toast toast4 = Toast.makeText(getApplicationContext(), "4 estrellas: Buena Calificación " , Toast.LENGTH_SHORT);
+                toast4.show();
+                closeCalification();
+                break;
+
+            case R.id.btnRegular:
+                mScore = "3";
+                DriverCalification();
+                mObsscore = mEditobsScore.getText().toString();
+                Toast toast3 = Toast.makeText(getApplicationContext(), "3 estrellas: Regular Calificación " , Toast.LENGTH_SHORT);
+                toast3.show();
                 closeCalification();
                 break;
 
             case R.id.btnMalo:
-                mScore = "3";
+                mScore = "2";
+                DriverCalification();
+                mObsscore = mEditobsScore.getText().toString();
+                Toast toast2 = Toast.makeText(getApplicationContext(), "2 estrellas: Mala Calificación " , Toast.LENGTH_SHORT);
+                toast2.show();
+                closeCalification();
+                break;
+
+            case R.id.btnMuyMalo:
+                mScore = "1";
+                DriverCalification();
+                mObsscore = mEditobsScore.getText().toString();
+                Toast toast1 = Toast.makeText(getApplicationContext(), "1 estrella: Muy Mala Calificación " , Toast.LENGTH_SHORT);
+                toast1.show();
                 final CharSequence[] items = {"Cobro injusto", "Vehiculo en mal estado", "Conductor irrespetuoso"};
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Razon:");
@@ -178,16 +236,16 @@ public class CalificarActivity extends Activity implements OnClickListener {
                         Toast toast = Toast.makeText(getApplicationContext(), "Haz elegido la opcion: " + items[item] , Toast.LENGTH_SHORT);
                         toast.show();
                         dialog.cancel();
-                        closeCalification();
                     }
                 });
                 AlertDialog alert = builder.create();
                 alert.show();
+                closeCalification();
                 break;
 
         }
 
-        MiddleConnect.calificar(this, mUuid, mIdUser, mServiceId, mScore, new AsyncHttpResponseHandler() {
+        MiddleConnect.calificar(this, mUuid, mIdUser, mServiceId, mScore, mObsscore, mScoreDriver, mNumScore, mDriverId, new AsyncHttpResponseHandler() {
             @Override
             public void onStart() {
                         Log.v("CALIFICAR1", "onStart ");
@@ -227,6 +285,21 @@ public class CalificarActivity extends Activity implements OnClickListener {
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(200);
         Toast.makeText(getApplicationContext(), getString(R.string.error_net), Toast.LENGTH_SHORT).show();
+    }
+
+    public void DriverCalification(){
+        double score = Double.parseDouble(mScore);
+        NumScore = numscoreD +1;
+        mNumScore = Double.toString(NumScore);
+        double promedio = (((scoreD * numscoreD) + score)/NumScore);
+        /*String score3 = Double.toString(scoreD);
+        String score4 = Double.toString(numscoreD);
+        String score5 = Double.toString(mNumScore);*/
+        mScoreDriver = Double.toString(promedio);
+        Log.v("CALIFICAR1",  "mScoreDriver: " + mScoreDriver);
+      /*  Log.v("CALIFICAR1",  "scoreD: " + score3);
+        Log.v("CALIFICAR1",  "numscoreD: " + score4);
+        Log.v("CALIFICAR1",  "mNumScoreD: " + score5); */
     }
 
 }
