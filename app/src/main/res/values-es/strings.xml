@@ -187,7 +187,7 @@
     <string name="texto_actualizar_datos">Actualizar datos</string>
     <string name="texto_opciones_pago">Medios de pago</string>
     <string name="texto_agregar_nueva">Agregar nueva</string>
-    <string name="texto_aviso_confirmacion">Hola, dentro de pocos minutos estaré a tu disposición para llevarte seguro en a destino</string>
+    <string name="texto_aviso_confirmacion">Hola, en pocos minutos estaré a tu disposición para llevarte seguro a destino.</string>
     <string name="texto_barrio_1">Barrio:</string>
     <string name="texto_boton_bueno">Bueno</string>
     <string name="texto_boton_malo">Malo</string>
@@ -238,10 +238,13 @@
     <string name="title_informacion">Información</string>
     <string name="title_informacion_importante_2">Información importante</string>
     <string name="titulo_agendar_agradecimiento">Gracias por utilizar nuestros servicios</string>
-    <string name="titulo_agendar_por_favor_calificar">Por favor califica a tu conductor de 1 a 5, siendo 5 la calificación mas alta</string>
+    <string name="titulo_agendar_por_favor_calificar">Por favor califica a tu conductor de 1 a 5</string>
+     <string name="titulo_tipo_calificacion">siendo 5 la calificación mas alta</string>
     <string name="titulo_agendar_title_1">Califica</string>
     <string name="titulo_agendar_title_2">Servicio</string>
     <string name="titulo_cargando_agendamientos">Cargando Agendamientos...</string>
+    <string name="btn_ask">Solicitar</string>
+    <string name="btn_return">Regresar</string>
     <string name="titulo_cierre_sesion">Cierre sesión</string>
     <string name="tu_contrase_a">Contraseña</string>
     <string name="tu_e_mail_correo_electr_nico_">Correo electrónico</string>
@@ -267,6 +270,14 @@
     <string name="ticket_commit">Ingresa motivo del vale</string>
     <string name="title_code_authorization">Código de autorización:</string>
     <string name="ticket_invalid">El vale no se ingresó o es inválido</string>
+    <string name="kind_services">Selecciona una opción para continuar</string>
+    <string name="car_text">Selecciona un vehículo para continuar</string>
+    <string name="place_details">
+    <![CDATA[
+        <i>%1$s</i>
 
+    ]]>
+    </string>
+    <string name="type_car">Tipo de Vehículo</string>
 
 </resources>

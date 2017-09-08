@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "/Users/TaxisYa/Documents/Aplicacion base/ty-usuarios-android/app/build/intermediates/incremental/mergeTaxisyaDebugResources/merged.dir/values-land/values-land.xml",
+        "outputFile": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android/app/build/intermediates/incremental/mergeTaxisyaDebugResources/merged.dir/values-land/values-land.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 120
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-land/values-land.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-land/values-land.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -30,7 +30,7 @@
                     "endOffset": 184
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-land/values-land.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-land/values-land.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -49,7 +49,7 @@
                     "endOffset": 255
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-land/values-land.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-land/values-land.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -68,7 +68,7 @@
                     "endOffset": 323
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-land/values-land.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-land/values-land.xml",
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,
@@ -88,7 +88,7 @@
                     "endOffset": 505
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/afaeaed6d52dd60781231cc6b0253458ac8aa484/output/res/values-land/values-land.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/6d66d7870bb9b862461a7e8f6658f21f792bb48b/output/res/values-land/values-land.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,

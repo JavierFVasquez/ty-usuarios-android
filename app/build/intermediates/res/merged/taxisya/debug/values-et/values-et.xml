@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
-    <string msgid="8585111718777012708" name="common_google_play_services_enable_button">"Lubamine"</string>
+    <string msgid="8585111718777012708" name="common_google_play_services_enable_button">"Luba"</string>
     <string msgid="7045129128108380659" name="common_google_play_services_enable_text">"Rakendus <ns1:g id="APP_NAME">%1$s</ns1:g> töötab ainult siis, kui lubate Google Play teenused."</string>
     <string msgid="3147157405986503375" name="common_google_play_services_enable_title">"Google Play teenuste lubamine"</string>
     <string msgid="9115728400623041681" name="common_google_play_services_install_button">"Installi"</string>
@@ -17,4 +17,6 @@
     <string msgid="5201977337835724196" name="common_open_on_phone">"Ava telefonis"</string>
     <string msgid="3441753203274453993" name="common_signin_button_text">"Logi sisse"</string>
     <string msgid="669893613918351210" name="common_signin_button_text_long">"Logi sisse Google\'i kontoga"</string>
+    <string msgid="1303870564366209730" name="place_autocomplete_clear_button">"Otsingu kustutamine"</string>
+    <string msgid="2809095107724486040" name="place_autocomplete_search_hint">"Otsing"</string>
 </resources>

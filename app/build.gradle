@@ -1,7 +1,7 @@
 buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
-        mavenCentral()
+        //mavenCentral()
     }
 
     dependencies {
@@ -20,8 +20,8 @@ android {
         applicationId "co.taxisya.usuarioandroid"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 1
-        versionName "1.9.11"
+        versionCode 0
+        versionName "1.9.13"
     }
 //    signingConfigs {
 //        release {
@@ -121,23 +121,28 @@ dependencies {
     compile "com.android.support:recyclerview-v7:${supportLibVersion}"
     compile "com.android.support:cardview-v7:${supportLibVersion}"
 
-    compile 'com.google.android.gms:play-services-maps:9.8.0'
-    compile 'com.google.android.gms:play-services-appindexing:9.8.0'
-    compile 'com.google.android.gms:play-services-location:9.8.0'
-    compile 'com.google.android.gms:play-services-analytics:9.8.0'
-    compile 'com.google.android.gms:play-services-gcm:9.8.0'
+    //compile 'com.google.android.gms:play-services-location:11.0.4'
+    //compile 'com.google.android.gms:play-services-appindexing:9.8.0'
+
+    
+    //compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+    compile 'com.google.android.gms:play-services-location:11.0.4'
+    compile 'com.google.android.gms:play-services-maps:11.0.4'
+    compile 'com.google.android.gms:play-services-analytics:11.0.4'
+    compile 'com.google.android.gms:play-services-gcm:11.0.4'
+    compile 'com.google.android.gms:play-services-places:11.0.4'
     compile 'com.loopj.android:android-async-http:1.4.4'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'de.greenrobot:eventbus:2.1.0'
     compile 'de.hdodenhof:circleimageview:1.3.0'
-    compile 'com.google.firebase:firebase-core:9.8.0'
-    compile 'com.google.firebase:firebase-messaging:9.8.0'
+    compile 'com.google.firebase:firebase-core:11.0.4'
+    compile 'com.google.firebase:firebase-messaging:11.0.4'
     compile 'com.paymentez.paymentezsdk:paymentezsdk:1.0.4'
     compile 'info.hoang8f:android-segmented:1.0.6'
-
-    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
-
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.google.android.gms:play-services-plus:11.0.4'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
 
 apply plugin: 'com.google.gms.google-services'

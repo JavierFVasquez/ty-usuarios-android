@@ -88,11 +88,11 @@ public class CalificarActivity extends Activity implements OnClickListener {
 
         mPref = new Preferencias(this);
 
-            scoreD = Double.parseDouble(getIntent().getExtras().getString("scoreD"));
-            numscoreD = Double.parseDouble(getIntent().getExtras().getString("numscoreD"));
-            mDriverId = getIntent().getExtras().getString("driver_id");
+        scoreD = Double.parseDouble(getIntent().getExtras().getString("scoreD"));
+        numscoreD = Double.parseDouble(getIntent().getExtras().getString("numscoreD"));
+        mDriverId = getIntent().getExtras().getString("driver_id");
 
-          //  Log.v("Driver", "scoreD: " + scoreD + "numScoreD: " + numscoreD);
+        //  Log.v("Driver", "scoreD: " + scoreD + "numScoreD: " + numscoreD);
 
 
 
@@ -248,8 +248,8 @@ public class CalificarActivity extends Activity implements OnClickListener {
         MiddleConnect.calificar(this, mUuid, mIdUser, mServiceId, mScore, mObsscore, mScoreDriver, mNumScore, mDriverId, new AsyncHttpResponseHandler() {
             @Override
             public void onStart() {
-                        Log.v("CALIFICAR1", "onStart ");
-                    }
+                Log.v("CALIFICAR1", "onStart ");
+            }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -278,7 +278,7 @@ public class CalificarActivity extends Activity implements OnClickListener {
         mPref.setRootActivity("MapaActivitys");
         Intent i = new Intent(CalificarActivity.this, MapaActivitys.class);
         startActivity(i);
-       // finish();
+        // finish();
     }
 
     public void errorCalification() {

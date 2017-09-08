@@ -31,8 +31,6 @@ public class EndAgendamientoActivity extends Activity implements OnClickListener
 
     private ImageView muyBueno, bueno, malo;
     private String score;
-    private String obs_score;
-    private String score_driver;
     private Conf conf;
 
     @Override
@@ -69,7 +67,7 @@ public class EndAgendamientoActivity extends Activity implements OnClickListener
 
     public void qualifyService(String id_schedule) {
 
-        MiddleConnect.finishSchedule(this, id_user, uuid, score,obs_score, score_driver, id_schedule, new AsyncHttpResponseHandler() {
+        MiddleConnect.finishSchedule(this, id_user, uuid, score, id_schedule, new AsyncHttpResponseHandler() {
             @Override
             public void onStart() {
                 pDialog = new ProgressDialog(EndAgendamientoActivity.this);

@@ -3,8 +3,6 @@
 
     <!-- URL SERVICES -->
 
-    <string name="facebook_app_id">248161855705121</string>
-
     <string name="login">user/login</string>
     <string name="is_logued">user/islogued</string>
     <string name="logout">user/logout</string>
@@ -278,5 +276,12 @@
     <string name="ticket_unauthorized">The ticket is not authorized</string>
     <string name="title_code_authorization">Code of authorization:</string>
     <string name="ticket_invalid">The ticket is not filled or not authorized</string>
+    <string name="place_details">
+    <![CDATA[
+        <i>%1$s</i>
+
+    ]]>
+    </string>
+    <string name="type_car">Car type</string>
 
 </resources>

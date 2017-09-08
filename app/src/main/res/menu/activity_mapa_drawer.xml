@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/profile"
+            android:title="Perfil"/>
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/calendar"
+            android:title="Agendamientos"/>
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/call_center_worker"
+            android:title="Historial y reclamos"/>
+
+        <item
+            android:id="@+id/nav_address"
+            android:icon="@drawable/contacts_book"
+            android:title="Mis direcciones"/>
+
+    </group>
+
+    <item android:title="Sesión">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/cross_mark"
+                android:title="Cerrar sesión"/>
+
+        </menu>
+    </item>
+
+</menu>

@@ -8,8 +8,8 @@ public final class BuildConfig {
   public static final String APPLICATION_ID = "co.taxisya.usuarioandroid";
   public static final String BUILD_TYPE = "debug";
   public static final String FLAVOR = "taxisya";
-  public static final int VERSION_CODE = 1;
-  public static final String VERSION_NAME = "1.9.11";
+  public static final int VERSION_CODE = 0;
+  public static final String VERSION_NAME = "1.9.13";
   // Fields from build type: debug
   public static final String HOST = "http://www.taxisya.co";
   public static final String HOST_NODE = "http://www.taxisya.co:3701/";

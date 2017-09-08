@@ -185,7 +185,7 @@ public class MiddleConnect {
 	}
 
 
-	public static void getServiceAddress(Context context,String user_id,String latitud,  String longitud,String address,String barrio,String uuid, String payType,String payReference,String userEmail, String cardReference, String code, String commit, AsyncHttpResponseHandler responseHandler) {
+	public static void getServiceAddress(Context context,String user_id,String latitud, String longitud,String address,String barrio,String uuid, String payType,String payReference,String userEmail, String cardReference, String code, String commit, String destination, AsyncHttpResponseHandler responseHandler) {
 
 		RequestParams params = new RequestParams();
 
@@ -193,7 +193,7 @@ public class MiddleConnect {
 		params.put("lng", longitud);
 		params.put("address", address);
 		params.put("barrio", barrio);
-		//params.put("commit", commit);
+		params.put("destination", destination);
 		params.put("uuid", uuid);
 		params.put("pay_type",payType);
 		params.put("pay_reference",payReference);
@@ -202,21 +202,24 @@ public class MiddleConnect {
 		params.put("code",code);
         params.put("commit",commit);
 
-		Log.v("USER_SERVICE", "        params " + params.toString());
+		Log.v("USER_SERVICE", "params " + params.toString());
 
-		Log.v("USER_SERVICE", "        getService: ");
+		Log.v("USER_SERVICE", "getService: ");
 
 		Connect.post(context.getResources().getString(R.string.request_service_address,user_id), params, responseHandler);
 	}
 
 
-	public static void checkStatusService(Context context, String user_id, String service_id, String uuid, AsyncHttpResponseHandler responseHandler) throws JSONException {
+	public static void checkStatusService(Context context, String user_id, String service_id, String uuid, String address, Double from_lat, Double from_lng, AsyncHttpResponseHandler responseHandler) throws JSONException {
 
 		RequestParams params = new RequestParams();
         Log.v("checkStatusService","service_id = " + service_id + " user_id = " + user_id);
         if (service_id != null ) {
 		    params.put("user_id", user_id);
 		    params.put("service_id", service_id);
+			params.put("address", address);
+			params.put("address", from_lat);
+			params.put("address", from_lng);
 
 	        Log.v("USER_SERVICE", "checkStatusService: ");
 
@@ -233,15 +236,13 @@ public class MiddleConnect {
         }
 	}
 
-	public static void finishSchedule(Context context , String user_id, String id_schedule,String uuid,String score, String obs_score, String score_driver, AsyncHttpResponseHandler responseHandler) {
+	public static void finishSchedule(Context context , String user_id, String id_schedule,String uuid,String score,AsyncHttpResponseHandler responseHandler) {
 		RequestParams params = new RequestParams();
 
 		params.put("user_id", user_id);
 		params.put("schedule_id", id_schedule);
 		params.put("uuid", uuid);
 		params.put("qualification", score);
-		params.put("reason_qualification", obs_score);
-		params.put("score_driver", score_driver);
 
 	    Log.v("USER_SERVICE", "        finishSchedule: ");
 
@@ -262,8 +263,8 @@ public class MiddleConnect {
 		Connect.post(context.getResources().getString(R.string.reclamo), params, responseHandler);
 	}
 
-	public static void calificar(Context context,String uuid,String id_user,String service_id,String score,String obs_score, String score_driver, String num_score_driver, String driver_id, AsyncHttpResponseHandler responseHandler)
-	{
+
+	public static void calificar(Context context,String uuid,String id_user,String service_id,String score,String obs_score, String score_driver, String num_score_driver, String driver_id, AsyncHttpResponseHandler responseHandler) {
 		RequestParams params = new RequestParams();
 
 		params.put("user_id", id_user);
@@ -276,7 +277,7 @@ public class MiddleConnect {
 		params.put("uuid", uuid);
 
 		Log.v("CALIFICA","user_id="+id_user + " service_id=" + service_id + " qualification=" + score + " uuid=" + uuid);
-	    Log.v("USER_SERVICE", "        activity_calificar: ");
+		Log.v("USER_SERVICE", "        activity_calificar: ");
 
 		Connect.post(context.getResources().getString(R.string.calificar), params, responseHandler);
 	}

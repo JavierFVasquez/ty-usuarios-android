@@ -7,4 +7,5 @@
     <string name="google_app_id" translatable="false">1:254682418821:android:a62d955d84b45b78</string>
     <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAjimktXSUrxSBHRq14RnO6oHemm2nadsE</string>
     <string name="google_storage_bucket" translatable="false">taxis-ya-usuario-android.appspot.com</string>
+    <string name="project_id" translatable="false">taxis-ya-usuario-android</string>
 </resources>

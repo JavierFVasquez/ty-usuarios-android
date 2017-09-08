@@ -71,7 +71,7 @@ public class HomeActivity extends Activity {
     private Boolean inUse = false;
     public String id_user;
     public String service_id;
-    public String status_id;
+    public String status_id ,address;
     private int status_service;
     private int qualification = 0;
     private BroadcastReceiver mReceiver;
@@ -81,6 +81,7 @@ public class HomeActivity extends Activity {
     private double longitud = 0;
     private int position2 = 0;
     private Preferencias mPref;
+    private double from_lat, from_lng;
 
 
     private static String TAG = "HOMEACTIVITY";
@@ -349,7 +350,7 @@ public class HomeActivity extends Activity {
 
                                     } else {
                                         mPref.setRootActivity("HomeActivity");
-                                        Intent in = new Intent(HomeActivity.this, RegistroActivity.class);
+                                        Intent in = new Intent(HomeActivity.this, LoginActivity.class);
                                         in.putExtra("target", Target.AGEND_TARGET);
                                         startActivity(in);
                                     }
@@ -378,7 +379,7 @@ public class HomeActivity extends Activity {
 
                                         } else {
                                             mPref.setRootActivity("HomeActivity");
-                                            Intent in = new Intent(HomeActivity.this, RegistroActivity.class);
+                                            Intent in = new Intent(HomeActivity.this, LoginActivity.class);
                                             in.putExtra("target", Target.HISTORY_TARGET);
                                             startActivity(in);
 
@@ -398,7 +399,7 @@ public class HomeActivity extends Activity {
 
                                         } else {
                                             mPref.setRootActivity("HomeActivity");
-                                            Intent in = new Intent(HomeActivity.this, RegistroActivity.class);
+                                            Intent in = new Intent(HomeActivity.this, LoginActivity.class);
                                             in.putExtra("target", Target.HISTORY_TARGET);
                                             startActivity(in);
 
@@ -413,12 +414,12 @@ public class HomeActivity extends Activity {
                                 if (conf.getLogin()) {
 
                                     mPref.setRootActivity("HomeActivity");
-                                    Intent in3 = new Intent(HomeActivity.this, MapaActivitys.class);
+                                    Intent in3 = new Intent(HomeActivity.this, MapaActivity.class);
                                     startActivity(in3);
                                 } else {
 
                                     mPref.setRootActivity("MapaActivitys");
-                                    Intent in = new Intent(HomeActivity.this, RegistroActivity.class);
+                                    Intent in = new Intent(HomeActivity.this, LoginActivity.class);
                                     in.putExtra("target", Target.HISTORY_TARGET);
                                     startActivity(in);
 
@@ -511,7 +512,7 @@ public class HomeActivity extends Activity {
         Log.v("checkService", "ini");
         Log.v("checkService", "id_driver=" + id_user + " service_id=" + service_id);
 
-        MiddleConnect.checkStatusService(this, id_user, service_id, "uuid", new AsyncHttpResponseHandler() {
+        MiddleConnect.checkStatusService(this, id_user, service_id, "uuid", address, from_lat, from_lng, new AsyncHttpResponseHandler() {
 
             @Override
             public void onStart() {
@@ -591,7 +592,7 @@ public class HomeActivity extends Activity {
         service_id = null;
         Log.v("checkServiceInOtherDev", "id_user=" + id_user + " service_id=" + service_id);
 
-        MiddleConnect.checkStatusService(HomeActivity.this, id_user, service_id, "uuid", new AsyncHttpResponseHandler() {
+        MiddleConnect.checkStatusService(HomeActivity.this, id_user, service_id, "uuid", address, from_lat, from_lng, new AsyncHttpResponseHandler() {
 
             @Override
             public void onStart() {

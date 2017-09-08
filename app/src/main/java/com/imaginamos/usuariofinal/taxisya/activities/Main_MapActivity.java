@@ -1,5 +1,6 @@
 package com.imaginamos.usuariofinal.taxisya.activities;
 
+
 import java.util.ArrayList;
 
 import org.json.JSONObject;
@@ -14,20 +15,17 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -38,31 +36,31 @@ import com.imaginamos.usuariofinal.taxisya.utils.Actions;
 import com.imaginamos.usuariofinal.taxisya.models.Conf;
 import com.imaginamos.usuariofinal.taxisya.R;
 
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-//public class Main_MapActivity extends FragmentActivity implements OnClickListener {
-public class Main_MapActivity extends Activity implements OnClickListener, NetworkChangeReceiver.NetworkReceiverListener,
-        Connectivity.ConnectivityQualityCheckListener, OnMapReadyCallback {
 
+public class Main_MapActivity extends AppCompatActivity implements OnClickListener, NetworkChangeReceiver.NetworkReceiverListener,
+        Connectivity.ConnectivityQualityCheckListener, OnMapReadyCallback{
 
     //private ImageView ver_taxista;
     private Button btnVerTaxista;
 
     private GoogleMap map;
     private ArrayList<LatLng> markerPoints;
-    private double latitud, longitud;
+    private double latitud, longitud, from_lat, from_lng;
+    private String mAddress;
     private BroadcastReceiver mReceiver;
     private MarkerOptions options = new MarkerOptions();
     private Marker marker;
     private RelativeLayout mNoConnectivityPanel;
+    public TextView time_arrive;
     private  LatLng mTaxi;
 
     private NetworkChangeReceiver mNetworkMonitor;
 
     private Connectivity connectivityChecker = new Connectivity(this);
-
+    //private String AddressFromMapa;
 
     @Override
     public void onRestart() {
@@ -111,22 +109,24 @@ public class Main_MapActivity extends Activity implements OnClickListener, Netwo
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.mapa_taxista);
-
         //ver_taxista = (ImageView) findViewById(R.id.ver_taxista);
-
         btnVerTaxista = (Button) findViewById(R.id.btnVerTaxista);
-
         mNoConnectivityPanel = (RelativeLayout) findViewById(R.id.layout_no_connectivity);
-
-        //ver_taxista.setOnClickListener(this);
-
         btnVerTaxista.setOnClickListener(this);
 
         Bundle reicieveParams = getIntent().getExtras();
+        if (reicieveParams != null) {
 
-        latitud = reicieveParams.getDouble("latitud");
+            latitud = reicieveParams.getDouble("latitud");
+            longitud = reicieveParams.getDouble("longitud");
 
-        longitud = reicieveParams.getDouble("longitud");
+            from_lat = reicieveParams.getDouble("from_lat");
+            from_lng = reicieveParams.getDouble("from_lng");
+            //String from_lat = reicieveParams.getString("from_lat");
+            //String from_lng = reicieveParams.getString("from_lng");
+        }
+
+        time_arrive = (TextView) findViewById(R.id.time_arrive);
 
 //		SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         MapFragment fm = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
@@ -136,18 +136,11 @@ public class Main_MapActivity extends Activity implements OnClickListener, Netwo
 //        map.setMyLocationEnabled(true);
 
         markerPoints = new ArrayList<LatLng>();
-
         mTaxi = new LatLng(latitud, longitud);
-
         markerPoints.add(mTaxi);
-
         options.position(mTaxi);
 
         options.icon(BitmapDescriptorFactory.fromResource(R.drawable.taxista_carrito));
-
-//        marker = map.addMarker(options);
-
-//        map.moveCamera(CameraUpdateFactory.newLatLngZoom(mTaxi, 17.0f));
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Actions.ACTION_TAXI_ARRIVED);
@@ -156,7 +149,6 @@ public class Main_MapActivity extends Activity implements OnClickListener, Netwo
         intentFilter.addAction(Actions.ACTION_CANCEL_DRIVER_SERVICE);
         intentFilter.addAction(Actions.ACTION_USER_CLOSE_SESSION);
         intentFilter.addAction(Actions.ACTION_MESSAGE_MASSIVE);
-        //intentFilter.addAction(Actions.CONFIRM_NEW_SERVICES);
 
         mReceiver = new BroadcastReceiver() {
 
@@ -195,46 +187,28 @@ public class Main_MapActivity extends Activity implements OnClickListener, Netwo
                     mostrarMensaje(message);
 
                 }
-                /*
-				else if (intent.getAction().equals(Actions.CONFIRM_NEW_SERVICES)) {
-                    Log.v("CONFIRMATION","onReceive() service_id = " + intent.getExtras().getString("service_id"));
-                    Log.v("CONFIRMATION","onReceive() kind_id = " + intent.getExtras().getString("kind_id"));
-
-                    Intent mIntent = new Intent(getApplicationContext(),ConfirmacionActivity.class);
-
-                    conf.setServiceId(intent.getExtras().getString("service_id"));
-
-                    mIntent.putExtra("driver", intent.getExtras().getString("driver"));
-                    mIntent.putExtra("kind_id", intent.getExtras().getString("kind_id"));
-
-                    startActivity(mIntent);
-                    finish();
-
-                }
-                */
-
 
             }
         };
 
+        mAddress = String.valueOf(from_lat + from_lng);
 
         registerReceiver(mReceiver, intentFilter);
 
+        //String url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + mAddress + "&destinations=" + mTaxi + "&mode=driving&language=fr-FR&avoid=tolls&key=AIzaSyAK5bs-8nB8_exkk5JhYOtpLD83ZRCkmPM";
+        //new GeoTask(Main_MapActivity.this).execute(url);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
         map = googleMap;
-
         map.setMyLocationEnabled(true);
-
         marker = map.addMarker(options);
-
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(mTaxi, 17.0f));
 
-
     }
+
 
     void mostrarMensaje(final String message) {
 
@@ -298,4 +272,14 @@ public class Main_MapActivity extends Activity implements OnClickListener, Netwo
     public void onConnectivityQualityChecked(boolean Optimal) {
         displayConnectivityPanel(!Optimal);
     }
+
+    /*@Override
+    public void setDouble(String result) {
+
+        String res[]=result.split(",");
+        Double min=Double.parseDouble(res[0])/60;
+        int dist=Integer.parseInt(res[1])/1000;
+        time_arrive.setText(" " + (int) (min / 60) + " hr " + (int) (min % 60) + " minutos");
+
+    }*/
 }

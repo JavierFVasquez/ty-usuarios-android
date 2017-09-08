@@ -8,32 +8,32 @@ package info.hoang8f.android.segmented;
 
 public final class R {
     public static final class attr {
-        public static final int sc_border_width = 0x7f01014c;
-        public static final int sc_checked_text_color = 0x7f01014e;
-        public static final int sc_corner_radius = 0x7f01014b;
-        public static final int sc_tint_color = 0x7f01014d;
+        public static final int sc_border_width = 0x7f010154;
+        public static final int sc_checked_text_color = 0x7f010156;
+        public static final int sc_corner_radius = 0x7f010153;
+        public static final int sc_tint_color = 0x7f010155;
     }
     public static final class color {
-        public static final int radio_button_selected_color = 0x7f0c0069;
-        public static final int radio_button_unselected_color = 0x7f0c006a;
+        public static final int radio_button_selected_color = 0x7f0c005b;
+        public static final int radio_button_unselected_color = 0x7f0c005c;
     }
     public static final class dimen {
-        public static final int radio_button_conner_radius = 0x7f0800ae;
-        public static final int radio_button_stroke_border = 0x7f0800af;
+        public static final int radio_button_conner_radius = 0x7f0800a2;
+        public static final int radio_button_stroke_border = 0x7f0800a3;
     }
     public static final class drawable {
         public static final int button_text_color = 0x7f02008a;
-        public static final int radio_checked = 0x7f02011c;
-        public static final int radio_unchecked = 0x7f02011d;
+        public static final int radio_checked = 0x7f020111;
+        public static final int radio_unchecked = 0x7f020112;
     }
     public static final class string {
-        public static final int app_name = 0x7f060045;
+        public static final int app_name = 0x7f06002f;
     }
     public static final class style {
-        public static final int RadioButton = 0x7f0900e8;
+        public static final int RadioButton = 0x7f0900db;
     }
     public static final class styleable {
-        public static final int[] SegmentedGroup = { 0x7f01014b, 0x7f01014c, 0x7f01014d, 0x7f01014e };
+        public static final int[] SegmentedGroup = { 0x7f010153, 0x7f010154, 0x7f010155, 0x7f010156 };
         public static final int SegmentedGroup_sc_border_width = 1;
         public static final int SegmentedGroup_sc_checked_text_color = 3;
         public static final int SegmentedGroup_sc_corner_radius = 0;

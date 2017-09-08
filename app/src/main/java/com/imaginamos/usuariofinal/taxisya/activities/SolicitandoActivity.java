@@ -48,30 +48,19 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 	public static final int NOTIFICATION_ID = 1;
 
 	private ImageView volver;
-
-	private String id_user, uuid, service_id, index, comp1, comp2, no, barrio, obs, latitud, longitud, commit;
-
+	private String id_user, uuid, service_id, index, comp1, comp2, no, barrio, obs, latitud, longitud, address, commit;
 	private ProgressDialog pDialog;
-
 	private AnimationDrawable frameAnimation;
-
 	private boolean isError = false;
-
 	private AlertDialog alert;
-
 	private Conf conf;
-
 	private String url_cancel_current;
-
 	private Timer myTimer = new Timer();
-
 	private BroadcastReceiver  mBroadCastReceiver;
-
 	private BroadcastReceiver mReceiver;
-
 	private int reintento = 0;
-
 	private Date fecha1;
+	private double from_lat, from_lng;
 
 	@SuppressLint("HandlerLeak")
 	private Handler puente = new Handler() {
@@ -585,7 +574,7 @@ public class SolicitandoActivity extends Activity implements OnClickListener {
 
         Log.v("checkService","id_user="+ id_user + " service_id=" + service_id );
 
-		MiddleConnect.checkStatusService(this, id_user, service_id, "uuid", new AsyncHttpResponseHandler() {
+		MiddleConnect.checkStatusService(this, id_user, service_id, "uuid", address, from_lat, from_lng, new AsyncHttpResponseHandler() {
 
 					@Override
 					public void onStart()

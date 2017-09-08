@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -67,32 +67,27 @@
                     android:contentDescription="@string/app_name"
                     android:src="@drawable/holaconfirm" />
                 -->
-                <TextView
-                    android:id="@+id/message"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="15sp"
-                    android:layout_marginRight="15sp"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center_horizontal"
-                    android:text="@string/texto_aviso_confirmacion"
-                    android:textColor="#999999"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="15sp"
-                    android:layout_marginRight="15sp"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/texto_mis_datos_son"
-                    android:textColor="#999999"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                <RelativeLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
+                    <TextView
+                        android:id="@+id/message"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="15sp"
+                        android:layout_marginRight="15sp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/texto_aviso_confirmacion"
+                        android:textColor="#999999"
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
+
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/relativeLayout1"
@@ -132,15 +127,6 @@
                             android:textSize="17sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/qua"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text=""
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="#EB8D71"
-                            android:textSize="17sp" />
-
                         <!--RelativeLayout
                             android:layout_width="fill_parent"
                             android:layout_height="match_parent">
@@ -162,6 +148,7 @@
                                 android:text=""
                                 android:textColor="#999999" />
                         </RelativeLayout-->
+
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
@@ -184,7 +171,6 @@
                                 android:layout_centerHorizontal="true"
                                 android:textColor="#999999" />
                         </RelativeLayout>
-
 
                         <TextView
                             android:id="@+id/celular"

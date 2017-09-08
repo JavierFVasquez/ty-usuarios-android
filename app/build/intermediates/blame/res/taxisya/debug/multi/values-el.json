@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "/Users/TaxisYa/Documents/Aplicacion base/ty-usuarios-android/app/build/intermediates/incremental/mergeTaxisyaDebugResources/merged.dir/values-el/values-el.xml",
+        "outputFile": "/Users/developer_celuvans/Documents/workspace/android/tyusuarios-android/app/build/intermediates/incremental/mergeTaxisyaDebugResources/merged.dir/values-el/values-el.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 218
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-el/values-el.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-el/values-el.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -30,7 +30,7 @@
                     "endOffset": 326
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-el/values-el.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-el/values-el.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -49,7 +49,7 @@
                     "endOffset": 449
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-el/values-el.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-el/values-el.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -68,7 +68,7 @@
                     "endOffset": 560
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-el/values-el.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-el/values-el.xml",
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,
@@ -87,7 +87,7 @@
                     "endOffset": 677
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-el/values-el.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-el/values-el.xml",
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,
@@ -106,7 +106,7 @@
                     "endOffset": 762
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-el/values-el.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-el/values-el.xml",
                     "position": {
                         "startLine": 7,
                         "startColumn": 4,
@@ -125,7 +125,7 @@
                     "endOffset": 867
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-el/values-el.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-el/values-el.xml",
                     "position": {
                         "startLine": 8,
                         "startColumn": 4,
@@ -144,7 +144,7 @@
                     "endOffset": 993
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-el/values-el.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-el/values-el.xml",
                     "position": {
                         "startLine": 9,
                         "startColumn": 4,
@@ -163,7 +163,7 @@
                     "endOffset": 1081
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-el/values-el.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-el/values-el.xml",
                     "position": {
                         "startLine": 10,
                         "startColumn": 4,
@@ -182,7 +182,7 @@
                     "endOffset": 1167
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-el/values-el.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-el/values-el.xml",
                     "position": {
                         "startLine": 11,
                         "startColumn": 4,
@@ -201,7 +201,7 @@
                     "endOffset": 1252
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-el/values-el.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-el/values-el.xml",
                     "position": {
                         "startLine": 12,
                         "startColumn": 4,
@@ -220,7 +220,7 @@
                     "endOffset": 1363
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-el/values-el.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-el/values-el.xml",
                     "position": {
                         "startLine": 13,
                         "startColumn": 4,
@@ -239,7 +239,7 @@
                     "endOffset": 1473
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-el/values-el.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-el/values-el.xml",
                     "position": {
                         "startLine": 14,
                         "startColumn": 4,
@@ -258,7 +258,7 @@
                     "endOffset": 1575
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-el/values-el.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-el/values-el.xml",
                     "position": {
                         "startLine": 15,
                         "startColumn": 4,
@@ -277,7 +277,7 @@
                     "endOffset": 1686
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-el/values-el.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-el/values-el.xml",
                     "position": {
                         "startLine": 16,
                         "startColumn": 4,
@@ -296,7 +296,7 @@
                     "endOffset": 1795
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-el/values-el.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-el/values-el.xml",
                     "position": {
                         "startLine": 17,
                         "startColumn": 4,
@@ -315,7 +315,7 @@
                     "endOffset": 1903
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-el/values-el.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-el/values-el.xml",
                     "position": {
                         "startLine": 18,
                         "startColumn": 4,
@@ -334,7 +334,7 @@
                     "endOffset": 2026
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-el/values-el.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-el/values-el.xml",
                     "position": {
                         "startLine": 19,
                         "startColumn": 4,
@@ -353,7 +353,7 @@
                     "endOffset": 2126
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-el/values-el.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-el/values-el.xml",
                     "position": {
                         "startLine": 20,
                         "startColumn": 4,
@@ -368,448 +368,11 @@
                     "startLine": 21,
                     "startColumn": 4,
                     "startOffset": 2131,
-                    "endColumn": 175,
-                    "endOffset": 2302
-                },
-                "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/res/values-el/values-el.xml",
-                    "position": {
-                        "startLine": 2,
-                        "startColumn": 4,
-                        "startOffset": 55,
-                        "endColumn": 175,
-                        "endOffset": 226
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 22,
-                    "startColumn": 4,
-                    "startOffset": 2307,
-                    "endColumn": 149,
-                    "endOffset": 2452
-                },
-                "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/res/values-el/values-el.xml",
-                    "position": {
-                        "startLine": 3,
-                        "startColumn": 4,
-                        "startOffset": 231,
-                        "endColumn": 149,
-                        "endOffset": 376
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 23,
-                    "startColumn": 4,
-                    "startOffset": 2457,
-                    "endColumn": 151,
-                    "endOffset": 2604
-                },
-                "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/res/values-el/values-el.xml",
-                    "position": {
-                        "startLine": 4,
-                        "startColumn": 4,
-                        "startOffset": 381,
-                        "endColumn": 151,
-                        "endOffset": 528
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 24,
-                    "startColumn": 4,
-                    "startOffset": 2609,
                     "endColumn": 112,
-                    "endOffset": 2717
+                    "endOffset": 2239
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/res/values-el/values-el.xml",
-                    "position": {
-                        "startLine": 5,
-                        "startColumn": 4,
-                        "startOffset": 533,
-                        "endColumn": 112,
-                        "endOffset": 641
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 25,
-                    "startColumn": 4,
-                    "startOffset": 2722,
-                    "endColumn": 86,
-                    "endOffset": 2804
-                },
-                "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/res/values-el/values-el.xml",
-                    "position": {
-                        "startLine": 6,
-                        "startColumn": 4,
-                        "startOffset": 646,
-                        "endColumn": 86,
-                        "endOffset": 728
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 26,
-                    "startColumn": 4,
-                    "startOffset": 2809,
-                    "endColumn": 91,
-                    "endOffset": 2896
-                },
-                "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/res/values-el/values-el.xml",
-                    "position": {
-                        "startLine": 7,
-                        "startColumn": 4,
-                        "startOffset": 733,
-                        "endColumn": 91,
-                        "endOffset": 820
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 27,
-                    "startColumn": 4,
-                    "startOffset": 2901,
-                    "endColumn": 76,
-                    "endOffset": 2973
-                },
-                "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/res/values-el/values-el.xml",
-                    "position": {
-                        "startLine": 8,
-                        "startColumn": 4,
-                        "startOffset": 825,
-                        "endColumn": 76,
-                        "endOffset": 897
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 28,
-                    "startColumn": 4,
-                    "startOffset": 2978,
-                    "endColumn": 89,
-                    "endOffset": 3063
-                },
-                "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/res/values-el/values-el.xml",
-                    "position": {
-                        "startLine": 9,
-                        "startColumn": 4,
-                        "startOffset": 902,
-                        "endColumn": 89,
-                        "endOffset": 987
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 29,
-                    "startColumn": 4,
-                    "startOffset": 3068,
-                    "endColumn": 89,
-                    "endOffset": 3153
-                },
-                "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/res/values-el/values-el.xml",
-                    "position": {
-                        "startLine": 10,
-                        "startColumn": 4,
-                        "startOffset": 992,
-                        "endColumn": 89,
-                        "endOffset": 1077
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 30,
-                    "startColumn": 4,
-                    "startOffset": 3158,
-                    "endColumn": 114,
-                    "endOffset": 3268
-                },
-                "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/res/values-el/values-el.xml",
-                    "position": {
-                        "startLine": 11,
-                        "startColumn": 4,
-                        "startOffset": 1082,
-                        "endColumn": 114,
-                        "endOffset": 1192
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 31,
-                    "startColumn": 4,
-                    "startOffset": 3273,
-                    "endColumn": 111,
-                    "endOffset": 3380
-                },
-                "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/res/values-el/values-el.xml",
-                    "position": {
-                        "startLine": 12,
-                        "startColumn": 4,
-                        "startOffset": 1197,
-                        "endColumn": 111,
-                        "endOffset": 1304
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 32,
-                    "startColumn": 4,
-                    "startOffset": 3385,
-                    "endColumn": 93,
-                    "endOffset": 3474
-                },
-                "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/res/values-el/values-el.xml",
-                    "position": {
-                        "startLine": 13,
-                        "startColumn": 4,
-                        "startOffset": 1309,
-                        "endColumn": 93,
-                        "endOffset": 1398
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 33,
-                    "startColumn": 4,
-                    "startOffset": 3479,
-                    "endColumn": 93,
-                    "endOffset": 3568
-                },
-                "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/res/values-el/values-el.xml",
-                    "position": {
-                        "startLine": 14,
-                        "startColumn": 4,
-                        "startOffset": 1403,
-                        "endColumn": 93,
-                        "endOffset": 1492
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 34,
-                    "startColumn": 4,
-                    "startOffset": 3573,
-                    "endColumn": 104,
-                    "endOffset": 3673
-                },
-                "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/res/values-el/values-el.xml",
-                    "position": {
-                        "startLine": 15,
-                        "startColumn": 4,
-                        "startOffset": 1497,
-                        "endColumn": 104,
-                        "endOffset": 1597
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 35,
-                    "startColumn": 4,
-                    "startOffset": 3678,
-                    "endColumn": 120,
-                    "endOffset": 3794
-                },
-                "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/res/values-el/values-el.xml",
-                    "position": {
-                        "startLine": 16,
-                        "startColumn": 4,
-                        "startOffset": 1602,
-                        "endColumn": 120,
-                        "endOffset": 1718
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 36,
-                    "startColumn": 4,
-                    "startOffset": 3799,
-                    "endColumn": 83,
-                    "endOffset": 3878
-                },
-                "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/res/values-el/values-el.xml",
-                    "position": {
-                        "startLine": 17,
-                        "startColumn": 4,
-                        "startOffset": 1723,
-                        "endColumn": 83,
-                        "endOffset": 1802
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 37,
-                    "startColumn": 4,
-                    "startOffset": 3883,
-                    "endColumn": 88,
-                    "endOffset": 3967
-                },
-                "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/res/values-el/values-el.xml",
-                    "position": {
-                        "startLine": 18,
-                        "startColumn": 4,
-                        "startOffset": 1807,
-                        "endColumn": 88,
-                        "endOffset": 1891
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 38,
-                    "startColumn": 4,
-                    "startOffset": 3972,
-                    "endColumn": 202,
-                    "endOffset": 4170
-                },
-                "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/res/values-el/values-el.xml",
-                    "position": {
-                        "startLine": 19,
-                        "startColumn": 4,
-                        "startOffset": 1896,
-                        "endColumn": 202,
-                        "endOffset": 2094
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 39,
-                    "startColumn": 4,
-                    "startOffset": 4175,
-                    "endColumn": 92,
-                    "endOffset": 4263
-                },
-                "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/res/values-el/values-el.xml",
-                    "position": {
-                        "startLine": 20,
-                        "startColumn": 4,
-                        "startOffset": 2099,
-                        "endColumn": 92,
-                        "endOffset": 2187
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 40,
-                    "startColumn": 4,
-                    "startOffset": 4268,
-                    "endColumn": 106,
-                    "endOffset": 4370
-                },
-                "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/res/values-el/values-el.xml",
-                    "position": {
-                        "startLine": 21,
-                        "startColumn": 4,
-                        "startOffset": 2192,
-                        "endColumn": 106,
-                        "endOffset": 2294
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 41,
-                    "startColumn": 4,
-                    "startOffset": 4375,
-                    "endColumn": 111,
-                    "endOffset": 4482
-                },
-                "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/res/values-el/values-el.xml",
-                    "position": {
-                        "startLine": 22,
-                        "startColumn": 4,
-                        "startOffset": 2299,
-                        "endColumn": 111,
-                        "endOffset": 2406
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 42,
-                    "startColumn": 4,
-                    "startOffset": 4487,
-                    "endColumn": 109,
-                    "endOffset": 4592
-                },
-                "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/res/values-el/values-el.xml",
-                    "position": {
-                        "startLine": 23,
-                        "startColumn": 4,
-                        "startOffset": 2411,
-                        "endColumn": 109,
-                        "endOffset": 2516
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 43,
-                    "startColumn": 4,
-                    "startOffset": 4597,
-                    "endColumn": 164,
-                    "endOffset": 4757
-                },
-                "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/res/values-el/values-el.xml",
-                    "position": {
-                        "startLine": 24,
-                        "startColumn": 4,
-                        "startOffset": 2521,
-                        "endColumn": 164,
-                        "endOffset": 2681
-                    }
-                }
-            },
-            {
-                "to": {
-                    "startLine": 44,
-                    "startColumn": 4,
-                    "startOffset": 4762,
-                    "endColumn": 112,
-                    "endOffset": 4870
-                },
-                "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c1eff232e395d53d1fab868cf2a2038197dde76e/output/res/values-el/values.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/9b440d5bb4a8a4e48dda80aabe70142f82395d5e/output/res/values-el/values.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 0,
@@ -821,14 +384,14 @@
             },
             {
                 "to": {
-                    "startLine": 45,
+                    "startLine": 22,
                     "startColumn": 4,
-                    "startOffset": 4875,
+                    "startOffset": 2244,
                     "endColumn": 217,
-                    "endOffset": 5088
+                    "endOffset": 2457
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c1eff232e395d53d1fab868cf2a2038197dde76e/output/res/values-el/values.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/9b440d5bb4a8a4e48dda80aabe70142f82395d5e/output/res/values-el/values.xml",
                     "position": {
                         "startLine": 5,
                         "startColumn": 0,
@@ -840,14 +403,14 @@
             },
             {
                 "to": {
-                    "startLine": 46,
+                    "startLine": 23,
                     "startColumn": 4,
-                    "startOffset": 5093,
+                    "startOffset": 2462,
                     "endColumn": 133,
-                    "endOffset": 5222
+                    "endOffset": 2591
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c1eff232e395d53d1fab868cf2a2038197dde76e/output/res/values-el/values.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/9b440d5bb4a8a4e48dda80aabe70142f82395d5e/output/res/values-el/values.xml",
                     "position": {
                         "startLine": 6,
                         "startColumn": 0,
@@ -859,14 +422,14 @@
             },
             {
                 "to": {
-                    "startLine": 47,
+                    "startLine": 24,
                     "startColumn": 4,
-                    "startOffset": 5227,
+                    "startOffset": 2596,
                     "endColumn": 112,
-                    "endOffset": 5335
+                    "endOffset": 2704
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c1eff232e395d53d1fab868cf2a2038197dde76e/output/res/values-el/values.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/9b440d5bb4a8a4e48dda80aabe70142f82395d5e/output/res/values-el/values.xml",
                     "position": {
                         "startLine": 7,
                         "startColumn": 0,
@@ -878,14 +441,14 @@
             },
             {
                 "to": {
-                    "startLine": 48,
+                    "startLine": 25,
                     "startColumn": 4,
-                    "startOffset": 5340,
+                    "startOffset": 2709,
                     "endColumn": 239,
-                    "endOffset": 5575
+                    "endOffset": 2944
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c1eff232e395d53d1fab868cf2a2038197dde76e/output/res/values-el/values.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/9b440d5bb4a8a4e48dda80aabe70142f82395d5e/output/res/values-el/values.xml",
                     "position": {
                         "startLine": 8,
                         "startColumn": 0,
@@ -897,14 +460,14 @@
             },
             {
                 "to": {
-                    "startLine": 49,
+                    "startLine": 26,
                     "startColumn": 4,
-                    "startOffset": 5580,
+                    "startOffset": 2949,
                     "endColumn": 126,
-                    "endOffset": 5702
+                    "endOffset": 3071
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c1eff232e395d53d1fab868cf2a2038197dde76e/output/res/values-el/values.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/9b440d5bb4a8a4e48dda80aabe70142f82395d5e/output/res/values-el/values.xml",
                     "position": {
                         "startLine": 9,
                         "startColumn": 0,
@@ -916,14 +479,14 @@
             },
             {
                 "to": {
-                    "startLine": 50,
+                    "startLine": 27,
                     "startColumn": 4,
-                    "startOffset": 5707,
+                    "startOffset": 3076,
                     "endColumn": 133,
-                    "endOffset": 5836
+                    "endOffset": 3205
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c1eff232e395d53d1fab868cf2a2038197dde76e/output/res/values-el/values.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/9b440d5bb4a8a4e48dda80aabe70142f82395d5e/output/res/values-el/values.xml",
                     "position": {
                         "startLine": 10,
                         "startColumn": 0,
@@ -935,14 +498,14 @@
             },
             {
                 "to": {
-                    "startLine": 51,
+                    "startLine": 28,
                     "startColumn": 4,
-                    "startOffset": 5841,
+                    "startOffset": 3210,
                     "endColumn": 222,
-                    "endOffset": 6059
+                    "endOffset": 3428
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/08050cfa91e803cf60422f41c0ea1d32db4ad872/output/res/values-el/values.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/5905606974ac812e21c728fa6c7297c850433b23/output/res/values-el/values.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 0,
@@ -954,14 +517,14 @@
             },
             {
                 "to": {
-                    "startLine": 52,
+                    "startLine": 29,
                     "startColumn": 4,
-                    "startOffset": 6064,
+                    "startOffset": 3433,
                     "endColumn": 247,
-                    "endOffset": 6307
+                    "endOffset": 3676
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c1eff232e395d53d1fab868cf2a2038197dde76e/output/res/values-el/values.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/9b440d5bb4a8a4e48dda80aabe70142f82395d5e/output/res/values-el/values.xml",
                     "position": {
                         "startLine": 11,
                         "startColumn": 0,
@@ -973,14 +536,14 @@
             },
             {
                 "to": {
-                    "startLine": 53,
+                    "startLine": 30,
                     "startColumn": 4,
-                    "startOffset": 6312,
+                    "startOffset": 3681,
                     "endColumn": 109,
-                    "endOffset": 6417
+                    "endOffset": 3786
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c1eff232e395d53d1fab868cf2a2038197dde76e/output/res/values-el/values.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/9b440d5bb4a8a4e48dda80aabe70142f82395d5e/output/res/values-el/values.xml",
                     "position": {
                         "startLine": 12,
                         "startColumn": 0,
@@ -992,14 +555,14 @@
             },
             {
                 "to": {
-                    "startLine": 54,
+                    "startLine": 31,
                     "startColumn": 4,
-                    "startOffset": 6422,
+                    "startOffset": 3791,
                     "endColumn": 200,
-                    "endOffset": 6618
+                    "endOffset": 3987
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c1eff232e395d53d1fab868cf2a2038197dde76e/output/res/values-el/values.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/9b440d5bb4a8a4e48dda80aabe70142f82395d5e/output/res/values-el/values.xml",
                     "position": {
                         "startLine": 13,
                         "startColumn": 0,
@@ -1011,14 +574,14 @@
             },
             {
                 "to": {
-                    "startLine": 55,
+                    "startLine": 32,
                     "startColumn": 4,
-                    "startOffset": 6623,
+                    "startOffset": 3992,
                     "endColumn": 130,
-                    "endOffset": 6749
+                    "endOffset": 4118
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c1eff232e395d53d1fab868cf2a2038197dde76e/output/res/values-el/values.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/9b440d5bb4a8a4e48dda80aabe70142f82395d5e/output/res/values-el/values.xml",
                     "position": {
                         "startLine": 14,
                         "startColumn": 0,
@@ -1030,14 +593,14 @@
             },
             {
                 "to": {
-                    "startLine": 56,
+                    "startLine": 33,
                     "startColumn": 4,
-                    "startOffset": 6754,
+                    "startOffset": 4123,
                     "endColumn": 236,
-                    "endOffset": 6986
+                    "endOffset": 4355
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c1eff232e395d53d1fab868cf2a2038197dde76e/output/res/values-el/values.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/9b440d5bb4a8a4e48dda80aabe70142f82395d5e/output/res/values-el/values.xml",
                     "position": {
                         "startLine": 15,
                         "startColumn": 0,
@@ -1049,14 +612,14 @@
             },
             {
                 "to": {
-                    "startLine": 57,
+                    "startLine": 34,
                     "startColumn": 4,
-                    "startOffset": 6991,
+                    "startOffset": 4360,
                     "endColumn": 174,
-                    "endOffset": 7161
+                    "endOffset": 4530
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c1eff232e395d53d1fab868cf2a2038197dde76e/output/res/values-el/values.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/9b440d5bb4a8a4e48dda80aabe70142f82395d5e/output/res/values-el/values.xml",
                     "position": {
                         "startLine": 16,
                         "startColumn": 0,
@@ -1068,14 +631,14 @@
             },
             {
                 "to": {
-                    "startLine": 58,
+                    "startLine": 35,
                     "startColumn": 4,
-                    "startOffset": 7166,
+                    "startOffset": 4535,
                     "endColumn": 98,
-                    "endOffset": 7260
+                    "endOffset": 4629
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c1eff232e395d53d1fab868cf2a2038197dde76e/output/res/values-el/values.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/9b440d5bb4a8a4e48dda80aabe70142f82395d5e/output/res/values-el/values.xml",
                     "position": {
                         "startLine": 17,
                         "startColumn": 0,
@@ -1087,14 +650,14 @@
             },
             {
                 "to": {
-                    "startLine": 59,
+                    "startLine": 36,
                     "startColumn": 4,
-                    "startOffset": 7265,
+                    "startOffset": 4634,
                     "endColumn": 91,
-                    "endOffset": 7352
+                    "endOffset": 4721
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c1eff232e395d53d1fab868cf2a2038197dde76e/output/res/values-el/values.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/9b440d5bb4a8a4e48dda80aabe70142f82395d5e/output/res/values-el/values.xml",
                     "position": {
                         "startLine": 18,
                         "startColumn": 0,
@@ -1106,14 +669,14 @@
             },
             {
                 "to": {
-                    "startLine": 60,
+                    "startLine": 37,
                     "startColumn": 4,
-                    "startOffset": 7357,
+                    "startOffset": 4726,
                     "endColumn": 111,
-                    "endOffset": 7464
+                    "endOffset": 4833
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c1eff232e395d53d1fab868cf2a2038197dde76e/output/res/values-el/values.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/9b440d5bb4a8a4e48dda80aabe70142f82395d5e/output/res/values-el/values.xml",
                     "position": {
                         "startLine": 19,
                         "startColumn": 0,
@@ -1125,33 +688,52 @@
             },
             {
                 "to": {
-                    "startLine": 61,
+                    "startLine": 38,
                     "startColumn": 4,
-                    "startOffset": 7469,
-                    "endColumn": 63,
-                    "endOffset": 7528
+                    "startOffset": 4838,
+                    "endColumn": 110,
+                    "endOffset": 4944
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/e15fa5cfefac5becdf562d3ab125587c759978ff/output/res/values-el/values-el.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/26ac45e9fa4940b170873934a1f337b99cd78a24/output/res/values-el/values.xml",
                     "position": {
-                        "startLine": 25,
-                        "startColumn": 4,
-                        "startOffset": 2686,
-                        "endColumn": 63,
-                        "endOffset": 2745
+                        "startLine": 4,
+                        "startColumn": 0,
+                        "startOffset": 233,
+                        "endColumn": 106,
+                        "endOffset": 339
                     }
                 }
             },
             {
                 "to": {
-                    "startLine": 62,
+                    "startLine": 39,
                     "startColumn": 4,
-                    "startOffset": 7533,
-                    "endColumn": 84,
-                    "endOffset": 7613
+                    "startOffset": 4949,
+                    "endColumn": 98,
+                    "endOffset": 5043
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-el/values-el.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/26ac45e9fa4940b170873934a1f337b99cd78a24/output/res/values-el/values.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 0,
+                        "startOffset": 340,
+                        "endColumn": 94,
+                        "endOffset": 434
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 40,
+                    "startColumn": 4,
+                    "startOffset": 5048,
+                    "endColumn": 84,
+                    "endOffset": 5128
+                },
+                "from": {
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-el/values-el.xml",
                     "position": {
                         "startLine": 21,
                         "startColumn": 4,
@@ -1163,14 +745,14 @@
             },
             {
                 "to": {
-                    "startLine": 63,
+                    "startLine": 41,
                     "startColumn": 4,
-                    "startOffset": 7618,
+                    "startOffset": 5133,
                     "endColumn": 100,
-                    "endOffset": 7714
+                    "endOffset": 5229
                 },
                 "from": {
-                    "file": "/Users/TaxisYa/.android/build-cache/c0ac328e37169c6171bf93071fc866a6e800d45d/output/res/values-el/values-el.xml",
+                    "file": "/Users/developer_celuvans/.android/build-cache/a5f3dcb5227c42b866ff7ed2967cc074b7db016a/output/res/values-el/values-el.xml",
                     "position": {
                         "startLine": 22,
                         "startColumn": 4,

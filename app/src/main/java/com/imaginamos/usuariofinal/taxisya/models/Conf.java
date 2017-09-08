@@ -18,7 +18,6 @@ public class Conf {
 	private String IDUSER="IDUSER";
 	private String NAME = "NAME";
 	private String PHONE = "PHONE";
-	private String QUALIFICATION = "QUALIFICATION";
 	private String CARD_DEFAULT = "CARD_DEFAULT";
 	private String USER_EMAIL = "USER_EMAIL"; // para transaccion
 
@@ -84,16 +83,9 @@ public class Conf {
 		editor.commit();
 	}
 
-
-
 	public String getPhone()
 	{
 		return prefs.getString(PHONE, null);
-	}
-
-	public String getQualification()
-	{
-		return prefs.getString(QUALIFICATION, null);
 	}
 
 	public void setUuid(String uuid)
@@ -101,8 +93,6 @@ public class Conf {
 		editor.putString(UUID, uuid);
 		editor.commit();
 	}
-
-
 
 	public String getUuid()
 	{
