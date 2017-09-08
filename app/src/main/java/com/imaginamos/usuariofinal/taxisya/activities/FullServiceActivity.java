@@ -173,7 +173,7 @@ public class FullServiceActivity extends AppCompatActivity implements Navigation
     private ProgressDialog pDialog;
     private Conf conf;
     private Timer timer;
-    private MapaActivity.GetPosition gp;
+    private GetPosition gp;
     private BroadcastReceiver mReceiver;
     private NetworkChangeReceiver mNetworkMonitor;
     private CircleImageView imageMap;
@@ -2158,7 +2158,7 @@ public class FullServiceActivity extends AppCompatActivity implements Navigation
                             timer.cancel();
                             timer.purge();
                             gp.cancel(true);
-                            gp = new MapaActivity.GetPosition();
+                            gp = new GetPosition();
                             gp.execute(latitud, longitud);
                         }
 

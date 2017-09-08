@@ -2074,7 +2074,7 @@ public class MapaActivity extends FragmentActivity
     }
 
 
-    static class GetPosition extends AsyncTask<Double, Integer, List<Address>> {
+    class GetPosition extends AsyncTask<Double, Integer, List<Address>> {
 
         @Override
         protected void onPreExecute() {
