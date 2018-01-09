@@ -56,6 +56,7 @@ public class Main_MapActivity extends AppCompatActivity implements OnClickListen
     private RelativeLayout mNoConnectivityPanel;
     public TextView time_arrive;
     private  LatLng mTaxi;
+    private Button BT_Chat;
 
     private NetworkChangeReceiver mNetworkMonitor;
 
@@ -75,7 +76,7 @@ public class Main_MapActivity extends AppCompatActivity implements OnClickListen
     protected void onResume() {
 
         super.onResume();
-        displayConnectivityPanel(!Connectivity.isConnected(this) && !connectivityChecker.getConnectivityCheckResult());
+//        displayConnectivityPanel(!Connectivity.isConnected(this) && !connectivityChecker.getConnectivityCheckResult());
         connectivityChecker.startConnectivityMonitor();
         mNetworkMonitor = new NetworkChangeReceiver(this);
         registerReceiver(mNetworkMonitor, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
@@ -113,6 +114,19 @@ public class Main_MapActivity extends AppCompatActivity implements OnClickListen
         btnVerTaxista = (Button) findViewById(R.id.btnVerTaxista);
         mNoConnectivityPanel = (RelativeLayout) findViewById(R.id.layout_no_connectivity);
         btnVerTaxista.setOnClickListener(this);
+
+//        BT_Chat = (Button) findViewById(R.id.BT_Chat);
+//
+//        BT_Chat.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent i = new Intent(Main_MapActivity.this,);
+//                Bundle b = new Bundle();
+//                b.putString("service_id");
+//                i.putExtras(b);
+//                startActivity(i;);
+//            }
+//        });
 
         Bundle reicieveParams = getIntent().getExtras();
         if (reicieveParams != null) {
@@ -265,12 +279,12 @@ public class Main_MapActivity extends AppCompatActivity implements OnClickListen
 
     @Override
     public void onNetworkConnectivityChange(boolean connected) {
-        displayConnectivityPanel(!connected);
+//        displayConnectivityPanel(!connected);
     }
 
     @Override
     public void onConnectivityQualityChecked(boolean Optimal) {
-        displayConnectivityPanel(!Optimal);
+//        displayConnectivityPanel(!Optimal);
     }
 
     /*@Override

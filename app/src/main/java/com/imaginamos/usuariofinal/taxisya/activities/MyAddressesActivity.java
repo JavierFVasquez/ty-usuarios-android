@@ -29,13 +29,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.imaginamos.taxisya.activities.MapaActivitys;
+import com.imaginamos.usuariofinal.taxisya.Model.AddAddressResponse;
+import com.imaginamos.usuariofinal.taxisya.Model.LoginResponse;
 import com.imaginamos.usuariofinal.taxisya.R;
 import com.imaginamos.usuariofinal.taxisya.adapter.AddressAdapter;
 import com.imaginamos.usuariofinal.taxisya.adapter.RecyclerItemClickListener;
 import com.imaginamos.usuariofinal.taxisya.adapter.SimpleItemTouchHelperCallback;
+import com.imaginamos.usuariofinal.taxisya.comm.Connect;
 import com.imaginamos.usuariofinal.taxisya.io.AddressServiceResponse;
 import com.imaginamos.usuariofinal.taxisya.io.ApiAdapter;
+import com.imaginamos.usuariofinal.taxisya.io.ApiService;
 import com.imaginamos.usuariofinal.taxisya.io.ServiceResponse;
+import com.imaginamos.usuariofinal.taxisya.models.CancelServiceResponse;
 import com.imaginamos.usuariofinal.taxisya.models.Conf;
 import com.imaginamos.usuariofinal.taxisya.models.Direccion;
 import com.imaginamos.usuariofinal.taxisya.utils.Actions;
@@ -43,11 +48,16 @@ import com.imaginamos.usuariofinal.taxisya.utils.Utils;
 
 import java.util.Date;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MyAddressesActivity extends Activity implements OnClickListener, Callback<AddressServiceResponse>, AddressAdapter.OnItemClickListener {
+public class MyAddressesActivity extends Activity implements OnClickListener, AddressAdapter.OnItemClickListener {
 
     private RecyclerView addressList;
     private AddressAdapter addressAdapter;
@@ -349,10 +359,24 @@ public class MyAddressesActivity extends Activity implements OnClickListener, Ca
         String name = edt_new_name.getText().toString();
         id_user = conf.getIdUser();
 
-        ApiAdapter.getApiService().addAddress(address, "", comment, id_user, "1", null, null, name, new Callback<ServiceResponse>() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Connect.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
+                .build();
+
+        ApiService service = retrofit.create(ApiService.class);
+
+        Call<AddAddressResponse> call_profile=service.addAddress( address, "", comment, id_user, "1", null, null, name);
+        call_profile.enqueue(new retrofit2.Callback<AddAddressResponse>() {
             @Override
-            public void success(ServiceResponse data, Response response) {
-                if (data.getError() == 1) {
+            public void onResponse(Call<AddAddressResponse> call, retrofit2.Response<AddAddressResponse> response) {
+                if (response.body().getError() == 1) {
                     Log.v("ADD_ADDRESS1", "ApiService 1");
                     //dirs.addAll(data.getAddress());
                     //adaptador.notifyDataSetChanged();
@@ -363,42 +387,57 @@ public class MyAddressesActivity extends Activity implements OnClickListener, Ca
                 } else {
                     Log.v("ADD_ADDRESS1", "ApiService 0");
                 }
+
             }
 
             @Override
-            public void failure(RetrofitError error) {
-                Log.v("ADD_ADDRESS1", "onFailure " + String.valueOf(new Date()));
-                //err_address();
+            public void onFailure(Call<AddAddressResponse> call, Throwable t) {
+                Log.w("-----Error-----",t.toString());
+
             }
         });
+
 
     }
 
 
     private void requestAddresses() {
-        ApiAdapter.getApiService().getAddress(id_user, uuid, this);
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Connect.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
+                .build();
+
+
+        ApiService service = retrofit.create(ApiService.class);
+        Call<AddressServiceResponse> call_profile=service.getAddress(id_user, uuid);
+        call_profile.enqueue(new retrofit2.Callback<AddressServiceResponse>() {
+            @Override
+            public void onResponse(Call<AddressServiceResponse> call, retrofit2.Response<AddressServiceResponse> response) {
+
+
+                if (response.body().getError() == 0) {
+                    Log.v("ADDRESS1", "ApiService");
+                    //dirs.addAll(data.getAddress());
+                    Log.v("ADDRESS1"," " + String.valueOf(response.body().getAddress().size()));
+                    addressAdapter.removeAll();
+                    addressAdapter.addAll(response.body().getAddress());
+                    addressAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AddressServiceResponse> call, Throwable t) {
+                Log.w("-----Error-----",t.toString());
+            }
+        });
+
     }
 
-    @Override
-    public void success(AddressServiceResponse addressResponse, Response response) {
-        Log.v("ADDRESS1", "ApiService " + addressResponse.toString());
-
-        if (addressResponse.getError() == 0) {
-            Log.v("ADDRESS1", "ApiService");
-            //dirs.addAll(data.getAddress());
-            Log.v("ADDRESS1"," " + String.valueOf(addressResponse.getAddress().size()));
-            addressAdapter.removeAll();
-            addressAdapter.addAll(addressResponse.getAddress());
-            addressAdapter.notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public void failure(RetrofitError error) {
-        Log.v("ADDRESS1", "onFailure " + String.valueOf(new Date()));
-        if (error.getKind() == RetrofitError.Kind.NETWORK) {
-            Toast.makeText(this,"Error de red", Toast.LENGTH_LONG).show();
-        }
-    }
 
 }

@@ -5,8 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.imaginamos.usuariofinal.taxisya.activities.MapaActivity">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -22,7 +21,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_mapa"/>
 
     <!--android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -44,7 +42,7 @@
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="48dp"
+            android:layout_height="98dp"
             android:layout_marginTop="65dp">
 
             <TextView
@@ -79,6 +77,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="210dp"
                 android:layout_gravity="top"
+                android:background="@android:color/white"
                 android:scaleType="centerCrop" />
 
 
@@ -95,7 +94,7 @@
                     android:layout_marginRight="54dp"
                     android:layout_marginLeft="25dp"
                     android:layout_weight="1"
-                    android:background="@drawable/circle"
+                    android:background="@drawable/circular"
                     android:drawableLeft="@drawable/draw2left"
                     android:gravity="center_vertical"
                     android:imeOptions="actionDone"
@@ -103,7 +102,39 @@
                     android:paddingLeft="4dp"
                     android:paddingRight="10dp"
                     android:singleLine="true"
-                    android:text="@string/sd"
+                    android:hint="@string/sd"
+                    android:textColor="@color/edit_color" />
+
+                <!--Button
+                    android:id="@+id/btn_add"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_add"
+                    android:layout_weight="0.05" /-->
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/handle_2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/handle">
+
+                <EditText
+                    android:id="@+id/direccion_dos"
+                    android:layout_width="0sp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="54dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/circular"
+                    android:drawableLeft="@drawable/draw2left"
+                    android:gravity="center_vertical"
+                    android:imeOptions="actionDone"
+                    android:inputType="textImeMultiLine"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="10dp"
+                    android:singleLine="true"
+                    android:hint="@string/sd"
                     android:textColor="@color/edit_color" />
 
                 <!--Button
@@ -114,6 +145,8 @@
                     android:layout_weight="0.05" /-->
 
             </LinearLayout>
+
+
 
         </RelativeLayout>
 
@@ -192,7 +225,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="180dp"
                     android:layout_gravity="bottom">
 
                     <TextView
@@ -212,6 +245,7 @@
                         android:layout_width="370dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:orientation="vertical"
                         android:layout_marginRight="700dp"
                         android:background="@android:color/transparent"
                         android:visibility="gone">
@@ -224,55 +258,92 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginTop="40dp"
+                        android:layout_alignParentBottom="true"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="65sp"
                         android:background="@android:color/white"
                         android:visibility="gone">
-
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:id="@+id/LL_Estimated"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="@string/pay_type_title"
-                            android:textColor="@android:color/black" />
-
-                        <info.hoang8f.android.segmented.SegmentedGroup
-                            xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/segmented3"
-                            android:layout_width="180dp"
+                            android:visibility="gone"
+                            android:weightSum="2">
+                            <TextView
+                                android:id="@+id/TV_Distance"
+                                android:layout_width="0sp"
+                                android:layout_height="40sp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/loading"
+                                android:textColor="@color/gray_text"/>
+                            <TextView
+                                android:id="@+id/TV_Estimated_Price"
+                                android:layout_width="0sp"
+                                android:layout_height="40sp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/loading"
+                                android:textColor="@color/gray_text"/>
+                        </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1sp"
+                            android:background="@color/gray_text"
+                            android:layout_marginRight="15sp"
+                            android:layout_marginLeft="15sp"
+                            android:layout_marginTop="5sp"
+                            android:layout_marginBottom="5sp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:layout_weight="1"
-                            android:orientation="horizontal"
-                            segmentedgroup:sc_border_width="2dp"
-                            segmentedgroup:sc_corner_radius="0dp">
-
-                            <RadioButton
-                                android:id="@+id/payType1"
-                                style="@style/RadioButton"
+                            android:orientation="horizontal">
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight=".3"
-                                android:text="@string/pay_type1" />
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/pay_type_title"
+                                android:textColor="@android:color/black" />
 
-                            <RadioButton
-                                android:id="@+id/payType2"
-                                style="@style/RadioButton"
-                                android:layout_width="wrap_content"
+                            <info.hoang8f.android.segmented.SegmentedGroup
+                                xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
+                                android:id="@+id/segmented3"
+                                android:layout_width="180dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight=".3"
-                                android:text="@string/pay_type2" />
+                                android:layout_margin="5dp"
+                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                                segmentedgroup:sc_border_width="2dp"
+                                segmentedgroup:sc_corner_radius="0dp">
 
-                            <RadioButton
-                                android:id="@+id/payType3"
-                                style="@style/RadioButton"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".3"
-                                android:text="@string/pay_type3" />
+                                <RadioButton
+                                    android:id="@+id/payType1"
+                                    style="@style/RadioButton"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".3"
+                                    android:text="@string/pay_type1" />
+
+                                <RadioButton
+                                    android:id="@+id/payType2"
+                                    style="@style/RadioButton"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".3"
+                                    android:text="@string/pay_type2" />
+
+                                <RadioButton
+                                    android:id="@+id/payType3"
+                                    style="@style/RadioButton"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".3"
+                                    android:text="@string/pay_type3" />
 
 
-                        </info.hoang8f.android.segmented.SegmentedGroup>
+                            </info.hoang8f.android.segmented.SegmentedGroup>
 
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -300,7 +371,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_gravity="center_horizontal|bottom"
-                        android:layout_marginTop="80dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="20sp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:background="@drawable/btn_request"
@@ -312,7 +384,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_gravity="center_horizontal|bottom"
-                        android:layout_marginTop="80dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_alignParentBottom="true"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:background="@drawable/btn_request"

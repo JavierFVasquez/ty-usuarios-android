@@ -15,7 +15,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.imaginamos.taxisya.activities.MapaActivitys;
+import com.imaginamos.usuariofinal.taxisya.Model.LoginResponse;
+import com.imaginamos.usuariofinal.taxisya.Model.RegisterResponse;
+import com.imaginamos.usuariofinal.taxisya.comm.Connect;
 import com.imaginamos.usuariofinal.taxisya.comm.Preferencias;
+import com.imaginamos.usuariofinal.taxisya.io.ApiService;
 import com.imaginamos.usuariofinal.taxisya.models.Conf;
 import com.imaginamos.usuariofinal.taxisya.comm.MiddleConnect;
 import com.imaginamos.usuariofinal.taxisya.models.Target;
@@ -24,6 +29,13 @@ import com.imaginamos.usuariofinal.taxisya.R;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import cz.msebera.android.httpclient.Header;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends Activity implements OnClickListener {
 
@@ -104,93 +116,96 @@ public class LoginActivity extends Activity implements OnClickListener {
 
             } else {
 
-                MiddleConnect.login(this, email, crypted_pass, uuid,
-                        new AsyncHttpResponseHandler() {
+                pDialog = new ProgressDialog(LoginActivity.this);
+                pDialog.setMessage(getString(R.string.text_autenticando));
+                pDialog.setIndeterminate(false);
+                pDialog.setCancelable(false);
+                pDialog.show();
 
-                            @Override
-                            public void onStart() {
-                                // Initiated the request
-                                pDialog = new ProgressDialog(LoginActivity.this);
-                                pDialog.setMessage(getString(R.string.text_autenticando));
-                                pDialog.setIndeterminate(false);
-                                pDialog.setCancelable(false);
-                                pDialog.show();
-                            }
 
-                            @Override
-                            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                String response = new String(responseBody);
-                                Log.e("ERROR", response);
-                                try {
-                                    JSONObject responsejson = new JSONObject(
-                                            response);
+                HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+                OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+                httpClient.addInterceptor(logging);
 
-                                    int error = responsejson.getInt("error");
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(Connect.BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(httpClient.build())
+                        .build();
 
-                                    if (error == 0) {
 
-                                        id_user = responsejson.getString("id");
-                                        String name = responsejson.getString("name");
-                                        String cellphone = responsejson.getString("cellphone");
+                ApiService service = retrofit.create(ApiService.class);
+                Call<LoginResponse> call_profile=service.login(HomeActivity.TYPE_USER, email, crypted_pass, uuid);
+                call_profile.enqueue(new Callback<LoginResponse>() {
+                    @Override
+                    public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
 
-                                        conf = new Conf(getApplicationContext());
+                        try {
 
-                                        conf.setLogin(true);
+                            int error = response.body().getError();
 
-                                        conf.setName(name);
+                            if (error == 0) {
 
-                                        conf.setPhone(cellphone);
+                                id_user = response.body().getId();
+                                String name = response.body().getName();
+                                String cellphone = response.body().getCellphone();
 
-                                        conf.setIdUser(id_user);
+                                conf = new Conf(getApplicationContext());
 
-                                        conf.setPass(crypted_pass);
+                                conf.setLogin(true);
 
-                                        conf.setUser(email);
+                                conf.setName(name);
 
-                                        conf.setUuid(uuid);
+                                conf.setPhone(cellphone);
 
-                                        conf.setIsFirst(false);
+                                conf.setIdUser(id_user);
 
-                                        if (target_option > 0) {
-                                            Log.v("LoginActivity", "target_option > 0");
-                                            Intent in3 = new Intent(LoginActivity.this, HomeActivity.class);
-                                            in3.putExtra("target", 0);
-                                            startActivity(in3);
-                                            finish();
-                                        } else {
-                                            Log.v("LoginActivity", "target_option > 0");
-                                            Intent returnIntent = new Intent();
-                                            returnIntent.putExtra("target_for",
-                                                    target_option);
-                                            setResult(RESULT_OK, returnIntent);
-                                            finish();
-                                        }
+                                conf.setPass(crypted_pass);
 
-                                    } else {
-                                        err_login(1);
-                                    }
+                                conf.setUser(email);
 
-                                } catch (Exception e) {
-                                    err_login(1);
+                                conf.setUuid(uuid);
+
+                                conf.setIsFirst(false);
+
+                                if (target_option > 0) {
+                                    Log.v("LoginActivity", "target_option > 0");
+                                    Intent in3 = new Intent(LoginActivity.this, HomeActivity.class);
+                                    in3.putExtra("target", 0);
+                                    startActivity(in3);
+                                    finish();
+                                } else {
+                                    Log.v("LoginActivity", "target_option > 0");
+                                    Intent returnIntent = new Intent();
+                                    returnIntent.putExtra("target_for",
+                                            target_option);
+                                    setResult(RESULT_OK, returnIntent);
+                                    finish();
                                 }
 
-                            }
-
-                            @Override
-                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
+                            } else {
                                 err_login(1);
                             }
+                            pDialog.dismiss();
 
-                            @Override
-                            public void onFinish() {
-                                try {
-                                    pDialog.dismiss();
-                                } catch (Exception e) {
-                                }
+                        } catch (Exception e) {
+                            err_login(1);
+                            pDialog.dismiss();
+                        }
 
-                            }
-                        });
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<LoginResponse> call, Throwable t) {
+                        Log.w("-----Error-----",t.toString());
+                        err_login(1);
+                        pDialog.dismiss();
+                    }
+                });
+
             }
 
         } else {

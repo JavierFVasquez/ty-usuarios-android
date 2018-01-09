@@ -31,76 +31,113 @@
             android:src="@drawable/mapa" />
     </HorizontalScrollView>
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
-
-        <ImageView
-            android:id="@+id/imaginamos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:adjustViewBounds="true"
-            android:background="@android:color/white"
-            android:contentDescription="@string/textimageview"
-            android:paddingBottom="8dp"
-            android:paddingLeft="7dp"
-            android:paddingRight="9dp"
-            android:src="@drawable/imaginamos"
-            android:visibility="invisible" />
-
-        <RelativeLayout
-            android:id="@+id/relativeLayout2"
-            android:layout_width="fill_parent"
-            android:layout_height="100dp"
-            android:layout_above="@+id/fondo"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/fondodos" >
-        </RelativeLayout>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/fondo"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/imaginamos"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:adjustViewBounds="true"
-            android:scaleType="fitXY"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
             android:contentDescription="@string/textimageview"
-            android:src="@drawable/fondouno" />
+            android:scaleType="fitXY"
+            android:maxHeight="150sp"
+            android:src="@drawable/fondouno"
+            pj:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            pj:layout_constraintEnd_toEndOf="parent"
+            pj:layout_constraintStart_toStartOf="parent"
+            pj:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/nombre"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/fondo"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="24dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:adjustViewBounds="false"
+            android:layout_width="339dp"
+            android:layout_height="113dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:contentDescription="@string/textimageview"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:src="@drawable/logo" />
-    </RelativeLayout>
+            android:src="@drawable/logo"
+            pj:layout_constraintBottom_toBottomOf="@+id/fondo"
+            pj:layout_constraintEnd_toEndOf="@+id/fondo"
+            pj:layout_constraintStart_toStartOf="@+id/fondo"
+            pj:layout_constraintTop_toTopOf="@+id/fondo" />
 
-    <com.carouseldemo.controls.Carousel
-        android:id="@+id/carouseles"
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="24dp"
+            android:orientation="vertical"
+            android:padding="20sp"
+            android:layout_marginRight="20sp"
+            android:layout_marginLeft="20sp"
+            android:minHeight="300sp"
+            android:weightSum="4"
+            pj:layout_constraintBottom_toBottomOf="parent"
+            pj:layout_constraintEnd_toEndOf="parent"
+            pj:layout_constraintStart_toStartOf="parent">
 
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:animationDuration="300"
-        android:gravity="center"
-        pj:Items="@array/entries"
-        pj:Names="@array/names"
-        pj:SelectedItem="1"
-        pj:UseReflection="false"
-        android:visibility="visible" >
-    </com.carouseldemo.controls.Carousel>
+
+            <Button
+                android:id="@+id/BT_Pedir_Taxi"
+                android:layout_width="match_parent"
+                android:layout_height="0sp"
+                android:layout_marginTop="15sp"
+                android:layout_weight="1"
+                android:background="@drawable/button_back"
+                android:textColor="@color/text_orange"
+                android:textAllCaps="false"
+                android:textSize="19sp"
+                android:text="Pedir Taxi" />
+            <Button
+                android:id="@+id/BT_Agendar"
+                android:layout_width="match_parent"
+                android:layout_height="0sp"
+                android:layout_marginTop="15sp"
+                android:layout_weight="1"
+                android:background="@drawable/button_back"
+                android:textColor="@color/text_orange"
+                android:textAllCaps="false"
+                android:textSize="19sp"
+                android:text="Agendar" />
+
+            <Button
+                android:id="@+id/BT_Perfil"
+                android:layout_width="match_parent"
+                android:layout_height="0sp"
+                android:layout_marginTop="15sp"
+                android:layout_weight="1"
+                android:background="@drawable/button_back"
+                android:textColor="@color/text_orange"
+                android:textAllCaps="false"
+                android:textSize="19sp"
+                android:text="Perfil" />
+
+            <Button
+                android:id="@+id/BT_Reclamos"
+                android:layout_width="match_parent"
+                android:layout_height="0sp"
+                android:layout_marginTop="15sp"
+                android:layout_weight="1"
+                android:background="@drawable/button_back"
+                android:textColor="@color/text_orange"
+                android:textAllCaps="false"
+                android:textSize="19sp"
+                android:text="Reclamos" />
+
+
+
+
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+
+
 
 </RelativeLayout>

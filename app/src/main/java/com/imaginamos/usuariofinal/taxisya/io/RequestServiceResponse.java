@@ -36,4 +36,8 @@ public class RequestServiceResponse {
     public void setError(int error) {
         this.error = error;
     }
+
+    public boolean getSuccess() {
+        return success;
+    }
 }

@@ -33,8 +33,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.imaginamos.usuariofinal.taxisya.Model.AddAddressResponse;
 import com.imaginamos.usuariofinal.taxisya.R;
+import com.imaginamos.usuariofinal.taxisya.comm.Connect;
 import com.imaginamos.usuariofinal.taxisya.io.ApiAdapter;
+import com.imaginamos.usuariofinal.taxisya.io.ApiService;
 import com.imaginamos.usuariofinal.taxisya.io.ServiceResponse;
 import com.imaginamos.usuariofinal.taxisya.models.Conf;
 
@@ -42,9 +45,14 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MapNewAddressActivity extends FragmentActivity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         LocationListener , OnMapReadyCallback {
@@ -260,32 +268,47 @@ public class MapNewAddressActivity extends FragmentActivity implements View.OnCl
 
         id_user = conf.getIdUser();
 
-        Log.v("ADD_ADDRESS1", "address=" + address + " comment=" + comment + " barrio=" + barrio + " id_user=" + id_user + " name=" + name);
-        ApiAdapter.getApiService().addAddress(address, barrio, comment, id_user, "1", strLat, strLng, name, new Callback<ServiceResponse>() {
-            @Override
-            public void success(ServiceResponse data, Response response) {
-                if (data.getError() == 1) {
-                    Log.v("ADD_ADDRESS1", "ApiService 1");
-                    //dirs.addAll(data.getAddress());
-                    //adaptador.notifyDataSetChanged();
+        Log.v("ADD_ADDRESS1", "address=" + address + " comment=" + comment + " barrio=" + barrio + " id_user=" + id_user + " name=" + name + "latlng: " + strLat + "," + strLng);
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Connect.BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            ApiService service = retrofit.create(ApiService.class);
+
+            Call<AddAddressResponse> call_profile=service.addAddress( address, barrio, comment, id_user, "1", strLat, strLng, name);
+        call_profile.enqueue(new retrofit2.Callback<AddAddressResponse>() {
+                @Override
+                public void onResponse(Call<AddAddressResponse> call, retrofit2.Response<AddAddressResponse> response) {
+                    if (response.body().getError() == 1) {
+                        Log.v("ADD_ADDRESS1", "ApiService 1");
+                        //dirs.addAll(data.getAddress());
+                        //adaptador.notifyDataSetChanged();
+                    }
+                    else {
+                        Log.v("ADD_ADDRESS1", "ApiService 0");
+                    }
+                    InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    Log.v("SEGUIMIENTO","oculta teclado");
+                    imm.hideSoftInputFromWindow(edt_new_name.getWindowToken(), 0);
+
+                    finish();
+
                 }
-                else {
-                    Log.v("ADD_ADDRESS1", "ApiService 0");
+
+                @Override
+                public void onFailure(Call<AddAddressResponse> call, Throwable t) {
+                    Log.w("-----Error-----",t.toString());
+
                 }
-                InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                Log.v("SEGUIMIENTO","oculta teclado");
-                imm.hideSoftInputFromWindow(edt_new_name.getWindowToken(), 0);
-
-                finish();
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.v("ADD_ADDRESS1", "onFailure " + String.valueOf(new Date()));
-                //err_address();
-            }
-        });
-
+            });
     }
 
 

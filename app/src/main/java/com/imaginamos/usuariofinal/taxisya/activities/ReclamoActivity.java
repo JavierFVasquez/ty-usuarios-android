@@ -56,7 +56,7 @@ public class ReclamoActivity extends Activity implements OnClickListener {
         btnSend = (Button) findViewById(R.id.btnSend);
         btnSend.setOnClickListener(this);
         reclamo = (EditText) findViewById(R.id.txt_reclamo);
-        bt_atras.setOnClickListener(this);
+//        bt_atras.setOnClickListener(this);
         Bundle reicieveParams = getIntent().getExtras();
         service_id = reicieveParams.getString("service_id");
         conf = new Conf(this);

@@ -20,6 +20,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.imaginamos.taxisya.activities.MapaActivitys;
+import com.imaginamos.usuariofinal.taxisya.Model.RegisterResponse;
+import com.imaginamos.usuariofinal.taxisya.Model.UpdateResponse;
+import com.imaginamos.usuariofinal.taxisya.comm.Connect;
+import com.imaginamos.usuariofinal.taxisya.io.ApiService;
 import com.imaginamos.usuariofinal.taxisya.utils.Actions;
 import com.imaginamos.usuariofinal.taxisya.models.Conf;
 import com.imaginamos.usuariofinal.taxisya.comm.MiddleConnect;
@@ -29,6 +33,13 @@ import com.imaginamos.usuariofinal.taxisya.R;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import cz.msebera.android.httpclient.Header;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PerfilActivity extends Activity implements OnClickListener {
 
@@ -292,31 +303,40 @@ public class PerfilActivity extends Activity implements OnClickListener {
         if (mUuid != null) {
             if (checkregisterdata(mName, ".", mUser, mPassword, mCellphone)) {
 
-                MiddleConnect.update(this, mName, mPassword, mUser, mUuid, mCellphone, new AsyncHttpResponseHandler() {
 
-                    @Override
-                    public void onStart() {
-                        pDialog = new ProgressDialog(PerfilActivity.this);
-                        pDialog.setMessage(getString(R.string.text_actualizando));
-                        pDialog.setIndeterminate(false);
-                        pDialog.setCancelable(false);
-                        pDialog.show();
-                    }
+                pDialog = new ProgressDialog(PerfilActivity.this);
+                pDialog.setMessage(getString(R.string.text_actualizando));
+                pDialog.setIndeterminate(false);
+                pDialog.setCancelable(false);
+                pDialog.show();
 
+
+                HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+                OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+                httpClient.addInterceptor(logging);
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(Connect.BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(httpClient.build())
+                        .build();
+
+                ApiService service = retrofit.create(ApiService.class);
+
+                Call<UpdateResponse> call_profile=service.update(HomeActivity.TYPE_USER, mName, ".",mUser, mUser, mPassword, mUuid, mCellphone, mUuid);
+                call_profile.enqueue(new Callback<UpdateResponse>() {
                     @Override
-                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                        String response = new String(responseBody);
+                    public void onResponse(Call<UpdateResponse> call, Response<UpdateResponse> response) {
                         try {
 
-                            JSONObject responsejson = new JSONObject(response);
-
-                            if (responsejson.getInt("error") == 0) {
+                            if (response.body().getError() == 0) {
                                 mConf.setUser(mUser);
                                 mConf.setName(mName);
                                 mConf.setPass(Utils.md5(mPassword));
                                 mConf.setIsFirst(false);
                                 mConf.setLogin(true);
-                                mConf.setIdUser(responsejson.getString("id"));
+                                mConf.setIdUser(response.body().getId());
 
                                 if (mEdtPassword.getText().toString().length() > 1) {
                                     mEdtPassword.setText("");
@@ -328,25 +348,78 @@ public class PerfilActivity extends Activity implements OnClickListener {
                                 vibrator.vibrate(200);
                                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.user_exist, mUser), Toast.LENGTH_LONG).show();
                             }
+                            pDialog.dismiss();
+
                         } catch (Exception e) {
                             err_update();
-                        }
-
-                    }
-
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                        err_update();
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        try {
                             pDialog.dismiss();
-                        } catch (Exception e) {
                         }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<UpdateResponse> call, Throwable t) {
+                        Log.w("-----Error-----",t.toString());
+                        err_update();
+                        pDialog.dismiss();
                     }
                 });
+
+//                MiddleConnect.update(this, mName, mPassword, mUser, mUuid, mCellphone, new AsyncHttpResponseHandler() {
+//
+//                    @Override
+//                    public void onStart() {
+//                        pDialog = new ProgressDialog(PerfilActivity.this);
+//                        pDialog.setMessage(getString(R.string.text_actualizando));
+//                        pDialog.setIndeterminate(false);
+//                        pDialog.setCancelable(false);
+//                        pDialog.show();
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+//                        String response = new String(responseBody);
+//                        try {
+//
+//                            JSONObject responsejson = new JSONObject(response);
+//
+//                            if (responsejson.getInt("error") == 0) {
+//                                mConf.setUser(mUser);
+//                                mConf.setName(mName);
+//                                mConf.setPass(Utils.md5(mPassword));
+//                                mConf.setIsFirst(false);
+//                                mConf.setLogin(true);
+//                                mConf.setIdUser(responsejson.getString("id"));
+//
+//                                if (mEdtPassword.getText().toString().length() > 1) {
+//                                    mEdtPassword.setText("");
+//                                }
+//                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.update_ok), Toast.LENGTH_LONG).show();
+//                                // goToActivity(target_option);
+//                            } else {
+//                                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+//                                vibrator.vibrate(200);
+//                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.user_exist, mUser), Toast.LENGTH_LONG).show();
+//                            }
+//                        } catch (Exception e) {
+//                            err_update();
+//                        }
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+//                        err_update();
+//                    }
+//
+//                    @Override
+//                    public void onFinish() {
+//                        try {
+//                            pDialog.dismiss();
+//                        } catch (Exception e) {
+//                        }
+//                    }
+//                });
 
             } else {
                 err_update();

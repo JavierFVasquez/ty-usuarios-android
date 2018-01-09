@@ -3,12 +3,573 @@
 
     <item
         is-multidex="false"
-        jar="/Users/developer_celuvans/Documents/workspace/android/ty-usuarios-android/app/libs/gcm.jar"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-25.0.1.aar/5d5290beacb19657482574037c132214/jars/classes.jar"
         jumboMode="false"
+        min-sdk-version="15"
         optimize="true"
-        revision="25.0.0"
+        revision="26.0.2"
+        sha1="b24e1c688744078e1fa833ffadf696794761bbe5">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/45.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/play-services-base-11.0.4.aar/6efa443b64abe3e852f95499614b244d/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="70ffe00aaf049893f59d1dad57bd82992faa38ef">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/31.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/hidekeyboard-1.1.3.aar/162da200493e9a4fe5b774484fa60d53/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="f7392f599d589fe3b29635bf30487adc443bd453">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/58.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/play-services-location-11.0.4.aar/d879516904123778133c13ed72621f0e/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="41f47bbcd281fdb1e42e220220ab3bfa1da591e0">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/10.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/play-services-analytics-11.0.4.aar/c92689349486195884c1b07fb3104f78/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="a25b0b5aec89681b95d32780ad7904c1e1e4c679">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/13.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/play-services-iid-11.0.4.aar/1cb203629e33c42a91035df5722257d4/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="dd282bdeaa904c59d77e57dedd7e0a241c9b679d">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/30.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/paymentezsdk-1.0.4.aar/a548146d344c4d8d8dabc10e97daf3bf/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="cc652b0e39513d7bcab7aae221d4edec02f2a42f">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/beta-1.2.2.aar/d9a3c6782c1d1ab0790cc2f9f5f6e805/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b42cf2134829f715edfa2adaf0ee246631322dba">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/40.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/play-services-places-11.0.4.aar/f937427dce9bb5f1329f3dcfafb58470/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="5594a368622908d89c47d9a391aa2724fe046c35">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/11.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/support-fragment-25.3.1.aar/651ab3d8e989f27dcafcf1016834c4b5/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/46.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-25.0.1.aar/f41f57ea833c4e351f26a9eb65f03bac/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/44.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.0.1.aar/149662c93c6e1b847e646e201c45217b/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="f7ac4b327fdb9e2ee386f5adc46164927658de4b">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/firebase-analytics-11.0.4.aar/7415dd243456b2fe86becdca273e7f67/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="e5b429c146094a612134910688d169ec08deeefb">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/32.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/paymentezsdk-1.0.4.aar/a548146d344c4d8d8dabc10e97daf3bf/jars/libs/devicecollector-sdk-2.5.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="90060b693ab97ea90a0ccbb6a430bd7e3b5d0771">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/circleimageview-1.3.0.aar/056680b33c4de3334e91968218111ed8/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="ac6948cce36f694f3eb3d73a135e298dc4b3527a">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/22.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/cardview-v7-25.0.1.aar/4854cb02e1197e04fe3345ad9256af94/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="1108575c7dc7b7f5b378b3290ac90de81a9b8830">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/android-maps-utils-0.4.4.aar/ece7fefd545d7efc026d786c7508b5d0/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="6f57b76211a1d7b0c1f18873af59faad95664681">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/answers-1.3.10.aar/5a8fd3a323f2b402082a0b9c4d76186a/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="ed6b455e3dd7bbf1ff31f8df0b41e2f0d87f3ace">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/42.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/firebase-iid-11.0.4.aar/a78fe78c164baeea819f7529c3daf68e/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="ed87ccdcb70c17d71ba4e6e4ac16afa62d3c49fb">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/34.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-gson/2.0.2/f8d87f15b94b8d74e7ccf61d7eedb558811cdb30/converter-gson-2.0.2.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="f8d87f15b94b8d74e7ccf61d7eedb558811cdb30">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/17.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/retrofit/2.1.0/2de7cd8b95b7021b1d597f049bcb422055119f2c/retrofit-2.1.0.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="2de7cd8b95b7021b1d597f049bcb422055119f2c">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/18.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-25.0.1.aar/d39fb0714c447c53bcb8fb3c0c7d07e1/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="297d4bcf6ed4e747a1bf7d0d094a2d911a8d3a8e">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/libs/gcm.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
         sha1="f0e7f01db9f6cbc6e5bf47c10c7d74fd7a7052d0">
-        <dex dex="/Users/developer_celuvans/Documents/workspace/android/ty-usuarios-android/app/build/intermediates/pre-dexed/taxisya/debug/gcm_c6a353f61cd0f7194e20e442532f51c5387fa32c.jar" />
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/play-services-gcm-11.0.4.aar/577af31e5f4b3da9777421c12ed63b66/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d8942ee348aaa9341f08f7e2437063893fe27542">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/14.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/transition-25.0.1.aar/874b5ee1228971ac2c633339d7894b61/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="c1b6ab157e8e12cb08b9ee82bb5e3c5d22632eb3">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/26.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/support-core-ui-25.3.1.aar/a034d9ea660467a2a7b7361369db817a/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/49.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/firebase-messaging-11.0.4.aar/71e297fee587b465ec9e6f8bbbdf744d/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="f47f4d5bdfd7d7bf330945b8a7ccce4ab437a710">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/24.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/android-segmented-1.0.6.aar/549390fb75138eb4c8bc0f12281a7e01/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="692a913dff3246e0cc5369c2508f5970ecfeca01">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/25.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/play-services-tagmanager-v4-impl-11.0.4.aar/73ec0b1474a49e2ac797ab5f8f6d6005/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="c1b91bc7e480ab100d0397b16c93732e26fd10eb">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/28.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/firebase-analytics-impl-11.0.4.aar/86d0c2ff9c7c65dfa1d8695f250b2ebb/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="e1625e48a836779b5fa141d22e5d05563aaccc9a">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/33.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/android-sdk-5.3.4.aar/bb9a5f86b93ea7f10ee6477da7013da0/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="28bc7007cc5fb935b0737a42f05b8286936228b0">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/54.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/play-services-maps-11.0.4.aar/47679f4666dc524650431f5705f36221/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="fcae52a60bc07924d370b4d376116cd8f8581f54">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/12.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/firebase-common-11.0.4.aar/37a66a72771b8aa264fda27aceaf584f/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="43e9789bd3240271265ab30ce1be9f224843f5a8">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/35.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/play-services-basement-11.0.4.aar/1a4d178a1589739c8baccd21099a5909/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="364364bf77b4a71afc5930fc3ae57b3f0eea637c">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/37.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/support-compat-25.3.1.aar/f0c18680535dc8911c57561e02524fea/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/50.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/modules-2/files-2.1/com.nostra13.universalimageloader/universal-image-loader/1.9.5/442dbfb517b9ab5cb5c6da7ebf8cc28ec5bd0375/universal-image-loader-1.9.5.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="442dbfb517b9ab5cb5c6da7ebf8cc28ec5bd0375">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/16.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/support-core-utils-25.3.1.aar/887f98d8184c5e3703aaefb7952ab6f2/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/48.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.3.1/19047bdb6a4fc00a44124f64ca98e88fc204e7e3/okhttp-3.3.1.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="19047bdb6a4fc00a44124f64ca98e88fc204e7e3">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/52.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/play-services-tasks-11.0.4.aar/8f2b0b0f69274212007a2b031b3db995/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="2430e711762a749feb00b3d64858ca4768251b9d">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/36.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/play-services-analytics-impl-11.0.4.aar/d1c23259063938aae22c2d6d7adc45b5/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="2c2f1b3f82c027e98f56bb0154de0acbcce42e6d">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/29.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/play-services-plus-11.0.4.aar/2a8e43fc10b6578675b4f377e5c2fce8/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="057fb316bed8467398333f30926c2d5506e275b2">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/27.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/modules-2/files-2.1/com.loopj.android/android-async-http/1.4.9/386a4339ffe52d5d63e80f9bed8d2b1d1a418249/android-async-http-1.4.9.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="386a4339ffe52d5d63e80f9bed8d2b1d1a418249">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/15.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/support-v4-25.3.1.aar/b3ae8ce2062e205872ef39ac6fd1839f/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/38.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/modules-2/files-2.1/org.greenrobot/eventbus/3.0.0/ddd99896e9569eaababbe81b35d80e1b91c4ad85/eventbus-3.0.0.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="ddd99896e9569eaababbe81b35d80e1b91c4ad85">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/21.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.6.1/b9d63507329a7178e026fc334f87587ee5070ac5/gson-2.6.1.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b9d63507329a7178e026fc334f87587ee5070ac5">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/53.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/fabric-1.3.14.aar/ad62b19fd1af028c7c259e3ca39504b6/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="a319fd4d548ba4cc9511561d37109ba922bfbf6a">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/43.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/6d9e88d4854bde5d8a65bdac935bb100/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/39.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/design-25.0.1.aar/857242f5e23655c4ccc4344295216339/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="3b236883e0df6002cabb01ce57d00a5b1e5de610">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/Library/Android/sdk/extras/m2repository/com/android/support/constraint/constraint-layout-solver/1.0.2/constraint-layout-solver-1.0.2.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/55.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/crashlytics-2.6.5.aar/2f05211a3afc45a5fa38efcf44ca11b0/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="02cc9f2e5899415add52bc716602b6b38e7eeb99">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit/retrofit/1.9.0/a681c044244d9fc375198588297a39ba78028423/retrofit-1.9.0.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="a681c044244d9fc375198588297a39ba78028423">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/19.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/25.3.1/support-annotations-25.3.1.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/51.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/modules-2/files-2.1/cz.msebera.android/httpclient/4.3.6/526a9f794eab830eae4f23a62c572878b3f491ab/httpclient-4.3.6.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="526a9f794eab830eae4f23a62c572878b3f491ab">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/57.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/support-media-compat-25.3.1.aar/fa3eff3d3ca5f8051c1aedb3b615caf7/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/47.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/logging-interceptor/3.3.1/99ce730034c6f5aaed710d1e0e9df95e8714ed5f/logging-interceptor-3.3.1.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="99ce730034c6f5aaed710d1e0e9df95e8714ed5f">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/20.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/transforms-1/files-1.1/crashlytics-core-2.3.14.aar/3d0b351285292976eb476d000bd8450a/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="7ff77725723167163d69439e3fd077bd0899babf">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/41.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/javiervasquez/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.8.0/5ea7af56cc7c567ed9856d99efb30740e9b17ff/okio-1.8.0.jar"
+        jumboMode="false"
+        min-sdk-version="15"
+        optimize="true"
+        revision="26.0.2"
+        sha1="05ea7af56cc7c567ed9856d99efb30740e9b17ff">
+        <dex dex="/Users/javiervasquez/StudioProjects/ty-usuarios-android/app/build/intermediates/transforms/preDex/release/56.jar" />
     </item>
 
 </items>

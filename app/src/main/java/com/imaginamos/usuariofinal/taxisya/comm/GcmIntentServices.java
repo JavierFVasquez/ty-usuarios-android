@@ -48,7 +48,7 @@ public class GcmIntentServices extends IntentService {
 
         for (String key : intent.getExtras().keySet()) {
             Object value = intent.getExtras().get(key);
-            Log.e("push", String.format("%s %s (%s)", key, value.toString(), value.getClass().getName()));
+            Log.e("=====push notif=====", String.format("%s %s (%s)", key, value.toString(), value.getClass().getName()));
         }
 
         Bundle extras = intent.getExtras();

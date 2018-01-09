@@ -23,18 +23,21 @@ public class Connect {
 	  private static final String CONNECTIVITY_QUALITY_CHECKING = "http://www.taxisya.co/dev/";
 
 	  private static final int timeout=40;
+	public static final String BASE_GOOGLE_URL = "https://maps.googleapis.com/maps/api/";
 
-	  public static AsyncHttpClient syncHttpClient= new SyncHttpClient();
+    public static AsyncHttpClient syncHttpClient= new SyncHttpClient();
 	  public static AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
 
 	  public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
 		  getClient().setTimeout(timeout * 1000);
 		  getClient().get(getAbsoluteUrl(url), params, responseHandler);
+          Log.i("REQUEST",url+" \n- \n"+params.toString());
 	  }
 
 	  public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
 		  getClient().setTimeout(timeout * 1000);
 		  getClient().post(getAbsoluteUrl(url), params, responseHandler);
+//		  Log.i("REQUEST",url+" \n- \n"+params.toString());
 	  }
 
 	  public static void sendJson(Context context, String url, RequestParams params, JSONObject bodyAsJson,

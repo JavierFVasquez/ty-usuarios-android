@@ -88,9 +88,9 @@ public class CalificarActivity extends Activity implements OnClickListener {
 
         mPref = new Preferencias(this);
 
-        scoreD = Double.parseDouble(getIntent().getExtras().getString("scoreD"));
-        numscoreD = Double.parseDouble(getIntent().getExtras().getString("numscoreD"));
-        mDriverId = getIntent().getExtras().getString("driver_id");
+//        scoreD = Double.parseDouble(getIntent().getExtras().getString("scoreD"));
+//        numscoreD = Double.parseDouble(getIntent().getExtras().getString("numscoreD"));
+//        mDriverId = getIntent().getExtras().getString("driver_id");
 
         //  Log.v("Driver", "scoreD: " + scoreD + "numScoreD: " + numscoreD);
 

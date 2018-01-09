@@ -93,7 +93,6 @@ public class HomeActivity extends Activity {
         Log.v("onCreate", "HomeActivity");
 
         super.onCreate(savedInstanceState);
-        if (BuildConfig.USE_CRASHLYTICS) Fabric.with(this, new Crashlytics());
         overridePendingTransition(R.anim.pull_in_from_right, R.anim.hold);
         setContentView(R.layout.activity_home);
 

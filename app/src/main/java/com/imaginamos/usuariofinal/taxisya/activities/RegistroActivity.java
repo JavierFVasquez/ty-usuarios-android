@@ -6,8 +6,10 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -16,14 +18,25 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.imaginamos.taxisya.activities.MapaActivitys;
+import com.imaginamos.usuariofinal.taxisya.Model.RegisterResponse;
+import com.imaginamos.usuariofinal.taxisya.comm.Connect;
+import com.imaginamos.usuariofinal.taxisya.io.ApiService;
 import com.imaginamos.usuariofinal.taxisya.models.Conf;
 import com.imaginamos.usuariofinal.taxisya.comm.MiddleConnect;
 import com.imaginamos.usuariofinal.taxisya.models.Target;
+import com.imaginamos.usuariofinal.taxisya.utils.Constants;
 import com.imaginamos.usuariofinal.taxisya.utils.Utils;
 import com.imaginamos.usuariofinal.taxisya.R;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import cz.msebera.android.httpclient.Header;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegistroActivity extends Activity implements OnClickListener {
 
@@ -35,6 +48,8 @@ public class RegistroActivity extends Activity implements OnClickListener {
 	private String index, comp1, comp2, no, barrio, obs, latitud, longitud;
 	private Button btnRegister;
 	private Button btnLogin;
+	private SharedPreferences sharedPref;
+	private SharedPreferences.Editor editor;
 
 	@Override
 	public void onRestart() {
@@ -48,6 +63,9 @@ public class RegistroActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 
 		overridePendingTransition(R.anim.pull_in_from_right, R.anim.hold);
+
+		sharedPref = getSharedPreferences(Constants.SharedPreferencesData, Context.MODE_PRIVATE);
+		editor=sharedPref.edit();
 
 		setContentView(R.layout.activity_registro);
 
@@ -128,64 +146,70 @@ public class RegistroActivity extends Activity implements OnClickListener {
 
 			if (checkregisterdata(nombre, ".", usuario, password, phone)) {
 
-				MiddleConnect.registry(this, nombre, password, usuario, uuid, phone, new AsyncHttpResponseHandler() {
+				pDialog = new ProgressDialog(RegistroActivity.this);
+				pDialog.setMessage(getString(R.string.loading));
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(false);
+				pDialog.show();
 
-							@Override
-							public void onStart() {
-								pDialog = new ProgressDialog(RegistroActivity.this);
-								pDialog.setMessage(getString(R.string.texto_registrando));
-								pDialog.setIndeterminate(false);
-								pDialog.setCancelable(false);
-								pDialog.show();
+				HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+				logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+				OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+				httpClient.addInterceptor(logging);
+
+				Retrofit retrofit = new Retrofit.Builder()
+						.baseUrl(Connect.BASE_URL)
+						.addConverterFactory(GsonConverterFactory.create())
+						.client(httpClient.build())
+						.build();
+
+
+				ApiService service = retrofit.create(ApiService.class);
+				Call<RegisterResponse> call_profile=service.register(HomeActivity.TYPE_USER, nombre, ".",usuario, usuario, password, uuid, phone, uuid);
+				call_profile.enqueue(new Callback<RegisterResponse>() {
+					@Override
+					public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
+
+						try {
+
+							if(response.body().getError() == 0) {
+
+								conf.setName(nombre);
+								conf.setUser(usuario);
+								conf.setPhone(phone);
+								conf.setPass(Utils.md5(password));
+								conf.setUuid(uuid);
+								conf.setIsFirst(false);
+								conf.setLogin(true);
+								conf.setIdUser(response.body().getId());
+								//goToActivity(target_option);
+
+								Intent intent1 = new Intent(RegistroActivity.this, MapaActivitys.class);
+								intent1.putExtra("target", target_option);
+								startActivityForResult(intent1, 0);
+							}else {
+								Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+								vibrator.vibrate(200);
+								Toast.makeText(getApplicationContext(),getResources().getString(R.string.user_exist,usuario),Toast.LENGTH_LONG).show();
 							}
+						} catch (Exception e) {
+							err_register();
+						}
 
-							@Override
-							public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-								String response = new String(responseBody);
-								try {
 
-									JSONObject responsejson = new JSONObject(response);
+						pDialog.dismiss();
 
-									if(responsejson.getInt("error") == 0) {
-										conf.setName(nombre);
-										conf.setUser(usuario);
-										conf.setPhone(phone);
-										conf.setPass(Utils.md5(password));
-										conf.setUuid(uuid);
-										conf.setIsFirst(false);
-										conf.setLogin(true);
-										conf.setIdUser(responsejson.getString("id"));
-										//goToActivity(target_option);
 
-									}else {
-										Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-										vibrator.vibrate(200);
-										Toast.makeText(getApplicationContext(),getResources().getString(R.string.user_exist,usuario),Toast.LENGTH_LONG).show();
-									}
-								} catch (Exception e) {
-									err_register();
-								}
+					}
 
-							}
+					@Override
+					public void onFailure(Call<RegisterResponse> call, Throwable t) {
+						Log.w("-----Error-----",t.toString());
+						err_register();
+					}
+				});
 
-							@Override
-							public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-								err_register();
-							}
 
-							@Override
-							public void onFinish()
-							{
-								try {
-									pDialog.dismiss();
-									Intent intent1 = new Intent(RegistroActivity.this, MapaActivitys.class);
-									intent1.putExtra("target", target_option);
-									startActivityForResult(intent1, 0);
-								} catch (Exception e) {
-								}
-							}
-
-						});
 
 			} else {
 				err_register();

@@ -97,6 +97,7 @@
     <string name="nombre">name</string>
     <string name="placa">plate</string>
     <string name="sd">Looking address...</string>
+    <string name="sd2">Select address</string>
     <string name="title_activity_reset_pass">ResetPass</string>
     <string name="recuperar_contrase_a">Recover password</string>
     <string name="digita_tu_direcci_n_de_correo">Enter your email</string>
@@ -282,13 +283,29 @@
 
     ]]>
     </string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="type_car">Car type</string>
     <string name="title_activity_mapa">MapaActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="loading">Loading...</string>
+    <string name="destination">Touch to add your destination</string>
+
+     
+    <string name="titulo_tipo_calificacion">siendo 5 la calificación mas alta</string>
+    <string name="btn_ask">Solicitar</string>
+    <string name="btn_return">Regresar</string>
+    <string name="kind_services">Selecciona una opción para continuar</string>
+    <string name="car_text">Selecciona un vehículo para continuar</string>
+    <string name="select_map_point">Move map, and select your destination</string>
+    <string name="fill_fields">You have to fill all the fields</string>
+    <string name="chat">Chat</string>
+    <string name="title_activity_chat">ChatActivity</string>
+    <string name="send">Send</string>
+    <string name="type_your_message_here">Type your message here ...</string>
+    <string name="new_message">New Message</string>
+    <string name="llamar_pbx">Call PBX</string>
+
 
 </resources>

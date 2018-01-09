@@ -333,8 +333,8 @@ public class AgendadoView extends LinearLayout {
 
 			 @Override
 			 public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-				 String response = new String(responseBody);
-				 Log.i("CANCELING SCHEDULE", "Response "+response);
+//				 String response = new String(responseBody);
+//				 Log.i("CANCELING SCHEDULE", "Response "+response);
 				 err_cancelar();
 		     }
 

@@ -1,11 +1,13 @@
 package com.imaginamos.usuariofinal.taxisya.activities;
 
+import java.util.EventListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -16,6 +18,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.Uri;
@@ -23,6 +26,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -36,11 +42,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.imaginamos.taxisya.activities.MapaActivitys;
 import com.imaginamos.usuariofinal.taxisya.adapter.BDAdapter;
 import com.imaginamos.usuariofinal.taxisya.comm.Connectivity;
 import com.imaginamos.usuariofinal.taxisya.comm.NetworkChangeReceiver;
 import com.imaginamos.usuariofinal.taxisya.comm.NetworkChangeReceiver.NetworkReceiverListener;
+import com.imaginamos.usuariofinal.taxisya.io.ApiService;
+import com.imaginamos.usuariofinal.taxisya.models.CancelServiceResponse;
 import com.imaginamos.usuariofinal.taxisya.utils.Actions;
 import com.imaginamos.usuariofinal.taxisya.models.Conf;
 import com.imaginamos.usuariofinal.taxisya.comm.Connect;
@@ -53,6 +68,13 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import cz.msebera.android.httpclient.Header;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ConfirmacionActivity extends Activity implements OnClickListener, Connectivity.ConnectivityQualityCheckListener, NetworkReceiverListener {
 
@@ -74,7 +96,7 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
     private int reintento = 0;
     private int status = 0;
     private String uuid;
-    private String id_user, service_id ,address;
+    private String id_user, service_id, address;
     private boolean service_agend = false;
 
     private String mServiceId;
@@ -97,6 +119,9 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
     private ImageView mConnectivityLoaderImage;
     private Connectivity mConnectivityChecker = new Connectivity(this);
     private NetworkChangeReceiver mNetworkMonitor;
+    private Button BT_Chat;
+    private boolean first_time = false;
+    private DatabaseReference chat_ref;
 
     @Override
     protected void onRestart() {
@@ -160,13 +185,13 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
 
         Bundle reicieveParams = getIntent().getExtras();
         mPayType = 1;
-        Log.v("LOG1","Confirmacion mPayType " + mPayType);
+        Log.v("LOG1", "Confirmacion mPayType " + mPayType);
         if (reicieveParams != null && reicieveParams.containsKey("pay_type")) {
             mPayType = reicieveParams.getInt("pay_type");
-            Log.v("LOG1","    2 Confirmacion mPayType " + mPayType);
+            Log.v("LOG1", "    2 Confirmacion mPayType " + mPayType);
 
         }
-        Log.v("LOG1","    3 Confirmacion mPayType " + mPayType);
+        Log.v("LOG1", "    3 Confirmacion mPayType " + mPayType);
 
 
         IntentFilter intentFilter = new IntentFilter();
@@ -187,6 +212,7 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
                 if (intent.getAction().equals(Actions.ACTION_CANCEL_DRIVER_SERVICE)) {
                     // muestra dialogo
                     mServiceId = intent.getExtras().getString("service_id");
+
                     String message = intent.getExtras().getString("message");
 
                     Log.v("SERVICE_PUSH", "CANCEL_DRIVER_SERVICE " + message);
@@ -220,12 +246,12 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
                     Log.v("SERVICE_PUSH", "SERVICE_ENDED servicio");
                     String message = intent.getExtras().getString("message");
 
-                    mTotUnits   = intent.getExtras().getString("units");
+                    mTotUnits = intent.getExtras().getString("units");
                     mTotCharge1 = intent.getExtras().getString("charge1");
                     mTotCharge2 = intent.getExtras().getString("charge2");
                     mTotCharge3 = intent.getExtras().getString("charge3");
                     mTotCharge4 = intent.getExtras().getString("charge4");
-                    mTotValue   = intent.getExtras().getString("value");
+                    mTotValue = intent.getExtras().getString("value");
 
 
                     mServiceId = intent.getExtras().getString("service_id");
@@ -242,20 +268,20 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
 
                     showResumeService();
                     //mostrarMensaje(message);
-                // } else if (intent.getAction().equals(Actions.ACTION_TAXI_GO)) {
-                //     Log.v("SERVICE_PUSH", "TAXI_GO servicio");
-                //     try {
-                //         JSONObject position = new JSONObject(intent.getExtras()
-                //                 .getString("service"));
-                //         Log.v("CONFIRMATION", "onReceive() position = " + position.toString());
+                    // } else if (intent.getAction().equals(Actions.ACTION_TAXI_GO)) {
+                    //     Log.v("SERVICE_PUSH", "TAXI_GO servicio");
+                    //     try {
+                    //         JSONObject position = new JSONObject(intent.getExtras()
+                    //                 .getString("service"));
+                    //         Log.v("CONFIRMATION", "onReceive() position = " + position.toString());
 
-                //         latitud_taxi = position.getDouble("lat");
+                    //         latitud_taxi = position.getDouble("lat");
 
-                //         longitud_taxi = position.getDouble("lng");
+                    //         longitud_taxi = position.getDouble("lng");
 
-                //     } catch (Exception e) {
-                //         Log.e("CONFIRMACION", e.toString() + "");
-                //     }
+                    //     } catch (Exception e) {
+                    //         Log.e("CONFIRMACION", e.toString() + "");
+                    //     }
                 } else if (intent.getAction().equals(Actions.ACTION_USER_CLOSE_SESSION)) {
                     Log.v("USER_CLOSE_SESSION", "Sesión cerrada - confirmación");
                     Conf conf = new Conf(getApplicationContext());
@@ -293,11 +319,11 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
         authorizationCodeTextView = (TextView) findViewById(R.id.authorizationCode);
 
         //if (mPayType == 3) {
-            String strPhone = conf.getPhone();
-            String strCode = strPhone.length() > 2 ? strPhone.substring(strPhone.length() - 2) : strPhone;
-            String strMessage = getResources().getString(R.string.title_code_authorization) + strCode;
-            authorizationCodeTextView.setText(strMessage);
-            authorizationCodeTextView.setVisibility(View.VISIBLE);
+        String strPhone = conf.getPhone();
+        String strCode = strPhone.length() > 2 ? strPhone.substring(strPhone.length() - 2) : strPhone;
+        String strMessage = getResources().getString(R.string.title_code_authorization) + strCode;
+        authorizationCodeTextView.setText(strMessage);
+        authorizationCodeTextView.setVisibility(View.VISIBLE);
         //}
 
         btnCancelar = (Button) findViewById(R.id.btnCancelar);
@@ -397,6 +423,13 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
 
         } catch (Exception e) {
             Log.e("HOLA", "" + e.toString());
+        }
+
+
+        try {
+            checkService();
+        } catch (JSONException e) {
+            Log.e("JSON", e.toString());
         }
     }
 
@@ -529,7 +562,7 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
     protected void onResume() {
         super.onResume();
         open = true;
-        displayConnectivityPanel(!Connectivity.isConnected(this) && !mConnectivityChecker.getConnectivityCheckResult());
+//        displayConnectivityPanel(!Connectivity.isConnected(this) && !mConnectivityChecker.getConnectivityCheckResult());
         mConnectivityChecker.startConnectivityMonitor();
         mNetworkMonitor = new NetworkChangeReceiver(this);
         registerReceiver(mNetworkMonitor, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
@@ -538,6 +571,7 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
     @Override
     protected void onPause() {
         super.onPause();
+
         mConnectivityChecker.stopConnectivityMonitor();
         unregisterReceiver(mNetworkMonitor);
     }
@@ -553,65 +587,121 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
 
     public void cancelarService() {
 
-        MiddleConnect.cancelService(
-                getString(R.string.cancel_service, conf.getIdUser()),
-                new AsyncHttpResponseHandler() {
 
-                    @Override
-                    public void onStart() {
-                        try {
-                            pDialog = new ProgressDialog(ConfirmacionActivity.this);
-                            pDialog.setMessage(getString(R.string.title_cancelando_servicio));
-                            pDialog.setIndeterminate(false);
-                            pDialog.setCancelable(false);
-                            pDialog.show();
-                        } catch (Exception e) {
-                        }
-                    }
+        pDialog = new ProgressDialog(ConfirmacionActivity.this);
+        pDialog.setMessage("Cancelando Servicio....");
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(false);
+        pDialog.show();
 
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                        String response = new String(responseBody);
-                        Log.v("CANCEL_SERVICE","response " + response);
-                        try {
 
-                            JSONObject responsejson = new JSONObject(response);
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);
 
-                            Log.v("CANCEL_SERVICE","responsejson " + responsejson);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Connect.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
+                .build();
 
-                            if (responsejson != null && responsejson.getInt("error") == 0) {
+        ApiService service = retrofit.create(ApiService.class);
 
-                                myTimer.cancel();
-                                myTimer.purge();
-                                myTimer = null;
+        Call<CancelServiceResponse> call_profile = service.cancelService(conf.getIdUser());
+        call_profile.enqueue(new Callback<CancelServiceResponse>() {
+            @Override
+            public void onResponse(Call<CancelServiceResponse> call, Response<CancelServiceResponse> response) {
+                pDialog.dismiss();
+                try {
 
-                                callMap();
-                                //finish();
-                            } else {
-                                err_cancel();
-                            }
-                        } catch (Exception e) {
-                            Log.v("CANCEL_SERVICE","responsejson catch");
-                            err_cancel();
-                        }
+                    if (response.body() != null && response.body().getError() == 0) {
 
-                    }
+                        myTimer.cancel();
+                        myTimer.purge();
+                        myTimer = null;
 
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                        String response = new String(responseBody);
-                        Log.v("CANCEL_SERVICE","failure response " + response);
+                        callMap();
+                        //finish();
+                    } else {
                         err_cancel();
                     }
+                } catch (Exception e) {
+                    Log.v("CANCEL_SERVICE", "responsejson catch");
+                    err_cancel();
+                }
 
-                    @Override
-                    public void onFinish() {
-                        try {
-                            pDialog.dismiss();
-                        } catch (Exception e) {
-                        }
-                    }
-                });
+            }
+
+            @Override
+            public void onFailure(Call<CancelServiceResponse> call, Throwable t) {
+                Log.w("-----Error-----", t.toString());
+                err_cancel();
+                pDialog.dismiss();
+
+            }
+        });
+
+
+//        MiddleConnect.cancelService(
+//                getString(R.string.cancel_service, conf.getIdUser()),
+//                new AsyncHttpResponseHandler() {
+//
+//                    @Override
+//                    public void onStart() {
+//                        try {
+//                            pDialog = new ProgressDialog(ConfirmacionActivity.this);
+//                            pDialog.setMessage(getString(R.string.title_cancelando_servicio));
+//                            pDialog.setIndeterminate(false);
+//                            pDialog.setCancelable(false);
+//                            pDialog.show();
+//                        } catch (Exception e) {
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+//                        String response = new String(responseBody);
+//                        Log.v("CANCEL_SERVICE","response " + response);
+//                        try {
+//
+//                            JSONObject responsejson = new JSONObject(response);
+//
+//                            Log.v("CANCEL_SERVICE","responsejson " + responsejson);
+//
+//                            if (responsejson != null && responsejson.getInt("error") == 0) {
+//
+//                                myTimer.cancel();
+//                                myTimer.purge();
+//                                myTimer = null;
+//
+//                                callMap();
+//                                //finish();
+//                            } else {
+//                                err_cancel();
+//                            }
+//                        } catch (Exception e) {
+//                            Log.v("CANCEL_SERVICE","responsejson catch");
+//                            err_cancel();
+//                        }
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+//                        String response = new String(responseBody);
+//                        Log.v("CANCEL_SERVICE","failure response " + response);
+//                        err_cancel();
+//                    }
+//
+//                    @Override
+//                    public void onFinish() {
+//                        try {
+//                            pDialog.dismiss();
+//                        } catch (Exception e) {
+//                        }
+//                    }
+//                });
 
     }
 
@@ -705,11 +795,47 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
 
     }
 
+    private ValueEventListener el = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            Log.e("The read failed: " , String.valueOf(databaseError.getCode()));
+        }
+    };
+
+
+
     public void checkService() throws JSONException {
 
         id_user = conf.getIdUser();
         service_id = conf.getServiceId();
         mServiceId = service_id;
+
+
+
+        BT_Chat = (Button) findViewById(R.id.BT_Chat);
+
+        FirebaseApp secondary = FirebaseApp.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance(secondary);
+        chat_ref = database.getReference("chat/taxi_user/"+service_id);
+
+
+//        chat_ref.addValueEventListener(el);
+
+        BT_Chat.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(ConfirmacionActivity.this, ChatActivity.class);
+                Bundle b = new Bundle();
+                b.putString("service_id", service_id);
+                i.putExtras(b);
+                startActivity(i);
+            }
+        });
 
         Log.v("checkService", "CONFIRMATION id_user=" + id_user + " service_id=" + service_id);
 
@@ -837,6 +963,16 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
         try {
             Intent callIntent = new Intent(Intent.ACTION_CALL);
             callIntent.setData(Uri.parse("tel:" + number));
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             startActivity(callIntent);
         } catch (ActivityNotFoundException activityException) {
             Log.e(TAG, "Error al llamar:", activityException);
@@ -933,12 +1069,12 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
 
     @Override
     public void onNetworkConnectivityChange(boolean connected) {
-        displayConnectivityPanel(!connected);
+//        displayConnectivityPanel(!connected);
     }
 
 
     @Override
     public void onConnectivityQualityChecked(boolean Optimal) {
-        displayConnectivityPanel(!Optimal);
+//        displayConnectivityPanel(!Optimal);
     }
 }

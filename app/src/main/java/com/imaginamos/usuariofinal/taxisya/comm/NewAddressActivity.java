@@ -21,7 +21,9 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.imaginamos.usuariofinal.taxisya.Model.AddAddressResponse;
 import com.imaginamos.usuariofinal.taxisya.io.ApiAdapter;
+import com.imaginamos.usuariofinal.taxisya.io.ApiService;
 import com.imaginamos.usuariofinal.taxisya.io.ServiceResponse;
 import com.imaginamos.usuariofinal.taxisya.R;
 import com.imaginamos.usuariofinal.taxisya.models.Conf;
@@ -29,9 +31,14 @@ import com.imaginamos.usuariofinal.taxisya.models.Conf;
 import java.io.FileInputStream;
 import java.util.Date;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NewAddressActivity extends Activity implements OnClickListener {
     private EditText edt_new_name;
@@ -275,11 +282,26 @@ public class NewAddressActivity extends Activity implements OnClickListener {
 
         id_user = conf.getIdUser();
 
-        Log.v("ADD_ADDRESS1", "address=" + address + " comment=" + comment + " barrio=" + barrio + " id_user=" + id_user + " name=" + name);
-        ApiAdapter.getApiService().addAddress(address, barrio, comment, id_user, "1", lat, lng, name, new Callback<ServiceResponse>() {
+        Log.v("ADD_ADDRESS1", "address=" + address + " comment=" + comment + " barrio=" + barrio + " id_user=" + id_user + " name=" + name + "latlng: " + lat + "," + lng);
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Connect.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
+                .build();
+
+        ApiService service = retrofit.create(ApiService.class);
+
+        Call<AddAddressResponse> call_profile=service.addAddress( address, "", comment, id_user, "1", lat, lng, name);
+        call_profile.enqueue(new retrofit2.Callback<AddAddressResponse>() {
             @Override
-            public void success(ServiceResponse data, Response response) {
-                if (data.getError() == 1) {
+            public void onResponse(Call<AddAddressResponse> call, retrofit2.Response<AddAddressResponse> response) {
+                if (response.body().getError() == 1) {
                     Log.v("ADD_ADDRESS1", "ApiService 1");
                     //dirs.addAll(data.getAddress());
                     //adaptador.notifyDataSetChanged();
@@ -292,14 +314,16 @@ public class NewAddressActivity extends Activity implements OnClickListener {
                 imm.hideSoftInputFromWindow(edt_new_name.getWindowToken(), 0);
 
                 finish();
+
             }
 
             @Override
-            public void failure(RetrofitError error) {
-                Log.v("ADD_ADDRESS1", "onFailure " + String.valueOf(new Date()));
-                //err_address();
+            public void onFailure(Call<AddAddressResponse> call, Throwable t) {
+                Log.w("-----Error-----",t.toString());
+
             }
         });
+
 
     }
 

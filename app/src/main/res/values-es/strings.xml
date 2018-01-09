@@ -118,6 +118,7 @@
     <string name="resetpass">forgotten</string>
     <string name="retry">reintentar</string>
     <string name="sd">Buscando Dirección...</string>
+    <string name="sd2">Selecciona una dirección</string>
     <string name="se_ha_enviado_a_tu_correo_electronico_un_codigo_de_confirmaci_n">Se ha enviado a tu correo electrónico un codigo de confirmacion</string>
     <string name="selecciona">Selecciona</string>
     <string name="services_user">service/user</string>
@@ -204,7 +205,7 @@
     <string name="texto_login_2">mi cuenta</string>
     <string name="texto_login_subtitulo">ingresa tus datos</string>
     <string name="texto_lugar_agendamiento">Lugar de agendamiento</string>
-    <string name="texto_maximo_24_horas">Máximo 24 horas antes</string>
+    <string name="texto_maximo_24_horas">Minimo 24 horas antes</string>
     <string name="texto_mi_ubicacion">Mi Ubicación</string>
     <string name="texto_mis_datos_son">Mis datos son:</string>
     <string name="texto_mis_direcciones">Mis direcciones</string>
@@ -272,6 +273,8 @@
     <string name="ticket_invalid">El vale no se ingresó o es inválido</string>
     <string name="kind_services">Selecciona una opción para continuar</string>
     <string name="car_text">Selecciona un vehículo para continuar</string>
+    <string name="title_activity_chat">ChatActivity</string>
+
     <string name="place_details">
     <![CDATA[
         <i>%1$s</i>
@@ -279,5 +282,21 @@
     ]]>
     </string>
     <string name="type_car">Tipo de Vehículo</string>
+    <string name="loading">Cargando...</string>
+    <string name="destination">Toca para ingresar tu destino</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_mapa">MapaActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="select_map_point">Selecciona tu destino en el mapa</string>
+    <string name="fill_fields">Debes llenar todos los campos</string>
+    <string name="chat">Chat</string>
+    <string name="send">Enviar</string>
+    <string name="type_your_message_here">Escribe tu mensaje aquí ...</string>
+    <string name="new_message">Nuevo mensaje</string>
+    <string name="llamar_pbx">Llamar a PBX</string>
+
 
 </resources>

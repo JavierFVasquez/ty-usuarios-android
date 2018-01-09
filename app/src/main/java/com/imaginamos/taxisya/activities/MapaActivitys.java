@@ -3,7 +3,6 @@ package com.imaginamos.taxisya.activities;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +13,7 @@ import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
@@ -22,12 +22,14 @@ import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.BroadcastReceiver;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -35,6 +37,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -49,6 +52,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
 import android.provider.Settings;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
@@ -59,11 +64,13 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -71,12 +78,14 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
@@ -96,12 +105,25 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.maps.android.PolyUtil;
+import com.imaginamos.usuariofinal.taxisya.Model.DirectionsResponse;
+import com.imaginamos.usuariofinal.taxisya.Model.FeesResponse;
+import com.imaginamos.usuariofinal.taxisya.Model.PlacesResponse;
+import com.imaginamos.usuariofinal.taxisya.Model.RequestServiceAddressResponse;
+import com.imaginamos.usuariofinal.taxisya.Model.ResultsItem;
+import com.imaginamos.usuariofinal.taxisya.Model.ReverseGeocodingResponse;
 import com.imaginamos.usuariofinal.taxisya.activities.AgendarActivity;
 import com.imaginamos.usuariofinal.taxisya.activities.ConfirmacionActivity;
 import com.imaginamos.usuariofinal.taxisya.activities.HistorialActivity;
@@ -112,10 +134,14 @@ import com.imaginamos.usuariofinal.taxisya.activities.NotificationActivity;
 import com.imaginamos.usuariofinal.taxisya.activities.PaymentsActivity;
 import com.imaginamos.usuariofinal.taxisya.activities.PerfilActivity;
 import com.imaginamos.usuariofinal.taxisya.activities.RegistroActivity;
+import com.imaginamos.usuariofinal.taxisya.adapter.AutocompleteAdapter;
 import com.imaginamos.usuariofinal.taxisya.adapter.BDAdapter;
+import com.imaginamos.usuariofinal.taxisya.comm.Connect;
 import com.imaginamos.usuariofinal.taxisya.comm.NetworkChangeReceiver;
 import com.imaginamos.usuariofinal.taxisya.comm.Preferencias;
 import com.imaginamos.usuariofinal.taxisya.dialogs.Dialogos;
+import com.imaginamos.usuariofinal.taxisya.io.ApiService;
+import com.imaginamos.usuariofinal.taxisya.models.CancelServiceResponse;
 import com.imaginamos.usuariofinal.taxisya.utils.Actions;
 import com.imaginamos.usuariofinal.taxisya.models.Conf;
 import com.imaginamos.usuariofinal.taxisya.comm.Connectivity;
@@ -126,14 +152,22 @@ import com.imaginamos.usuariofinal.taxisya.models.Error;
 import com.imaginamos.usuariofinal.taxisya.utils.Utils;
 import com.imaginamos.usuariofinal.taxisya.R;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.yinglan.keyboard.HideUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.imaginamos.usuariofinal.taxisya.R.id.btnAsk;
+import static android.view.View.GONE;
 import static com.imaginamos.usuariofinal.taxisya.R.id.ticketValue;
 
 public class MapaActivitys extends FragmentActivity implements OnClickListener, ConnectionCallbacks, OnConnectionFailedListener, LocationListener, NetworkChangeReceiver.NetworkReceiverListener, Connectivity.ConnectivityQualityCheckListener, OnMapReadyCallback, PlaceSelectionListener {
@@ -157,7 +191,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     private ImageView bg_shadow, imageHeader;
     private EditText direccion_uno, mAddress;
     private Button btnAddAddress, btn_menu, btnSolicitar, bt_direcc, btnCancelar, btnAsk;
-    private TextView textTotal, textSearch, mTextYaFaltaPoco,kind_text;
+    private TextView textTotal, textSearch, mTextYaFaltaPoco, kind_text;
     private RelativeLayout mNoConnectivityPanel;
     private ImageView mConnectivityLoaderImage;
     private Connectivity mConnectivityChecker = new Connectivity(this);
@@ -220,7 +254,8 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     // 1= efectivo, 2=tc,3=vale
     private int mPayType = 1;
     private String mCardReference;
-    private String[] destination;
+    private LatLng destination;
+    private String destination_address = "";
 
     private RadioButton mPayType1, mPayType2, mPayType3;
     private EditText mTicket;
@@ -232,6 +267,19 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
 
     private TextView mPlaceDetailsText;
     private TextView mPlaceAttribution;
+
+    private TextView TV_Distance;
+    private TextView TV_Estimated_Time;
+    private TextView TV_Estimated_Price;
+
+    private AutoCompleteTextView direccion_dos;
+    private String destination_name;
+    private String travel_distance;
+    private String travel_estimated_time;
+    private String pay_type = "Efectivo";
+    private List<ResultsItem> places_result;
+    private TextWatcher tw;
+    private String dir_by_result = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -291,6 +339,10 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         // occurred.
         autocompleteFragment.setOnPlaceSelectedListener(this);
 
+        TV_Distance = (TextView) findViewById(R.id.TV_Distance);
+        TV_Estimated_Time = (TextView) findViewById(R.id.TV_Estimated_Time);
+        TV_Estimated_Price = (TextView) findViewById(R.id.TV_Estimated_Price);
+
         mPlaceDetailsText = (TextView) findViewById(R.id.place_details);
         mPlaceAttribution = (TextView) findViewById(R.id.place_attribution);
 
@@ -301,7 +353,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         type_content = (LinearLayout) findViewById(R.id.type_content);
         pay_content = (LinearLayout) findViewById(R.id.pay_content);
         imageMapView = (ImageView) findViewById(R.id.image_map);
-        imageMapMarker = (ImageView) findViewById(R.id.ivMarker2);
+        imageMapMarker = (ImageView) findViewById(R.id.ivMarker);
         //kind_text = (TextView) findViewById(R.id.kind_text);
 
         hashback = (ImageButton) findViewById(R.id.hashback);
@@ -316,9 +368,11 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         mPayType3 = (RadioButton) findViewById(R.id.payType3);
         mTicket = (EditText) findViewById(ticketValue);
 
+
         mTicket.addTextChangedListener(new TextWatcher() {
 
             private String current = "";
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -337,7 +391,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                 final String stk = mTicket.getText().toString();
                 rTicket = new String(stk);
                 if ((stk != null) && stk.length() >= 7) {
-                    Log.v("LOG1","mTicket afterTextChanged " + stk);
+                    Log.v("LOG1", "mTicket afterTextChanged " + stk);
                     isTicketValid = false;
 
                     MiddleConnect.confirmTicker(getApplicationContext(), stk, new AsyncHttpResponseHandler() {
@@ -352,7 +406,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                             String response = new String(responseBody);
                             isTicketValid = false;
 
-                            Log.v("LOG1","onSuccess response = " + response);
+                            Log.v("LOG1", "onSuccess response = " + response);
                             try {
                                 Log.v("LOG1", "SUCCES: " + response);
                                 JSONObject responsejson = new JSONObject(response);
@@ -380,12 +434,12 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
 
                             Log.v("LOG1", "confirmTicket onFailure");
                             String response = new String(responseBody);
-                            Log.v("LOG1","failure response = " + response);
+                            Log.v("LOG1", "failure response = " + response);
                         }
 
                         @Override
                         public void onFinish() {
-                            Log.v("LOG1","confirmTicket onFinish =  ");
+                            Log.v("LOG1", "confirmTicket onFinish =  ");
                         }
 
                     });
@@ -430,9 +484,10 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                 mPayType = 1;
                 btnSolicitar.setEnabled(true);
                 btnSolicitar.setBackgroundResource(R.drawable.btn_request);
-                mTicket.setVisibility(View.GONE);
-                type_content.setVisibility(View.GONE);
+                mTicket.setVisibility(GONE);
+                type_content.setVisibility(GONE);
                 mTicket.getText().toString();
+                pay_type = "Efectivo";
             }
         });
 
@@ -440,12 +495,13 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
             @Override
             public void onClick(View view) {
                 mPayType = 2;
-                mTicket.setVisibility(View.GONE);
-                type_content.setVisibility(View.GONE);
+                mTicket.setVisibility(GONE);
+                type_content.setVisibility(GONE);
                 btnSolicitar.setBackgroundResource(R.drawable.btn_request);
                 btnSolicitar.setEnabled(true);
                 // TODO: check tipo servicio
                 checkCreditCards();
+                pay_type = "Tarjeta";
             }
         });
 
@@ -454,9 +510,10 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
             public void onClick(View view) {
                 mPayType = 3;
                 mTicket.setVisibility(View.VISIBLE);
-                type_content.setVisibility(View.GONE);
+                type_content.setVisibility(GONE);
                 btnSolicitar.setEnabled(false);
                 btnSolicitar.setBackgroundResource(R.drawable.btn_gray);
+                pay_type = "Vale";
             }
         });
 
@@ -465,10 +522,10 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
             public void onClick(View view) {
                 //mPayType = 3;
                 check_hashback.setVisibility(View.VISIBLE);
-                check_suv.setVisibility(View.GONE);
-                check_sedan.setVisibility(View.GONE);
+                check_suv.setVisibility(GONE);
+                check_sedan.setVisibility(GONE);
 
-                hashback.setVisibility(View.GONE);
+                hashback.setVisibility(GONE);
                 sedan.setVisibility(View.VISIBLE);
                 suv.setVisibility(View.VISIBLE);
 
@@ -481,12 +538,12 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
             @Override
             public void onClick(View view) {
                 //mPayType = 3;
-                check_hashback.setVisibility(View.GONE);
-                check_suv.setVisibility(View.GONE);
+                check_hashback.setVisibility(GONE);
+                check_suv.setVisibility(GONE);
                 check_sedan.setVisibility(View.VISIBLE);
 
                 hashback.setVisibility(View.VISIBLE);
-                sedan.setVisibility(View.GONE);
+                sedan.setVisibility(GONE);
                 suv.setVisibility(View.VISIBLE);
 
                 btnSolicitar.setEnabled(true);
@@ -498,13 +555,13 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
             @Override
             public void onClick(View view) {
                 //mPayType = 3;
-                check_hashback.setVisibility(View.GONE);
+                check_hashback.setVisibility(GONE);
                 check_suv.setVisibility(View.VISIBLE);
-                check_sedan.setVisibility(View.GONE);
+                check_sedan.setVisibility(GONE);
 
                 hashback.setVisibility(View.VISIBLE);
                 sedan.setVisibility(View.VISIBLE);
-                suv.setVisibility(View.GONE);
+                suv.setVisibility(GONE);
 
                 btnSolicitar.setEnabled(true);
                 btnSolicitar.setBackgroundResource(R.drawable.btn_request);
@@ -637,12 +694,40 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         btnSolicitar.setEnabled(false);
         btnSolicitar.setBackgroundResource(R.drawable.btn_gray);
 
+        direccion_uno.setFocusable(true);
+        direccion_uno.setFocusableInTouchMode(true);
+        Log.e("NO SE", "QUE ESTA PASANDO");
+        if (direccion_uno.requestFocus()) {
+            Log.e("NO SE NADA", "QUE ESTA PASANDO");
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        }
+
+        direccion_dos.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    imageMapMarker.setVisibility(View.GONE);
+
+                    Log.e("LLENO", "EL CAMPO DE DIRECCION DOS ESTA LLENO");
+
+                    direccion_dos.addTextChangedListener(tw);
+                    direccion_dos.setFocusableInTouchMode(true);
+                    direccion_dos.setFocusable(true);
+                    btnAsk.setVisibility(GONE);
+                    btnSolicitar.setVisibility(View.VISIBLE);
+                    pay_content.setVisibility(View.VISIBLE);
+                    btnSolicitar.setEnabled(true);
+                    btnSolicitar.setBackgroundResource(R.drawable.btn_request);
+
+                }
+            }
+        });
+
+
     }
 
     public void onPlaceSelected(Place place) {
-        //Log.v("LOG", "Place Selected: " + place.getName() + place.getLatLng());
 
-        // Format the returned place's details and display them in the TextView.
         mPlaceDetailsText.setText(formatPlaceDetails(getResources(), place.getLatLng()));
 
         CharSequence attributions = place.getAttributions();
@@ -675,8 +760,103 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         if (!isKeyboardShown) {
             if (isAddressFocus) {
                 map.getUiSettings().setScrollGesturesEnabled(true);
-                imageMapView.setVisibility(View.GONE);
-                imageMapMarker.setVisibility(View.GONE);
+                imageMapView.setVisibility(GONE);
+                imageMapMarker.setVisibility(GONE);
+
+                if (((direccion_uno.hasFocus()) || (direccion_dos.hasFocus())) && (!direccion_uno.getText().toString().isEmpty()) && (!direccion_dos.getText().toString().isEmpty()) && (!destination_address.isEmpty())) {
+
+                    Snackbar.make(getCurrentFocus(), "Calculando ruta", Snackbar.LENGTH_LONG).show();
+
+
+                    final String dir1 = direccion_uno.getText().toString() + "Bogota Colombia";
+                    String dir2 = direccion_dos.getText().toString() + "Bogota Colombia";
+
+
+                    HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                    logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+                    OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+                    httpClient.addInterceptor(logging);
+
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(Connect.BASE_GOOGLE_URL)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .client(httpClient.build())
+                            .build();
+
+                    ApiService service = retrofit.create(ApiService.class);
+                    Call<DirectionsResponse> call_profile = service.directions(dir1, destination_address);
+                    call_profile.enqueue(new Callback<DirectionsResponse>() {
+                        @Override
+                        public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
+
+                            String poly_encode = response.body().getRoutes().get(0).getOverview_polyline().getPoints();
+                            List<LatLng> points = PolyUtil.decode(poly_encode);
+
+                            PolylineOptions rectOptions = new PolylineOptions().width(10).color(getResources().getColor(R.color.text_orange));
+
+                            for (LatLng l : points) {
+                                rectOptions.add(l);
+                            }
+
+                            int height = convertSpToPixels(40, MapaActivitys.this);
+                            int width = convertSpToPixels(90, MapaActivitys.this);
+                            ;
+                            BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.pointer_1);
+                            Bitmap b = bitmapdraw.getBitmap();
+                            Bitmap smallMarker_1 = Bitmap.createScaledBitmap(b, width, height, false);
+                            BitmapDrawable bitmapdraw_2 = (BitmapDrawable) getResources().getDrawable(R.drawable.pointer_2);
+                            b = bitmapdraw_2.getBitmap();
+                            Bitmap smallMarker_2 = Bitmap.createScaledBitmap(b, width, height, false);
+
+                            map.clear();
+                            map.addMarker(new MarkerOptions()
+                                    .position(new LatLng(response.body().getRoutes().get(0).getLegs().get(0).getStart_location().getLat(), response.body().getRoutes().get(0).getLegs().get(0).getStart_location().getLng()))
+                                    .title(direccion_uno.getText().toString()))
+                                    .setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker_1));
+                            map.addMarker(new MarkerOptions()
+                                    .position(new LatLng(response.body().getRoutes().get(0).getLegs().get(0).getEnd_location().getLat(), response.body().getRoutes().get(0).getLegs().get(0).getEnd_location().getLng()))
+                                    .title(direccion_dos.getText().toString()))
+                                    .setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker_2));
+
+                            Polyline polyline = map.addPolyline(rectOptions);
+                            LinearLayout LL_Estimated = (LinearLayout) findViewById(R.id.LL_Estimated);
+                            LL_Estimated.setVisibility(View.VISIBLE);
+                            travel_distance = response.body().getRoutes().get(0).getLegs().get(0).getDistance().getText();
+                            travel_estimated_time = response.body().getRoutes().get(0).getLegs().get(0).getDuration().getText();
+                            TV_Distance.setText(response.body().getRoutes().get(0).getLegs().get(0).getDistance().getText());
+                            TV_Estimated_Time.setText(response.body().getRoutes().get(0).getLegs().get(0).getDuration().getText());
+
+                            getEstimatedPriceWithFees(String.valueOf(response.body().getRoutes().get(0).getLegs().get(0).getEnd_location().getLat()), String.valueOf(response.body().getRoutes().get(0).getLegs().get(0).getEnd_location().getLng()), response.body().getRoutes().get(0).getLegs().get(0).getDistance().getValue(), response.body().getRoutes().get(0).getLegs().get(0).getDuration().getValue());
+
+                            map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+                                @Override
+                                public void onCameraChange(CameraPosition cameraPosition) {
+
+                                }
+                            });
+                            imageMapMarker.setVisibility(GONE);
+
+                            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+
+                            builder.include(new LatLng(response.body().getRoutes().get(0).getBounds().getNortheast().getLat(), response.body().getRoutes().get(0).getBounds().getNortheast().getLng()));
+                            builder.include(new LatLng(response.body().getRoutes().get(0).getBounds().getSouthwest().getLat(), response.body().getRoutes().get(0).getBounds().getSouthwest().getLng()));
+
+                            LatLngBounds bounds = builder.build();
+
+                            int padding = convertSpToPixels(40, MapaActivitys.this); // offset from edges of the map in pixels
+                            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                            map.setPadding(0, 0, 0, convertSpToPixels(150, MapaActivitys.this));
+                            map.animateCamera(cu);
+                        }
+
+                        @Override
+                        public void onFailure(Call<DirectionsResponse> call, Throwable t) {
+                            Log.w("-----Error-----", t.toString());
+                        }
+                    });
+
+                }
             }
             isAddressFocus = false;
         } else {
@@ -691,12 +871,110 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         return isKeyboardShown;
     }
 
+
+    private final int cost_by_kilometer_sfc = 881;
+    private final int cost_by_kilometer_cfc = 998;
+    private final int banderazo_sfc = 2500;
+    private final int banderazo_cfc = 2800;
+    private int recargo_nocturno = 0;
+    private int recargo_puerta_a_puerta = 0;
+    private int recargo_aeropuerto = 0;
+    private final int carrera_minima_sfc = 4400;
+    private final int carrera_minima_cfc = 5000;
+
+    private final double vfl = 36;
+    private final double vc = 18;
+    private final double b1 = 0.83;
+    private final double b2 = 2.48;
+    private final double c = -0.825;
+
+    private final double factorDeCalidad = 0;
+
+
+    public String getEstimatedPrice(int distance, int time, int recargos) {
+
+        double distanceInKm = distance / 1000;
+        double timeInHours = (time / 60) / 60;
+
+        double costoServicio = 0;
+
+        double fc = factorDeCongestion(distanceInKm / timeInHours);
+
+
+        if (factorDeCalidad == 0) {
+            costoServicio = banderazo_sfc + ((cost_by_kilometer_sfc * (1 + factorDeCalidad)) * (1 + fc) * distanceInKm) + recargos;
+            costoServicio = (costoServicio < carrera_minima_sfc) ? carrera_minima_sfc : costoServicio;
+        } else {
+            costoServicio = banderazo_cfc + ((cost_by_kilometer_cfc * (1 + factorDeCalidad)) * (1 + fc) * distanceInKm) + recargos;
+            costoServicio = (costoServicio < carrera_minima_cfc) ? carrera_minima_cfc : costoServicio;
+
+        }
+
+        return "$ " + String.format("%,d", (int) costoServicio);
+    }
+
+    public double factorDeCongestion(double velocidadPromedio) {
+        if (velocidadPromedio >= vfl) {
+            return 0;
+        } else if ((vc <= velocidadPromedio) && (velocidadPromedio < vfl)) {
+            return ((vfl - velocidadPromedio) / vfl) * b1;
+        } else if (velocidadPromedio < vc) {
+            return (((vfl - velocidadPromedio) / vfl) * b2) + c;
+        } else {
+            return 0;
+        }
+    }
+
+    public void getEstimatedPriceWithFees(String lat, String lng, final int distance, final int time) {
+
+        int inhours = (int) ((time / 60) / 60);
+        int minutes = ((time / 60) % 60);
+        String time_formated = inhours + ":" + minutes;
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Connect.BASE_URL_IP)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
+                .build();
+
+        ApiService service = retrofit.create(ApiService.class);
+        Call<FeesResponse> call_profile = service.requestFees(lat, lng, time_formated);
+        call_profile.enqueue(new Callback<FeesResponse>() {
+            @Override
+            public void onResponse(Call<FeesResponse> call, Response<FeesResponse> response) {
+
+                TV_Estimated_Price.setText(getEstimatedPrice(distance, time, response.body().getTotalRecargo()));
+                recargo_nocturno = Integer.parseInt(response.body().getNocturno().trim());
+                recargo_aeropuerto = Integer.parseInt(response.body().getKm().trim());
+//                recargo_puerta_a_puerta = Integer.parseInt(response.body().getPuertaAPuerta().trim());
+
+            }
+
+            @Override
+            public void onFailure(Call<FeesResponse> call, Throwable t) {
+                Log.w("-----Error-----", t.toString());
+            }
+        });
+
+    }
+
     @Override
     protected void onStop() {
         Log.v("onStop", "MapActivity");
         super.onStop();
 ///		mLocationClient.disconnect();
     }
+
+    public static int convertSpToPixels(float sp, Context context) {
+        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
+        return px;
+    }
+
 
     @Override
     protected void onStart() {
@@ -716,7 +994,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         super.onResume();
         Log.v("SEGUIMIENTO", "onResume - MainActivity");
         checkPlayServices();
-        displayConnectivityPanel(!Connectivity.isConnected(this) && !mConnectivityChecker.getConnectivityCheckResult());
+//        displayConnectivityPanel(!Connectivity.isConnected(this) && !mConnectivityChecker.getConnectivityCheckResult());
         mConnectivityChecker.startConnectivityMonitor();
         mNetworkMonitor = new NetworkChangeReceiver(this);
         registerReceiver(mNetworkMonitor, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
@@ -778,22 +1056,32 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         map = googleMap;
 
         //map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitud, longitud), map.getCameraPosition().zoom), 15, null);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
             latitud = mLastLocation.getLatitude();
             longitud = mLastLocation.getLongitude();
             Log.v("MAP1", "se obtuvo mLastLocation");
         }
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitud, longitud), 15));
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitud, longitud), 17));
 
     }
 
     void showControls() {
 
-        btnSolicitar.setVisibility(View.GONE);
-        pay_content.setVisibility(View.GONE);
-        bt_direcc.setVisibility(View.GONE);
-        imageHeader.setVisibility(View.GONE);
+//        btnSolicitar.setVisibility(GONE);
+//        pay_content.setVisibility(View.GONE);
+        bt_direcc.setVisibility(GONE);
+        imageHeader.setVisibility(GONE);
         textSearch.setVisibility(View.VISIBLE);
         contendorWell.setVisibility(View.VISIBLE);
         textTotal.setVisibility(View.VISIBLE);
@@ -811,13 +1099,15 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     void hideControls() {
 
         // solicitando
-        textTotal.setVisibility(View.GONE);
-        btnCancelar.setVisibility(View.GONE);
-        contendorWell.setVisibility(View.GONE);
-        textSearch.setVisibility(View.GONE);
+        textTotal.setVisibility(GONE);
+        btnCancelar.setVisibility(GONE);
+        contendorWell.setVisibility(GONE);
+        textSearch.setVisibility(GONE);
         //kind_text.setVisibility(View.GONE);
         btnAsk.setEnabled(true);
 
+        mTicket.setFocusableInTouchMode(true);
+        mTicket.setFocusable(true);
         /*sedan.setVisibility(View.GONE);
         check_sedan.setVisibility(View.GONE);
         hashback.setVisibility(View.GONE);
@@ -825,7 +1115,9 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         suv.setVisibility(View.GONE);
         check_suv.setVisibility(View.GONE);*/
 
-        btnSolicitar.setVisibility(View.GONE);
+//        btnSolicitar.setVisibility(GONE);
+//        direccion_dos.setFocusableInTouchMode(true);
+//        direccion_dos.setFocusable(false);
         bt_direcc.setVisibility(View.VISIBLE);
         imageHeader.setVisibility(View.VISIBLE);
         direccion_uno.setFocusableInTouchMode(true);
@@ -867,7 +1159,14 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
             btnSolicitar.setText(getIntent().getBooleanExtra("PickUp",true) ? getText(R.string.text_pedir_taxi) : getString(R.string.text_pedir_destino));
         }
 
+        EditText SearchDestinyEditText = (EditText) findViewById(R.id.direccion_dos);
+        EditText SearchEditText = (EditText) findViewById(R.id.direccion_uno);
+
+
+        direccion_dos = (AutoCompleteTextView) findViewById(R.id.direccion_dos);
         direccion_uno = (EditText) findViewById(R.id.direccion_uno);
+
+
         bt_direcc = (Button) findViewById(R.id.btn_direcc);
         bg_shadow = (ImageView) findViewById(R.id.bg_shadows);
 
@@ -877,7 +1176,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         myAdapter = ArrayAdapter.createFromResource(this, R.array.opciones, android.R.layout.simple_spinner_item);
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        EditText SearchEditText = (EditText) findViewById(R.id.direccion_uno);
+
         SearchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
@@ -889,6 +1188,314 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                 return true;
             }
         });
+        direccion_dos.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                isKeyboardShown(direccion_dos.getRootView());
+            }
+        });
+
+
+
+        direccion_dos.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                direccion_dos.setFocusableInTouchMode(true);
+                direccion_dos.setFocusable(true);
+                btnAsk.setVisibility(GONE);
+                btnSolicitar.setVisibility(View.VISIBLE);
+                pay_content.setVisibility(View.VISIBLE);
+                btnSolicitar.setEnabled(true);
+                btnSolicitar.setBackgroundResource(R.drawable.btn_request);
+
+
+
+
+            }
+        });
+
+        tw = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (timer != null) {
+                    timer.cancel();
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                Log.i("======", "afterTextChanged");
+                timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        if(!direccion_dos.getText().toString().trim().isEmpty()) {
+                            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+                            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+                            httpClient.addInterceptor(logging);
+
+                            Retrofit retrofit = new Retrofit.Builder()
+                                    .baseUrl(Connect.BASE_GOOGLE_URL)
+                                    .addConverterFactory(GsonConverterFactory.create())
+                                    .client(httpClient.build())
+                                    .build();
+
+                            ApiService service = retrofit.create(ApiService.class);
+                            Call<PlacesResponse> call_profile = service.places(direccion_dos.getText().toString().trim());
+                            call_profile.enqueue(new Callback<PlacesResponse>() {
+                                @Override
+                                public void onResponse(Call<PlacesResponse> call, Response<PlacesResponse> response) {
+
+                                    if (response.body().getResults().size() > 0) {
+
+                                        places_result = response.body().getResults();
+
+                                        String[] results = new String[response.body().getResults().size()];
+
+                                        for (int i = 0 ; i < response.body().getResults().size() ; i++){
+                                            results[i] = response.body().getResults().get(i).getVicinity();
+                                        }
+                                        AutocompleteAdapter adapter = new AutocompleteAdapter(MapaActivitys.this,R.layout.autocomplete_item,response.body().getResults());
+
+                                        direccion_dos.setThreshold(3);
+                                        direccion_dos.setAdapter(adapter);
+                                        if(direccion_dos.hasFocus()) {
+                                            direccion_dos.showDropDown();
+                                        }
+
+                                    }
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<PlacesResponse> call, Throwable t) {
+                                    Log.w("-----Error-----", t.toString());
+                                }
+                            });
+                        }
+                    }
+                }, 600); // 600ms delay before the timer executes the „run“ method from TimerTask
+            }
+        };
+
+        direccion_dos.addTextChangedListener(tw);
+
+
+        direccion_dos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                direccion_dos.removeTextChangedListener(tw);
+
+
+                double lat = places_result.get(i).getGeometry().getLocation().getLat();
+                double lng = places_result.get(i).getGeometry().getLocation().getLng();
+                destination = new LatLng(lat, lng);
+                destination_address = places_result.get(i).getGeometry().getLocation().getLat() + "," +  places_result.get(i).getGeometry().getLocation().getLng();
+                destination_name = places_result.get(i).getName();
+                direccion_dos.setText(destination_name);
+                direccion_dos.clearFocus();
+                direccion_dos.dismissDropDown();
+
+
+                InputMethodManager imm1 = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm1.hideSoftInputFromWindow(mTicket.getWindowToken(), 0);
+                HideUtil.hideSoftKeyboard(MapaActivitys.this);
+
+
+                HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+                OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+                httpClient.addInterceptor(logging);
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(Connect.BASE_GOOGLE_URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(httpClient.build())
+                        .build();
+
+                ApiService service = retrofit.create(ApiService.class);
+                if((!direccion_uno.getText().toString().isEmpty())&&(!direccion_dos.getText().toString().isEmpty())&&(!destination_address.isEmpty())){
+
+                    Snackbar.make(getCurrentFocus(),"Calculando ruta...",Snackbar.LENGTH_LONG).show();
+
+
+                    String dir1= direccion_uno.getText().toString()+" Bogota Colombia";
+                    String dir2= direccion_dos.getText().toString()+" Bogota Colombia";
+
+
+
+                    Call<DirectionsResponse> call_directions=service.directions(dir1,destination_address);
+                    call_directions.enqueue(new Callback<DirectionsResponse>() {
+                        @Override
+                        public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
+                            String poly_encode = response.body().getRoutes().get(0).getOverview_polyline().getPoints();
+                            List<LatLng> points = PolyUtil.decode(poly_encode);
+
+                            PolylineOptions rectOptions = new PolylineOptions().width(10).color(getResources().getColor(R.color.text_orange));
+
+                            for (LatLng l : points){
+                                rectOptions.add(l);
+                            }
+
+                            int height = convertSpToPixels(40,MapaActivitys.this) ;
+                            int width = convertSpToPixels(90,MapaActivitys.this) ;;
+                            BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.pointer_1);
+                            Bitmap b=bitmapdraw.getBitmap();
+                            Bitmap smallMarker_1 = Bitmap.createScaledBitmap(b, width, height, false);
+                            BitmapDrawable bitmapdraw_2=(BitmapDrawable)getResources().getDrawable(R.drawable.pointer_2);
+                            b=bitmapdraw_2.getBitmap();
+                            Bitmap smallMarker_2 = Bitmap.createScaledBitmap(b, width, height, false);
+
+                            map.clear();
+                            map.addMarker(new MarkerOptions()
+                                    .position(new LatLng(response.body().getRoutes().get(0).getLegs().get(0).getStart_location().getLat(), response.body().getRoutes().get(0).getLegs().get(0).getStart_location().getLng()))
+                                    .title(direccion_uno.getText().toString()))
+                                    .setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker_1));
+                            map.addMarker(new MarkerOptions()
+                                    .position(new LatLng(response.body().getRoutes().get(0).getLegs().get(0).getEnd_location().getLat(), response.body().getRoutes().get(0).getLegs().get(0).getEnd_location().getLng()))
+                                    .title(direccion_dos.getText().toString()))
+                                    .setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker_2));
+
+                            Polyline polyline = map.addPolyline(rectOptions);
+                            LinearLayout LL_Estimated = (LinearLayout) findViewById(R.id.LL_Estimated);
+                            LL_Estimated.setVisibility(View.VISIBLE);
+                            travel_distance = response.body().getRoutes().get(0).getLegs().get(0).getDistance().getText();
+                            travel_estimated_time = response.body().getRoutes().get(0).getLegs().get(0).getDuration().getText();
+                            TV_Distance .setText(response.body().getRoutes().get(0).getLegs().get(0).getDistance().getText());
+                            TV_Estimated_Time.setText(response.body().getRoutes().get(0).getLegs().get(0).getDuration().getText());
+                            getEstimatedPriceWithFees(String.valueOf(response.body().getRoutes().get(0).getLegs().get(0).getEnd_location().getLat()),String.valueOf(response.body().getRoutes().get(0).getLegs().get(0).getEnd_location().getLng()), response.body().getRoutes().get(0).getLegs().get(0).getDistance().getValue(),response.body().getRoutes().get(0).getLegs().get(0).getDuration().getValue());
+
+
+                            map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+                                @Override
+                                public void onCameraChange(CameraPosition cameraPosition) {
+
+                                }
+                            });
+                            imageMapMarker.setVisibility(GONE);
+
+                            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+
+                            builder.include(new LatLng(response.body().getRoutes().get(0).getBounds().getNortheast().getLat(),response.body().getRoutes().get(0).getBounds().getNortheast().getLng()));
+                            builder.include(new LatLng(response.body().getRoutes().get(0).getBounds().getSouthwest().getLat(),response.body().getRoutes().get(0).getBounds().getSouthwest().getLng()));
+
+                            LatLngBounds bounds = builder.build();
+
+                            int padding = convertSpToPixels(40,MapaActivitys.this); // offset from edges of the map in pixels
+                            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                            map.setPadding(0,0,0,convertSpToPixels(150,MapaActivitys.this));
+                            map.animateCamera(cu);
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<DirectionsResponse> call, Throwable t) {
+                            Log.w("-----Error-----",t.toString());
+                        }
+                    });
+
+                }
+            }
+        });
+
+//        direccion_dos.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//
+//            @Override
+//            public boolean onEditorAction(TextView arg0, int actionId, KeyEvent arg2) {
+//                // hide the keyboard and search the web when the enter key
+//                // button is pressed
+//                if (actionId == EditorInfo.IME_ACTION_GO
+//                        || actionId == EditorInfo.IME_ACTION_DONE
+//                        || actionId == EditorInfo.IME_ACTION_NEXT
+//                        || actionId == EditorInfo.IME_ACTION_SEND
+//                        || actionId == EditorInfo.IME_ACTION_SEARCH) {
+//                    InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                    Log.v("SEGUIMIENTO", "oculta teclado");
+//
+//                    //map.getUiSettings().setScrollGesturesEnabled(true);
+////                    imageMapView.setVisibility(View.GONE);
+////                    imageMapMarker.setVisibility(View.VISIBLE);
+//                    HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+//                    logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+//                    OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+//                    httpClient.addInterceptor(logging);
+//
+//                    Retrofit retrofit = new Retrofit.Builder()
+//                            .baseUrl(Connect.BASE_GOOGLE_URL)
+//                            .addConverterFactory(GsonConverterFactory.create())
+//                            .client(httpClient.build())
+//                            .build();
+//
+//                    ApiService service = retrofit.create(ApiService.class);
+//                    if((!direccion_uno.getText().toString().isEmpty())&&(!direccion_dos.getText().toString().isEmpty())&&(!destination_address.isEmpty())){
+//
+//                        Snackbar.make(getCurrentFocus(),"Calculando ruta...",Snackbar.LENGTH_LONG).show();
+//
+//
+//                        String dir1= direccion_uno.getText().toString()+" Bogota Colombia";
+//                        String dir2= direccion_dos.getText().toString()+" Bogota Colombia";
+//
+//
+//
+//                        Call<DirectionsResponse> call_directions=service.directions(dir1,destination_address);
+//                        call_directions.enqueue(new Callback<DirectionsResponse>() {
+//                            @Override
+//                            public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
+//
+//                                direccion_dos.setText(destination_name);
+//                                String poly_encode = response.body().getRoutes().get(0).getOverview_polyline().getPoints();
+//                                List<LatLng> points = PolyUtil.decode(poly_encode);
+//
+//                                PolylineOptions rectOptions = new PolylineOptions().width(10).color(getResources().getColor(R.color.text_orange));
+//
+//                                for (LatLng l : points){
+//                                    rectOptions.add(l);
+//                                }
+//
+//
+//                                Polyline polyline = map.addPolyline(rectOptions);
+//                                LinearLayout LL_Estimated = (LinearLayout) findViewById(R.id.LL_Estimated);
+//                                LL_Estimated.setVisibility(View.VISIBLE);
+//                                travel_distance = response.body().getRoutes().get(0).getLegs().get(0).getDistance().getText();
+//                                travel_estimated_time = response.body().getRoutes().get(0).getLegs().get(0).getDuration().getText();
+//                                TV_Distance .setText(response.body().getRoutes().get(0).getLegs().get(0).getDistance().getText());
+//                                TV_Estimated_Time.setText(response.body().getRoutes().get(0).getLegs().get(0).getDuration().getText());
+//
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<DirectionsResponse> call, Throwable t) {
+//                                Log.w("-----Error-----",t.toString());
+//                            }
+//                        });
+//
+//                    }
+//                    imm.hideSoftInputFromWindow(direccion_dos.getWindowToken(), 0);
+//
+//                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+//                        Log.v("PREPARE", "------");
+//
+//                        prepareForRequestService();
+//
+//                    }
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
 
         direccion_uno.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -900,13 +1507,25 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         direccion_uno.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                imageMapMarker.setVisibility(View.VISIBLE);
                 direccion_uno.setFocusableInTouchMode(true);
                 direccion_uno.setFocusable(true);
-                btnAsk.setVisibility(View.GONE);
+                btnAsk.setVisibility(GONE);
                 btnSolicitar.setVisibility(View.VISIBLE);
-                pay_content.setVisibility(View.GONE);
+                pay_content.setVisibility(View.VISIBLE);
                 btnSolicitar.setEnabled(true);
                 btnSolicitar.setBackgroundResource(R.drawable.btn_request);
+
+                map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+                    @Override
+                    public void onCameraChange(CameraPosition cameraPosition) {
+                        Log.v("SEGUIMIENTO", "displayLocation -- onCameraChange ");
+                        Location l = new Location("");
+                        l.setLatitude(cameraPosition.target.latitude);
+                        l.setLongitude(cameraPosition.target.longitude);
+                        searchByLocation(l);
+                    }
+                });
                 return false;
             }
         });
@@ -926,8 +1545,8 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                     Log.v("SEGUIMIENTO", "oculta teclado");
 
                     //map.getUiSettings().setScrollGesturesEnabled(true);
-                    imageMapView.setVisibility(View.GONE);
-                    imageMapMarker.setVisibility(View.GONE);
+                    imageMapView.setVisibility(GONE);
+                    imageMapMarker.setVisibility(GONE);
                     imm.hideSoftInputFromWindow(direccion_uno.getWindowToken(), 0);
 
                     if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -942,6 +1561,10 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
             }
         });
 
+
+        direccion_uno.setFocusable(true);
+        direccion_uno.requestFocus();
+
     }
 
     public void updateAddress() {
@@ -949,7 +1572,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         comp1 = (comp1 == null) ? "" : comp1;
         comp2 = (comp2 == null) ? "" : comp2;
         no = (no == null) ? "" : no;
-        barrio = (barrio == null || barrio.equals("")) ? " no especifica " : barrio;
+        barrio = (barrio == null || barrio.equals("")) ? " No especifica " : barrio;
         obs = (obs == null) ? "" : obs;
         String address = indice + " " + comp1 + " # " + comp2 + " - " + no + " - " + barrio + " - " + obs;
         Log.v("SEGUIMIENTO", "updateAddress -- " + address);
@@ -969,7 +1592,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                 if (list.size() > 1) {
                     address = list.get(1);
                     if (address != null && address.getAddressLine(0) != null && !address.getAddressLine(0).equals("")) {
-                        barrio = address.getAddressLine(0).split(",")[0];
+//                        barrio = address.getAddressLine(0).split(",")[0];
                     }
                 }
                 updateAddress();
@@ -988,7 +1611,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     public boolean verificarDireccion(String addr) {
         // verificar si la dirección finaliza con -
 
-        if (addr.charAt(addr.length() - 1) == '-') return false;
+        if (addr.length() > 0 && addr.charAt(addr.length() - 1) == '-') return false;
         return true;
 
     }
@@ -996,78 +1619,146 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     @Override
     public void onClick(View v) {
 
-        //String origin = "Origen: " + destination;
-        String destiny = "Destino: " + destination;
-        String time_destiny = "Tiempo a destino: " + destination;
-        String trave_destiny = "Distancia a destino: " + destination;
-        String kind_car = "Tipo de Vehículo: " + destination;
-        String value_aprox = "Valor aproximado: " + destination;
+        String new_destiny = direccion_dos.getText().toString();
+        String new_origin = direccion_uno.getText().toString();
+
+        String origin = "Origen: " + new_origin;
+        String destiny = "Destino: " + new_destiny;
+        String time_destiny = "Tiempo a destino: " + travel_estimated_time;
+        String trave_destiny = "Distancia a destino: " + travel_distance;
+        String nocturno = recargo_nocturno > 0 ?  "Recargo nocturno: " + recargo_nocturno + "\n" : "";
+        String aeropuerto = recargo_aeropuerto > 0 ?  "Recargo aeropuerto: " + recargo_aeropuerto + "\n" : "";
+        String puerta = recargo_puerta_a_puerta > 0 ?  "Recargo puerta a puerta: " + recargo_puerta_a_puerta + "\n" : "";
+        String pay_type_name = "Metodo de pago: " + pay_type;
+
 
         switch (v.getId()) {
 
             case R.id.btnSolicitar:
 
-                btnAsk.setVisibility(View.VISIBLE);
-                btnSolicitar.setVisibility(View.GONE);
 
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-                alertDialog.setTitle("¿Desea Solicitar el servicio con los siguientes datos?");
-                alertDialog.setMessage(destiny +"\n"+ time_destiny + "\n" + trave_destiny +"\n"+ kind_car +"\n"+ value_aprox);
-                alertDialog.setPositiveButton("Solicitar", new DialogInterface.OnClickListener() {
+                if (direccion_uno.getText().toString().trim().length() != 0 && destination_name.trim().length() != 0){
 
-                    public void onClick(DialogInterface dialog, int which) {
+                    if (!Utils.checkPlayServices(this)) {
+                        hand.sendEmptyMessage(1);
 
-                                if (verificarDireccion(direccion_uno.getText().toString())) {
-                                    if (mFromScheduling) {
-                                        Intent intent = new Intent(MapaActivitys.this, AgendarActivity.class);
-                                        intent.putExtra("FromActivity", "MapaActivity");
-                                        intent.putExtra("AddressFromMapa", direccion_uno.getText().toString());
-                                        intent.putExtra("latitud",String.valueOf(latitud));
-                                        intent.putExtra("longitud",String.valueOf(longitud));
-                                        Log.i("ADDRESS TO SEND", "Lat: "+latitud+" Long: "+longitud);
-                                        setResult(RESULT_OK, intent);
-                                        finish();
-                                    } else {
-                                        showControls();
-                                        map.getUiSettings().setScrollGesturesEnabled(false);
-                                        direccion_uno.clearFocus();
-                                        direccion_uno.setFocusableInTouchMode(false);
-                                        direccion_uno.setFocusable(false);
-                                        map.getUiSettings().setAllGesturesEnabled(false);
-                                        screenShotMap(1);
-                                        getTaxi();
+                    } else {
+
+                        Toast.makeText(MapaActivitys.this, "Completa la dirección para continuar", Toast.LENGTH_SHORT).show();
+
+                        if(mPayType == 1){
+
+                            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+                            alertDialog.setTitle("¿Desea Solicitar el servicio en efectivo?");
+                            alertDialog.setMessage(origin+"\n"+destiny +"\n"+ time_destiny + "\n" + trave_destiny + "\n" + pay_type_name + "\n" + nocturno + aeropuerto + puerta);
+                            alertDialog.setPositiveButton("Solicitar", new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    if (verificarDireccion(direccion_uno.getText().toString())) {
+                                        if (mFromScheduling) {
+                                            Intent intent = new Intent(MapaActivitys.this, AgendarActivity.class);
+                                            intent.putExtra("FromActivity", "MapaActivity");
+                                            intent.putExtra("AddressFromMapa", direccion_uno.getText().toString());
+                                            intent.putExtra("latitud",String.valueOf(latitud));
+                                            intent.putExtra("longitud",String.valueOf(longitud));
+                                            Log.i("ADDRESS TO SEND", "Lat: "+latitud+" Long: "+longitud);
+                                            setResult(RESULT_OK, intent);
+                                            finish();
+                                        } else {
+                                            showControls();
+                                            map.getUiSettings().setScrollGesturesEnabled(false);
+                                            direccion_uno.clearFocus();
+                                            direccion_uno.setFocusableInTouchMode(false);
+                                            direccion_uno.setFocusable(false);
+
+                                            direccion_dos.clearFocus();
+                                            direccion_dos.setFocusableInTouchMode(false);
+                                            direccion_dos.setFocusable(false);
+                                            map.getUiSettings().setAllGesturesEnabled(false);
+                                            screenShotMap(1);
+                                            getTaxi();
+                                        }
                                     }
                                 }
+                            });
+
+                            alertDialog.setNegativeButton("Modificar", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    // call fragment
+                                    Fragment fragment1 = new Fragment();
+                                    moveToFragment(fragment1);
+                                }
+                            });
+
+                            alertDialog.show();
+
+                        } else if (mPayType == 3){
+
+                            Log.v("PAY_TYPE","forma de pago vale");
+
+                            if (!isTicketValid||rTicket.equals("")) {
+                                // show toast
+                                Toast.makeText(this, getResources().getString(R.string.ticket_invalid), Toast.LENGTH_LONG).show();
+                                return;
                             }
-                });
 
-                alertDialog.setNegativeButton("Modificar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
+                            else if (isTicketValid) {
 
-                        // call fragment
-                        Fragment fragment1 = new Fragment();
-                        moveToFragment(fragment1);
+                                final EditText txtUrl = new EditText(this);
+                                txtUrl.setHint("Motivo desplazamiento");
+
+                                new AlertDialog.Builder(this)
+                                        .setTitle("¿Desea pedir un servicio con vale?")
+                                        .setMessage("Digita el motivo del vale")
+                                        .setView(txtUrl)
+                                        .setPositiveButton("Pedir", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int whichButton) {
+                                                commitUser = txtUrl.getText().toString();
+                                                if(commitUser.equals("")){
+                                                    Toast.makeText(getApplicationContext(), "El motivo no puede estar vacio", Toast.LENGTH_SHORT).show();
+                                                }else{
+                                                    if (verificarDireccion(direccion_uno.getText().toString())) {
+                                                        if (mFromScheduling) {
+                                                            Intent intent = new Intent(MapaActivitys.this, AgendarActivity.class);
+                                                            intent.putExtra("FromActivity", "MapaActivity");
+                                                            intent.putExtra("AddressFromMapa", direccion_uno.getText().toString());
+                                                            intent.putExtra("latitud",String.valueOf(latitud));
+                                                            intent.putExtra("longitud",String.valueOf(longitud));
+                                                            Log.i("ADDRESS TO SEND", "Lat: "+latitud+" Long: "+longitud);
+                                                            setResult(RESULT_OK, intent);
+                                                            finish();
+                                                        } else {
+                                                            map.getUiSettings().setScrollGesturesEnabled(false);
+                                                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                                            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.RESULT_HIDDEN);
+                                                            showControls();
+                                                            InputMethodManager imm1 = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                                                            imm1.hideSoftInputFromWindow(mTicket.getWindowToken(), 0);
+                                                            HideUtil.hideSoftKeyboard(MapaActivitys.this);
+                                                            map.getUiSettings().setAllGesturesEnabled(false);
+                                                            screenShotMap(1);
+                                                            getTaxi();
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        })
+                                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int whichButton) {
+
+                                            }
+                                        })
+                                        .show();
+                            }
+                        }
+
                     }
-                });
 
-                alertDialog.show();
-
-                /*final String stk = mTicket.getText().toString();
-                if (stk.equals("")){
-                    isTicketValid = false;
-                    Toast.makeText(MapaActivitys.this, "Completa el campo para continuar", Toast.LENGTH_SHORT).show();
-                    //break;
+                }else{
+                    Toast.makeText(MapaActivitys.this,R.string.fill_fields,Toast.LENGTH_SHORT).show();
                 }
-                direccion_uno.setFocusableInTouchMode(true);
-                direccion_uno.setFocusable(true);
-                direccion_uno.requestFocus();
-                //btnSolicitar.setBackgroundResource(R.drawable.btn_gray);
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.RESULT_HIDDEN);
-                direccion_uno.setImeActionLabel("Pedir", EditorInfo.IME_ACTION_DONE);
-                screenShotMap(0);
-                break;*/
-
                 break;
 
             case R.id.btn_cancelar:
@@ -1081,9 +1772,8 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
             case R.id.btn_volver:
                 if (isNewAddress) {
                     // disable view newAddress
-                    mNewAddress.setVisibility(View.GONE);
-
-                    mHandleLayout.setVisibility(View.VISIBLE);
+//                    mNewAddress.setVisibility(View.GONE);
+//                    mHandleLayout.setVisibility(View.VISIBLE);
                 } else {
 
                     if (isRequestService) {
@@ -1107,7 +1797,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
 
             case R.id.btnAsk:
 
-                btnAsk.setVisibility(View.GONE);
+                btnAsk.setVisibility(GONE);
                 btnSolicitar.setVisibility(View.VISIBLE);
                 btnSolicitar.setEnabled(true);
                 btnSolicitar.setBackgroundResource(R.drawable.btn_request);
@@ -1121,6 +1811,10 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                 break;
 
             case R.id.btn_add:
+
+                direccion_dos.setFocusableInTouchMode(true);
+                direccion_dos.setFocusable(true);
+
 
                 direccion_uno.setFocusableInTouchMode(true);
                 direccion_uno.setFocusable(true);
@@ -1305,76 +1999,153 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     //Location Related Methods
     private void searchByLocation(final Location location) {
 
-        Log.v("SEGUIMIENTO", "searchByLocation -- ini ");
 
-        AsyncTask<Void, Void, List<Address>> task = new AsyncTask<Void, Void,
-                List<android.location.Address>>() {
+        double latitude = location.getLatitude(), longitude = location.getLongitude();
+        latitud = latitude;
+        longitud = longitude;
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Connect.BASE_GOOGLE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
+                .build();
+
+        ApiService service = retrofit.create(ApiService.class);
+        Call<ReverseGeocodingResponse> call_profile=service.reverse_geocoding(latitud + "," +longitud);
+        call_profile.enqueue(new Callback<ReverseGeocodingResponse>() {
+
 
             @Override
-            protected List<android.location.Address> doInBackground(Void... params) {
-                Geocoder geocoder = new Geocoder(MapaActivitys.this);
-                List<android.location.Address> list = null;
-                try {
-                    double latitude = location.getLatitude(), longitude = location.getLongitude();
-                    latitud = latitude;
-                    longitud = longitude;
-                    Log.i("ADDRESS UPDATE","Lat: "+latitud+" Long: "+longitude);
-                    list = geocoder.getFromLocation(latitude, longitude, 2);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return list;
-            }
+            public void onResponse(Call<ReverseGeocodingResponse> call, Response<ReverseGeocodingResponse> response) {
 
-            protected void onPostExecute(List<android.location.Address> result) {
-                if (result != null) {
-                    if (result.size() > 1) {
-                        android.location.Address address = result.get(0);
-                        android.location.Address addressSecondary = result.get(1);
+                if (response.body().getStatus().equalsIgnoreCase("OK")){
+                    String userAddress = response.body().getResults().get(0).getFormatted_address();
+                    String userBarrio = response.body().getResults().get(0).getAddress_components().get(2).getLong_name();
 
-                        String userAddress = address.getAddressLine(0);
-                        String userBarrio = addressSecondary.getAddressLine(0);
 
-                        Log.i("SEGUIMIENTO", "searchByLocation -- onPostExecute userAddress " + userAddress);
-                        Log.i("SEGUIMIENTO", "searchByLocation -- onPostExecute userBarrio " + userBarrio);
-//                        longitud = address.getLongitude();
-//                        latitud = address.getLatitude();
+                    Log.e("INFO DIR---", barrio + "  -   "+ userAddress);
 
-                        // se agrego para enviar
-                        if (address != null && address.getAddressLine(0) != null && !address.getAddressLine(0).equals("")) {
-                            //barrio = address.getAddressLine(0).split(",")[0];
+
+                    int index = userAddress.indexOf("-");
+                    if (index != -1) {
+                        userAddress = userAddress.substring(0, index + 1);
+                    }
+
+                    if(direccion_uno.hasFocus()) {
+
+                        if(dir_by_result.length() > 0){
+                            dir_by_result = "";
+                        }else {
                             barrio = userBarrio;
-                            Log.v("SEGUIMIENTO", "searchByLocation -- onPostExecute barrio " + barrio);
-                            //dir_barrio.setText(barrio);
+                            direccion_uno.setText(userAddress);
+                            no = userAddress;
+                            direccion_uno.setSelection(userAddress.length());
+                            direccion_uno.setEnabled(true);
+                            //btnOk.setEnabled(true);
                         }
+                    }
 
-                        int index = userAddress.indexOf("-");
-                        if (index != -1) {
-                            userAddress = userAddress.substring(0, index + 1);
-                        }
-                        Log.d("Address", userAddress);
-                        Log.v("SEGUIMIENTO", "searchByLocation -- onPostExecute userAddress 2 " + userAddress);
-
-                        Log.v("SEGUIMIENTO", "direccion_uno " + userAddress);
-                        Log.i("ADDRESS SELECTED", "Barrio: " + address.getLocality());
-
-                        direccion_uno.setText(userAddress);
-                        no = userAddress;
-                        direccion_uno.setSelection(userAddress.length());
-                        direccion_uno.setEnabled(true);
-                        //btnOk.setEnabled(true);
-
-                        if (mGoogleApiClient.isConnected()) {
-                            stopLocationUpdates();
-                            mGoogleApiClient.disconnect();
-                        }
+                    if (mGoogleApiClient.isConnected()) {
+                        stopLocationUpdates();
+                        mGoogleApiClient.disconnect();
                     }
                 }
 
-            }
-        };
 
-        task.execute();
+            }
+
+            @Override
+            public void onFailure(Call<ReverseGeocodingResponse> call, Throwable t) {
+                Log.w("-----Error-----",t.toString());
+            }
+        });
+
+
+        Log.v("SEGUIMIENTO", "searchByLocation -- ini ");
+
+//        AsyncTask<Void, Void, List<Address>> task = new AsyncTask<Void, Void,
+//                List<android.location.Address>>() {
+//
+//            @Override
+//            protected List<android.location.Address> doInBackground(Void... params) {
+//                Geocoder geocoder = new Geocoder(MapaActivitys.this);
+//                List<android.location.Address> list = null;
+//                try {
+//                    double latitude = location.getLatitude(), longitude = location.getLongitude();
+//                    latitud = latitude;
+//                    longitud = longitude;
+//                    Log.i("ADDRESS UPDATE","Lat: "+latitud+" Long: "+longitude);
+//                    list = geocoder.getFromLocation(latitude, longitude, 2);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                return list;
+//            }
+//
+//            protected void onPostExecute(List<android.location.Address> result) {
+//                if (result != null) {
+//                    if (result.size() > 1) {
+//                        android.location.Address address = result.get(0);
+//                        android.location.Address addressSecondary = result.get(1);
+//
+//                        String userAddress = address.getAddressLine(0);
+//                        String userBarrio = addressSecondary.getAddressLine(0);
+//
+//                        Log.i("SEGUIMIENTO", "searchByLocation -- onPostExecute userAddress " + userAddress);
+//                        Log.i("SEGUIMIENTO", "searchByLocation -- onPostExecute userBarrio " + userBarrio);
+////                        longitud = address.getLongitude();
+////                        latitud = address.getLatitude();
+//
+//                        // se agrego para enviar
+//                        if (address != null && address.getAddressLine(0) != null && !address.getAddressLine(0).equals("")) {
+//                            //barrio = address.getAddressLine(0).split(",")[0];
+//                            barrio = userBarrio;
+//                            Log.v("SEGUIMIENTO", "searchByLocation -- onPostExecute barrio " + barrio);
+//                            //dir_barrio.setText(barrio);
+//                        }
+//
+//                        int index = userAddress.indexOf("-");
+//                        if (index != -1) {
+//                            userAddress = userAddress.substring(0, index + 1);
+//                        }
+//                        Log.d("Address", userAddress);
+//                        Log.v("SEGUIMIENTO", "searchByLocation -- onPostExecute userAddress 2 " + userAddress);
+//
+//                        Log.v("SEGUIMIENTO", "direccion_uno " + userAddress);
+//                        Log.i("ADDRESS SELECTED", "Barrio: " + address.getLocality());
+//
+//                        if (direccion_dos.isFocused()) {
+//
+//                            direccion_dos.setText(userAddress);
+//                            no = userAddress;
+//                            direccion_dos.setSelection(userAddress.length());
+//                            direccion_dos.setEnabled(true);
+//                            //btnOk.setEnabled(true);
+//
+//                        }else {
+//                            direccion_uno.setText(userAddress);
+//                            no = userAddress;
+//                            direccion_uno.setSelection(userAddress.length());
+//                            direccion_uno.setEnabled(true);
+//                            //btnOk.setEnabled(true);
+//                        }
+//
+//                        if (mGoogleApiClient.isConnected()) {
+//                            stopLocationUpdates();
+//                            mGoogleApiClient.disconnect();
+//                        }
+//                    }
+//                }
+//
+//            }
+//        };
+//
+//        task.execute();
     }
 
     private void myAddress() {
@@ -1405,7 +2176,9 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                 comp1 = comp1.replaceAll("[^0-9 ]", "") + " " + comp1.replaceAll("[^A-Z a-z]", "");
 
                 if (conf.getLogin()) {
-                    btnSolicitar.setEnabled(true);
+                    if (direccion_uno.getText().toString().trim().length() != 0 && direccion_dos.getText().toString().trim().length() != 0) {
+                        btnSolicitar.setEnabled(true);
+                    }
                     id_user = conf.getIdUser();
                     uuid = conf.getUuid();
                     getService();
@@ -1481,10 +2254,10 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                     Log.v("ADDRESS1", "dirección con coordenada");
                     latitud = Double.valueOf(data.getStringExtra("lat"));
                     longitud = Double.valueOf(data.getStringExtra("lng"));
-                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitud, longitud), 15));
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitud, longitud), 17));
                 }
+                dir_by_result = dir_completa;
                 direccion_uno.setText(dir_completa);
-                updateAddress();
             }
 
         } else if (resultCode == 2) {
@@ -1536,14 +2309,14 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
 
     private void displayConnectivityPanel(boolean display) {
 
-        mNoConnectivityPanel.setVisibility(display ? View.VISIBLE : View.GONE);
+        mNoConnectivityPanel.setVisibility(display ? View.VISIBLE : GONE);
         if(display)
             mConnectivityLoaderImage.startAnimation(AnimationUtils.loadAnimation(this,R.anim.connection_loader));
     }
 
     @Override
     public void onNetworkConnectivityChange(boolean connected) {
-        displayConnectivityPanel(!connected);
+//        displayConnectivityPanel(!connected);
     }
 
 
@@ -1551,7 +2324,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
 
     @Override
     public void onConnectivityQualityChecked(boolean Optimal) {
-        displayConnectivityPanel(!Optimal);
+//        displayConnectivityPanel(!Optimal);
     }
 
     public class GetPosition extends AsyncTask<Double, Integer, List<Address>> {
@@ -1590,7 +2363,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                 // findViewById(R.id.handle).startAnimation(shake);
                 setAddress(result);
 
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitud, longitud), 18f), 15, null);
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitud, longitud), 18f), 17, null);
 
 
             } else {
@@ -1831,10 +2604,12 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         Log.v("onLocationChanged", "ini");
         if (firstTime) {
             Log.v("onLocationChanged", "firstTime ok");
-            latitud = (float) location.getLatitude();
-            longitud = (float) location.getLongitude();
+            if(direccion_uno.isFocused()){
+                latitud = (float) location.getLatitude();
+                longitud = (float) location.getLongitude();
+            }
             Log.i("GPS_1", "onLocationChanged firstTime " + String.valueOf(latitud)+ " Long "+longitud);
-            map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitud, longitud), 15));
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitud, longitud), 17));
             firstTime = false;
         }
     }
@@ -1911,6 +2686,29 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                     Log.v("CNF_SRV", "no driver 1");
                     Toast.makeText(getApplicationContext(), getString(R.string.error_no_driver), Toast.LENGTH_SHORT).show();
 
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MapaActivitys.this);
+                    builder.setMessage(getString(R.string.error_no_driver))
+                            .setTitle(getString(R.string.llamar_pbx))
+                            .setPositiveButton(getString(R.string.llamar_pbx), new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                    try {
+                                        Intent callIntent = new Intent(Intent.ACTION_CALL);
+                                        callIntent.setData(Uri.parse("tel:0312000000"));
+                                        if (ActivityCompat.checkSelfPermission(MapaActivitys.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                                            return;
+                                        }
+                                        startActivity(callIntent);
+                                    } catch (Exception e) {
+                                        Log.e("LLAMADA", "Error al llamar:", e);
+                                    }
+                                }
+                            });
+
+                    builder.create();
+
+                    builder.show();
+
                 } catch (Exception e) {
                     Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                     vibrator.vibrate(200);
@@ -1945,9 +2743,11 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
 
     private void getService() {
 
-        String strLatitud = String.valueOf(latitud);
+        if (direccion_uno.getText().toString().trim().length() != 0 && direccion_dos.getText().toString().trim().length() != 0){
+
+            String strLatitud = String.valueOf(latitud);
         String strLongitud = String.valueOf(longitud);
-        Log.i("ADDRESS ON SERVICE","Lat: "+latitud+" Long: "+longitud);
+        Log.i("ADDRESS ON SERVICE", "Lat: " + latitud + " Long: " + longitud);
 
         final ObjectAnimator animation = ObjectAnimator.ofInt(circleProgressBar, "progress", 1, 90);
 
@@ -1984,13 +2784,11 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         if (mPayType == 1) {
             payType = "1";
             mCardReference = "0";
-        }
-        else if (mPayType == 2) {
+        } else if (mPayType == 2) {
             payType = "2";
             mCardReference = conf.getCardDefault();
             if (mCardReference == null) mCardReference = "0";
-        }
-        else {
+        } else {
             payType = "3";
             mCardReference = mTicket.getText().toString();
         }
@@ -1999,40 +2797,46 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         String strCode = strPhone.length() > 2 ? strPhone.substring(strPhone.length() - 2) : strPhone;
         String commit = commitUser;
         String old_destination = mPlaceDetailsText.getText().toString();
-        String destination = old_destination.length() > 20 ? old_destination.substring(old_destination.length() - 10) : old_destination;
+        String destination = destination_name;
 
-        Log.v("CODE1","strCode " + strCode);
-        MiddleConnect.getServiceAddress(this, id_user, strLatitud, strLongitud, address, barrio,  uuid,  payType, "", userEmail,  mCardReference, strCode, commit, destination, new AsyncHttpResponseHandler() {
+        Log.v("CODE1", "strCode " + strCode);
 
+        pDialog = new ProgressDialog(MapaActivitys.this);
+        pDialog.setMessage(getString(R.string.texto_solicitando_servicio));
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(false);
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Connect.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
+                .build();
+
+        ApiService service = retrofit.create(ApiService.class);
+
+        Call<RequestServiceAddressResponse> call_profile = service.requestServiceAddress(id_user, strLatitud, strLongitud, barrio, address, uuid, payType, "", userEmail, mCardReference, strCode, commit, destination);
+        call_profile.enqueue(new Callback<RequestServiceAddressResponse>() {
             @Override
-            public void onStart() {
-                pDialog = new ProgressDialog(MapaActivitys.this);
-                pDialog.setMessage("Solicitando Servicio....");
-                pDialog.setIndeterminate(false);
-                pDialog.setCancelable(false);
-                //pDialog.show();
-                Log.v("SOLICITANDO_SERVICIO", "onStart " + String.valueOf(new Date()));
-            }
+            public void onResponse(Call<RequestServiceAddressResponse> call, Response<RequestServiceAddressResponse> response) {
 
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                String response = new String(responseBody);
-                Log.v("solicitando", "SUCCES: " + response);
+
                 try {
-                    Log.e("solicitando", "SUCCES: " + response);
-                    Log.v("SOLICITANDO_SERVICIO", "onSucces " + String.valueOf(new Date()));
-                    JSONObject responsejson = new JSONObject(response);
 
                     if (myTimer == null) {
                         Log.v("CNF_SRV", "myTimer is null");
                         myTimer = new Timer();
                     }
 
-                    if (responsejson.getBoolean("success")) {
+                    if (response.body().getSuccess()) {
 
-                        mServiceId = responsejson.getString("service_id");
+                        mServiceId = response.body().getService_id();
                         conf.setServiceId(mServiceId);
-                        mStatusNew = responsejson.getInt("status_id");
+                        mStatusNew = response.body().getStatus_id();
                         Log.v("SERVICE_STATUS", "getServiceAddress onSuccess service_id " + mServiceId);
                         Log.e("SERVICE_CMS", "    GET_SERVICE_ADDRESS success service_id= " + mServiceId);
 
@@ -2052,8 +2856,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                                 try {
                                     checkService();
                                 } catch (JSONException e) {
-                                    // TODO Auto-generated catch block
-                                    Log.v("CHECK1" ,"checkService exception " + e.toString());
+                                    Log.v("CHECK1", "checkService exception " + e.toString());
                                     e.printStackTrace();
                                 }
 
@@ -2076,7 +2879,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
 
 
                     } else {
-                        if (responsejson.getInt("error") == Error.NO_DRIVER_ENABLE) {
+                        if (response.body().getError() == Error.NO_DRIVER_ENABLE) {
 
                             Log.v("SOLICITANDO_SERVICIO", "error - Error.NO_DRIVER_ENABLE " + String.valueOf(new Date()));
                             Toast.makeText(getApplicationContext(), getString(R.string.error_no_driver), Toast.LENGTH_LONG).show();
@@ -2091,39 +2894,26 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                     }
 
                 } catch (Exception e) {
-                    Log.e("error_solicitando", "Problema json" + e.toString());
-                    Log.v("SOLICITANDO_SERVICIO", "error - problemas json " + String.valueOf(new Date()));
                     err_request();
-
-                    //isRequestService = false;
-                    //finish();
-                    hideControls();
-
-                    map.getUiSettings().setScrollGesturesEnabled(true);
+//
+                    isRequestService = false;
+                    puente.sendEmptyMessage(2000);
                 }
+
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                String response = new String(responseBody);
-                Log.e("error_solicitando", "FAILURE" + response);
-                Log.v("SOLICITANDO_SERVICIO", "onFailure " + String.valueOf(new Date()));
+            public void onFailure(Call<RequestServiceAddressResponse> call, Throwable t) {
+                Log.w("-----Error-----", t.toString());
                 err_request();
-
-                isRequestService = false;
                 puente.sendEmptyMessage(2000);
+                pDialog.dismiss();
             }
-
-            @Override
-            public void onFinish() {
-                //isRequestService = false;
-                try {
-                    //pDialog.dismiss();
-                } catch (Exception e) {
-                }
-            }
-
         });
+
+        }else{
+            Toast.makeText(MapaActivitys.this,R.string.fill_fields,Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -2176,11 +2966,11 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
 
     private void cancelarService() {
 
-        cancelService(getResources().getString(R.string.cancel_service, id_user));
+        cancelService(id_user);
 
     }
 
-    public void cancelService(final String Url) {
+    public void cancelService(final String id_user) {
 
         // add randome delay
         int delay = randInt(350, 1500);
@@ -2194,36 +2984,42 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         }
         Log.v("CANCEL_SERVICE", "fin " + String.valueOf(new Date()));
 
-        url_cancel_current = Url;
+
         this.sendBroadcast(new Intent("com.google.android.intent.action.GTALK_HEARTBEAT"));
         this.sendBroadcast(new Intent("com.google.android.intent.action.MCS_HEARTBEAT"));
-        MiddleConnect.cancelService(Url, new AsyncHttpResponseHandler() {
 
-            @Override
-            public void onStart() {
-
-                try {
-                    if (!pDialog.isShowing()) {
-                        pDialog = new ProgressDialog(MapaActivitys.this);
-                        pDialog.setMessage("Cancelando Servicio....");
-                        pDialog.setIndeterminate(false);
-                        pDialog.setCancelable(false);
-                        pDialog.show();
-                    }
-                } catch (Exception e) {
-                }
-
+        try {
+            if (!pDialog.isShowing()) {
+                pDialog = new ProgressDialog(MapaActivitys.this);
+                pDialog.setMessage("Cancelando Servicio....");
+                pDialog.setIndeterminate(false);
+                pDialog.setCancelable(false);
+                pDialog.show();
             }
+        } catch (Exception e) {
+        }
 
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Connect.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
+                .build();
+
+        ApiService service = retrofit.create(ApiService.class);
+
+        Call<CancelServiceResponse> call_profile=service.cancelService( id_user);
+        call_profile.enqueue(new Callback<CancelServiceResponse>() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                String response = new String(responseBody);
+            public void onResponse(Call<CancelServiceResponse> call, Response<CancelServiceResponse> response) {
                 try {
-                    Log.e("solicitando", "SUCCES: " + response);
 
-                    JSONObject responsejson = new JSONObject(response);
-
-                    if (responsejson.getBoolean("success")) {
+                    if (response.body().getSuccess()) {
                         try {
                             isError = false;
 
@@ -2240,7 +3036,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
 
                     } else {
 
-                        if (responsejson.getInt("error") == 404) {
+                        if (response.body().getError() == 404) {
                             try {
                                 pDialog.dismiss();
                             } catch (Exception e) {
@@ -2250,43 +3046,130 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                             isError = false;
 
                         } else {
-                            isError = true;
+                            try {
+                                pDialog.dismiss();
+                            } catch (Exception e) {
+                            }
+                            puente.sendEmptyMessage(1500);
                         }
 
                     }
 
                 } catch (Exception e) {
 
-                    isError = true;
+                    try {
+                        pDialog.dismiss();
+                    } catch (Exception e1) {
+                    }
+                    puente.sendEmptyMessage(1500);
                 }
+
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                String response = new String(responseBody);
-                Log.e("solicitando", "onFailure: " + response);
-
+            public void onFailure(Call<CancelServiceResponse> call, Throwable t) {
+                Log.w("-----Error-----",t.toString());
                 isError = true;
                 try {
                     pDialog.dismiss();
                 } catch (Exception e1) {
                 }
                 puente.sendEmptyMessage(1500);
+
             }
-
-            @Override
-            public void onFinish() {
-
-                if (isError) {
-                    try {
-                        pDialog.dismiss();
-                    } catch (Exception e) {
-                    }
-                    puente.sendEmptyMessage(1500);
-                }
-            }
-
         });
+
+
+//        MiddleConnect.cancelService(Url, new AsyncHttpResponseHandler() {
+//
+//            @Override
+//            public void onStart() {
+//
+//                try {
+//                    if (!pDialog.isShowing()) {
+//                        pDialog = new ProgressDialog(MapaActivitys.this);
+//                        pDialog.setMessage("Cancelando Servicio....");
+//                        pDialog.setIndeterminate(false);
+//                        pDialog.setCancelable(false);
+//                        pDialog.show();
+//                    }
+//                } catch (Exception e) {
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+//                String response = new String(responseBody);
+//                try {
+//                    Log.e("solicitando", "SUCCES: " + response);
+//
+//                    JSONObject responsejson = new JSONObject(response);
+//
+//                    if (responsejson.getBoolean("success")) {
+//                        try {
+//                            isError = false;
+//
+//                            pDialog.dismiss();
+//
+//                        } catch (Exception e) {
+//                        }
+//
+//                        hideControls();
+//
+//                        map.getUiSettings().setScrollGesturesEnabled(true);
+//
+//                        //finish();
+//
+//                    } else {
+//
+//                        if (responsejson.getInt("error") == 404) {
+//                            try {
+//                                pDialog.dismiss();
+//                            } catch (Exception e) {
+//                            }
+//
+//                            finish();
+//                            isError = false;
+//
+//                        } else {
+//                            isError = true;
+//                        }
+//
+//                    }
+//
+//                } catch (Exception e) {
+//
+//                    isError = true;
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+//                String response = new String(responseBody);
+//                Log.e("solicitando", "onFailure: " + response);
+//
+//                isError = true;
+//                try {
+//                    pDialog.dismiss();
+//                } catch (Exception e1) {
+//                }
+//                puente.sendEmptyMessage(1500);
+//            }
+//
+//            @Override
+//            public void onFinish() {
+//
+//                if (isError) {
+//                    try {
+//                        pDialog.dismiss();
+//                    } catch (Exception e) {
+//                    }
+//                    puente.sendEmptyMessage(1500);
+//                }
+//            }
+//
+//        });
 
     }
 

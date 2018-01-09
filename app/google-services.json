@@ -15,11 +15,19 @@
       },
       "oauth_client": [
         {
+          "client_id": "254682418821-7lels92m5f6hun7oqd1ournk3q21t6jm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.taxisya.usuarioandroid",
+            "certificate_hash": "990f880d82ffb90467bed34ec18427b711ca24a4"
+          }
+        },
+        {
           "client_id": "254682418821-1oml2lh8esei2hmgqsmmfq50r0psfj4h.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "co.taxisya.usuarioandroid",
-            "certificate_hash": "4F163B0B68B6E5A0D11C195215F70C552477CF43"
+            "certificate_hash": "4f163b0b68b6e5a0d11c195215f70c552477cf43"
           }
         },
         {
@@ -29,7 +37,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAjimktXSUrxSBHRq14RnO6oHemm2nadsE"
+          "current_key": "AIzaSyBrwoIIylGWvJvQ3nZ5R8N8PQxsHxbYars"
         }
       ],
       "services": {
