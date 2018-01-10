@@ -2,17 +2,17 @@ package com.imaginamos.usuariofinal.taxisya.Model;
 
 public class FeesResponse{
 	private String minima;
-	private String puertaAPuertaCalidad;
 	private String km;
-	private String nocturnoCalidad;
-	private int totalRecargo;
-	private int totalRecargoCalidad;
-	private String Nocturno;
-	private String puertaAPuerta;
-	private String banderazoCalidad;
-	private String minimaCalidad;
+	private int total_recargo;
+	private String nocturno_calidad;
+	private String km_calidad;
+	private String banderazo_calidad;
+	private String puerta_a_puerta;
+	private String puerta_a_puerta_calidad;
+	private String minima_calidad;
+	private String nocturno;
 	private String banderazo;
-	private String kmCalidad;
+	private int total_recargo_calidad;
 
 	public void setMinima(String minima){
 		this.minima = minima;
@@ -20,14 +20,6 @@ public class FeesResponse{
 
 	public String getMinima(){
 		return minima;
-	}
-
-	public void setPuertaAPuertaCalidad(String puertaAPuertaCalidad){
-		this.puertaAPuertaCalidad = puertaAPuertaCalidad;
-	}
-
-	public String getPuertaAPuertaCalidad(){
-		return puertaAPuertaCalidad;
 	}
 
 	public void setKm(String km){
@@ -38,60 +30,68 @@ public class FeesResponse{
 		return km;
 	}
 
-	public void setNocturnoCalidad(String nocturnoCalidad){
-		this.nocturnoCalidad = nocturnoCalidad;
+	public void setTotal_recargo(int total_recargo){
+		this.total_recargo = total_recargo;
 	}
 
-	public String getNocturnoCalidad(){
-		return nocturnoCalidad;
+	public int getTotal_recargo(){
+		return total_recargo;
 	}
 
-	public void setTotalRecargo(int totalRecargo){
-		this.totalRecargo = totalRecargo;
+	public void setNocturno_calidad(String nocturno_calidad){
+		this.nocturno_calidad = nocturno_calidad;
 	}
 
-	public int getTotalRecargo(){
-		return totalRecargo;
+	public String getNocturno_calidad(){
+		return nocturno_calidad;
 	}
 
-	public void setTotalRecargoCalidad(int totalRecargoCalidad){
-		this.totalRecargoCalidad = totalRecargoCalidad;
+	public void setKm_calidad(String km_calidad){
+		this.km_calidad = km_calidad;
 	}
 
-	public int getTotalRecargoCalidad(){
-		return totalRecargoCalidad;
+	public String getKm_calidad(){
+		return km_calidad;
+	}
+
+	public void setBanderazo_calidad(String banderazo_calidad){
+		this.banderazo_calidad = banderazo_calidad;
+	}
+
+	public String getBanderazo_calidad(){
+		return banderazo_calidad;
+	}
+
+	public void setPuerta_a_puerta(String puerta_a_puerta){
+		this.puerta_a_puerta = puerta_a_puerta;
+	}
+
+	public String getPuerta_a_puerta(){
+		return puerta_a_puerta;
+	}
+
+	public void setPuerta_a_puerta_calidad(String puerta_a_puerta_calidad){
+		this.puerta_a_puerta_calidad = puerta_a_puerta_calidad;
+	}
+
+	public String getPuerta_a_puerta_calidad(){
+		return puerta_a_puerta_calidad;
+	}
+
+	public void setMinima_calidad(String minima_calidad){
+		this.minima_calidad = minima_calidad;
+	}
+
+	public String getMinima_calidad(){
+		return minima_calidad;
 	}
 
 	public void setNocturno(String nocturno){
-		this.Nocturno = nocturno;
+		this.nocturno = nocturno;
 	}
 
 	public String getNocturno(){
-		return Nocturno;
-	}
-
-	public void setPuertaAPuerta(String puertaAPuerta){
-		this.puertaAPuerta = puertaAPuerta;
-	}
-
-	public String getPuertaAPuerta(){
-		return puertaAPuerta;
-	}
-
-	public void setBanderazoCalidad(String banderazoCalidad){
-		this.banderazoCalidad = banderazoCalidad;
-	}
-
-	public String getBanderazoCalidad(){
-		return banderazoCalidad;
-	}
-
-	public void setMinimaCalidad(String minimaCalidad){
-		this.minimaCalidad = minimaCalidad;
-	}
-
-	public String getMinimaCalidad(){
-		return minimaCalidad;
+		return nocturno;
 	}
 
 	public void setBanderazo(String banderazo){
@@ -102,11 +102,30 @@ public class FeesResponse{
 		return banderazo;
 	}
 
-	public void setKmCalidad(String kmCalidad){
-		this.kmCalidad = kmCalidad;
+	public void setTotal_recargo_calidad(int total_recargo_calidad){
+		this.total_recargo_calidad = total_recargo_calidad;
 	}
 
-	public String getKmCalidad(){
-		return kmCalidad;
+	public int getTotal_recargo_calidad(){
+		return total_recargo_calidad;
 	}
+
+	@Override
+ 	public String toString(){
+		return 
+			"FeesResponse{" + 
+			"minima = '" + minima + '\'' + 
+			",km = '" + km + '\'' + 
+			",total_recargo = '" + total_recargo + '\'' +
+			",nocturno_calidad = '" + nocturno_calidad + '\'' +
+			",km_calidad = '" + km_calidad + '\'' +
+			",banderazo_calidad = '" + banderazo_calidad + '\'' +
+			",puerta_a_puerta = '" + puerta_a_puerta + '\'' +
+			",puerta_a_puerta_calidad = '" + puerta_a_puerta_calidad + '\'' +
+			",minima_calidad = '" + minima_calidad + '\'' +
+			",nocturno = '" + nocturno + '\'' + 
+			",banderazo = '" + banderazo + '\'' + 
+			",total_recargo_calidad = '" + total_recargo_calidad + '\'' +
+			"}";
+		}
 }

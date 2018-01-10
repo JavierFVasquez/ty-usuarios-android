@@ -1,7 +1,6 @@
 package com.imaginamos.usuariofinal.taxisya.io;
 
 import com.imaginamos.usuariofinal.taxisya.Model.AddAddressResponse;
-import com.imaginamos.usuariofinal.taxisya.Model.AddressResponse;
 import com.imaginamos.usuariofinal.taxisya.Model.DirectionsResponse;
 import com.imaginamos.usuariofinal.taxisya.Model.FeesResponse;
 import com.imaginamos.usuariofinal.taxisya.Model.LoginResponse;
@@ -12,8 +11,6 @@ import com.imaginamos.usuariofinal.taxisya.Model.ReverseGeocodingResponse;
 import com.imaginamos.usuariofinal.taxisya.Model.UpdateResponse;
 import com.imaginamos.usuariofinal.taxisya.models.CancelServiceResponse;
 
-import retrofit2.Callback;
-import retrofit.*;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;

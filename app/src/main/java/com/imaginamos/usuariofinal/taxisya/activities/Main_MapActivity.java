@@ -76,7 +76,7 @@ public class Main_MapActivity extends AppCompatActivity implements OnClickListen
     protected void onResume() {
 
         super.onResume();
-//        displayConnectivityPanel(!Connectivity.isConnected(this) && !connectivityChecker.getConnectivityCheckResult());
+        displayConnectivityPanel(!Connectivity.isConnected(this) && !connectivityChecker.getConnectivityCheckResult());
         connectivityChecker.startConnectivityMonitor();
         mNetworkMonitor = new NetworkChangeReceiver(this);
         registerReceiver(mNetworkMonitor, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
@@ -279,7 +279,7 @@ public class Main_MapActivity extends AppCompatActivity implements OnClickListen
 
     @Override
     public void onNetworkConnectivityChange(boolean connected) {
-//        displayConnectivityPanel(!connected);
+        displayConnectivityPanel(!connected);
     }
 
     @Override

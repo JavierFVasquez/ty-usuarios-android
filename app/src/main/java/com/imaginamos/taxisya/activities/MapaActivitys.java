@@ -22,7 +22,6 @@ import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Context;
@@ -85,7 +84,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
@@ -280,6 +278,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     private List<ResultsItem> places_result;
     private TextWatcher tw;
     private String dir_by_result = "";
+    private String total_con_recargos = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -948,10 +947,11 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
             @Override
             public void onResponse(Call<FeesResponse> call, Response<FeesResponse> response) {
 
-                TV_Estimated_Price.setText(getEstimatedPrice(distance, time, response.body().getTotalRecargo()));
+                total_con_recargos = getEstimatedPrice(distance, time, response.body().getTotal_recargo());
+                TV_Estimated_Price.setText(total_con_recargos);
                 recargo_nocturno = Integer.parseInt(response.body().getNocturno().trim());
                 recargo_aeropuerto = Integer.parseInt(response.body().getKm().trim());
-//                recargo_puerta_a_puerta = Integer.parseInt(response.body().getPuertaAPuerta().trim());
+                recargo_puerta_a_puerta = Integer.parseInt(response.body().getPuerta_a_puerta().trim());
 
             }
 
@@ -994,7 +994,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         super.onResume();
         Log.v("SEGUIMIENTO", "onResume - MainActivity");
         checkPlayServices();
-//        displayConnectivityPanel(!Connectivity.isConnected(this) && !mConnectivityChecker.getConnectivityCheckResult());
+        displayConnectivityPanel(!Connectivity.isConnected(this) && !mConnectivityChecker.getConnectivityCheckResult());
         mConnectivityChecker.startConnectivityMonitor();
         mNetworkMonitor = new NetworkChangeReceiver(this);
         registerReceiver(mNetworkMonitor, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
@@ -1629,6 +1629,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         String nocturno = recargo_nocturno > 0 ?  "Recargo nocturno: " + recargo_nocturno + "\n" : "";
         String aeropuerto = recargo_aeropuerto > 0 ?  "Recargo aeropuerto: " + recargo_aeropuerto + "\n" : "";
         String puerta = recargo_puerta_a_puerta > 0 ?  "Recargo puerta a puerta: " + recargo_puerta_a_puerta + "\n" : "";
+        String total_recargos =  "Total con recargos: " + total_con_recargos + "\n";
         String pay_type_name = "Metodo de pago: " + pay_type;
 
 
@@ -1650,7 +1651,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
 
                             AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
                             alertDialog.setTitle("¿Desea Solicitar el servicio en efectivo?");
-                            alertDialog.setMessage(origin+"\n"+destiny +"\n"+ time_destiny + "\n" + trave_destiny + "\n" + pay_type_name + "\n" + nocturno + aeropuerto + puerta);
+                            alertDialog.setMessage(origin+"\n"+destiny +"\n"+ time_destiny + "\n" + trave_destiny + "\n" + pay_type_name + "\n" + nocturno + aeropuerto + puerta+ total_recargos);
                             alertDialog.setPositiveButton("Solicitar", new DialogInterface.OnClickListener() {
 
                                 public void onClick(DialogInterface dialog, int which) {
@@ -2316,7 +2317,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
 
     @Override
     public void onNetworkConnectivityChange(boolean connected) {
-//        displayConnectivityPanel(!connected);
+        displayConnectivityPanel(!connected);
     }
 
 

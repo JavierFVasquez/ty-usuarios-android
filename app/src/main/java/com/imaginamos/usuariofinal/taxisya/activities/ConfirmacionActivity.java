@@ -562,7 +562,7 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
     protected void onResume() {
         super.onResume();
         open = true;
-//        displayConnectivityPanel(!Connectivity.isConnected(this) && !mConnectivityChecker.getConnectivityCheckResult());
+        displayConnectivityPanel(!Connectivity.isConnected(this) && !mConnectivityChecker.getConnectivityCheckResult());
         mConnectivityChecker.startConnectivityMonitor();
         mNetworkMonitor = new NetworkChangeReceiver(this);
         registerReceiver(mNetworkMonitor, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
@@ -926,7 +926,7 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
                 Log.e("SERVICE_CMS", "    CHECK_SERVICE finish service_id= " + mServiceId + " status " + String.valueOf(status));
 
                 if (status >= 6) {
-                    myTimer.cancel();
+//                    myTimer.cancel();
                     Log.v("checkService", "Servicio cancelado por conductor");
                     if (status == 8) {
                         Log.v("checkService", "Servicio cancelado por conductor 2");
@@ -1069,7 +1069,7 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
 
     @Override
     public void onNetworkConnectivityChange(boolean connected) {
-//        displayConnectivityPanel(!connected);
+        displayConnectivityPanel(!connected);
     }
 
 
