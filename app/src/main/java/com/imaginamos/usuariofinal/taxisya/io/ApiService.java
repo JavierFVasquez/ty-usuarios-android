@@ -3,12 +3,14 @@ package com.imaginamos.usuariofinal.taxisya.io;
 import com.imaginamos.usuariofinal.taxisya.Model.AddAddressResponse;
 import com.imaginamos.usuariofinal.taxisya.Model.DirectionsResponse;
 import com.imaginamos.usuariofinal.taxisya.Model.FeesResponse;
+import com.imaginamos.usuariofinal.taxisya.Model.InterruptResponse;
 import com.imaginamos.usuariofinal.taxisya.Model.LoginResponse;
 import com.imaginamos.usuariofinal.taxisya.Model.PlacesResponse;
 import com.imaginamos.usuariofinal.taxisya.Model.RegisterResponse;
 import com.imaginamos.usuariofinal.taxisya.Model.RequestServiceAddressResponse;
 import com.imaginamos.usuariofinal.taxisya.Model.ReverseGeocodingResponse;
 import com.imaginamos.usuariofinal.taxisya.Model.UpdateResponse;
+import com.imaginamos.usuariofinal.taxisya.Model.UpdateServiceResponse;
 import com.imaginamos.usuariofinal.taxisya.models.CancelServiceResponse;
 
 import retrofit2.http.Field;
@@ -61,11 +63,39 @@ public interface ApiService {
                                 @Field("uuid") String uuid);
 
     @FormUrlEncoded
+    @POST(ApiConstants.SERVICE_INTERRUPT)
+    Call<InterruptResponse> interrupt(@Field("id_vehiculo") int id_vehiculo,
+                                      @Field("id_conductor") int id_conductor,
+                                      @Field("latitude") double latitude,
+                                      @Field("longitude") double longitude,
+                                      @Field("to_lati") double to_lati,
+                                      @Field("to_lng") double to_lng,
+                                      @Field("direccion") String direccion,
+                                      @Field("obs") String obs,
+                                      @Field("barrio") String barrio,
+                                      @Field("destino") String destino,
+                                      @Field("km_recorrido") double km_recorrido,
+                                      @Field("tiempo_recorido") String tiempo_recorido,
+                                      @Field("valor_app") double valor_app,
+                                      @Field("carrera_anterior") int carrera_anterior,
+                                      @Field("n_pasajeros") int n_pasajeros);
+ @FormUrlEncoded
+    @POST(ApiConstants.SERVICE_UPDATE)
+    Call<UpdateServiceResponse> service_update (@Field("idServicio") int idServicio,
+                                                @Field("to_lat") double to_lat,
+                                                @Field("to_lng") double to_lng,
+                                                @Field("valor") double valor,
+                                                @Field("distancia") double distancia,
+                                                @Field("tiempo") String tiempo);
+
+    @FormUrlEncoded
     @POST(ApiConstants.REQUEST_SERVICE_ADDRESS)
     Call<RequestServiceAddressResponse> requestServiceAddress(
             @Path("user_id") String user_id,
             @Field("lat") String lat,
             @Field("lng") String lng,
+            @Field("to_lati") String to_lati,
+            @Field("to_lng") String to_lng,
             @Field("barrio") String barrio,
             @Field("address") String address,
             @Field("uuid") String uuid,

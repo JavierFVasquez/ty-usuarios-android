@@ -24,8 +24,10 @@ public class Conf {
 	private String ISFIRST = "isFirst";
 	private String IDSERVICE ="IDSERVICE";
 	private String IDDRIVER ="IDDRIVER";
+	private String IDCAR ="IDCAR";
 
 	private String APPVERSION =  "APPVERSION";
+	private String carId;
 
 	public Conf(Context context)
 	{
@@ -168,4 +170,12 @@ public class Conf {
 		editor.commit();
 	}
 
+	public void setCarId(String carId) {
+		editor.putString(IDCAR, carId);
+		editor.commit();
+	}
+
+	public String getCarId() {
+		return prefs.getString(IDCAR, null);
+	}
 }

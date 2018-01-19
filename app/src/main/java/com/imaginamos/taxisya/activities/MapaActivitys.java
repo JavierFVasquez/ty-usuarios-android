@@ -118,6 +118,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.PolyUtil;
 import com.imaginamos.usuariofinal.taxisya.Model.DirectionsResponse;
 import com.imaginamos.usuariofinal.taxisya.Model.FeesResponse;
+import com.imaginamos.usuariofinal.taxisya.Model.InterruptResponse;
 import com.imaginamos.usuariofinal.taxisya.Model.PlacesResponse;
 import com.imaginamos.usuariofinal.taxisya.Model.RequestServiceAddressResponse;
 import com.imaginamos.usuariofinal.taxisya.Model.ResultsItem;
@@ -279,6 +280,8 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     private TextWatcher tw;
     private String dir_by_result = "";
     private String total_con_recargos = "";
+    private double to_lat;
+    private double to_lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -871,26 +874,26 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     }
 
 
-    private final int cost_by_kilometer_sfc = 881;
-    private final int cost_by_kilometer_cfc = 998;
-    private final int banderazo_sfc = 2500;
-    private final int banderazo_cfc = 2800;
-    private int recargo_nocturno = 0;
-    private int recargo_puerta_a_puerta = 0;
-    private int recargo_aeropuerto = 0;
-    private final int carrera_minima_sfc = 4400;
-    private final int carrera_minima_cfc = 5000;
+    public static final int cost_by_kilometer_sfc = 881;
+    public static final int cost_by_kilometer_cfc = 998;
+    public static final int banderazo_sfc = 2500;
+    public static final int banderazo_cfc = 2800;
+    public static int recargo_nocturno = 0;
+    public static int recargo_puerta_a_puerta = 0;
+    public static int recargo_aeropuerto = 0;
+    public static final int carrera_minima_sfc = 4400;
+    public static final int carrera_minima_cfc = 5000;
 
-    private final double vfl = 36;
-    private final double vc = 18;
-    private final double b1 = 0.83;
-    private final double b2 = 2.48;
-    private final double c = -0.825;
+    public static final double vfl = 36;
+    public static final double vc = 18;
+    public static final double b1 = 0.83;
+    public static final double b2 = 2.48;
+    public static final double c = -0.825;
 
-    private final double factorDeCalidad = 0;
+    public static final double factorDeCalidad = 0;
 
 
-    public String getEstimatedPrice(int distance, int time, int recargos) {
+    public static int getEstimatedPrice(int distance, int time, int recargos) {
 
         double distanceInKm = distance / 1000;
         double timeInHours = (time / 60) / 60;
@@ -909,10 +912,10 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
 
         }
 
-        return "$ " + String.format("%,d", (int) costoServicio);
+        return (int) costoServicio;
     }
 
-    public double factorDeCongestion(double velocidadPromedio) {
+    public static double factorDeCongestion(double velocidadPromedio) {
         if (velocidadPromedio >= vfl) {
             return 0;
         } else if ((vc <= velocidadPromedio) && (velocidadPromedio < vfl)) {
@@ -947,7 +950,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
             @Override
             public void onResponse(Call<FeesResponse> call, Response<FeesResponse> response) {
 
-                total_con_recargos = getEstimatedPrice(distance, time, response.body().getTotal_recargo());
+                total_con_recargos = "$ " + String.format("%,d", getEstimatedPrice(distance, time, response.body().getTotal_recargo()));
                 TV_Estimated_Price.setText(total_con_recargos);
                 recargo_nocturno = Integer.parseInt(response.body().getNocturno().trim());
                 recargo_aeropuerto = Integer.parseInt(response.body().getKm().trim());
@@ -1066,14 +1069,22 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (mLastLocation != null) {
-            latitud = mLastLocation.getLatitude();
-            longitud = mLastLocation.getLongitude();
-            Log.v("MAP1", "se obtuvo mLastLocation");
+        if(getIntent().getExtras() != null && getIntent().getExtras().getBoolean("new_destination",false)){
+            latitud = getIntent().getExtras().getDouble("from_lat",0);
+            longitud = getIntent().getExtras().getDouble("from_lng",0);
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitud, longitud), 17));
+            direccion_uno.setEnabled(false);
+            direccion_uno.clearFocus();
+            direccion_dos.requestFocus();
+        }else {
+            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            if (mLastLocation != null) {
+                latitud = mLastLocation.getLatitude();
+                longitud = mLastLocation.getLongitude();
+                Log.v("MAP1", "se obtuvo mLastLocation");
+            }
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitud, longitud), 17));
         }
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitud, longitud), 17));
-
     }
 
     void showControls() {
@@ -1302,6 +1313,8 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                 double lat = places_result.get(i).getGeometry().getLocation().getLat();
                 double lng = places_result.get(i).getGeometry().getLocation().getLng();
                 destination = new LatLng(lat, lng);
+                to_lat =  places_result.get(i).getGeometry().getLocation().getLat();
+                to_lng =  places_result.get(i).getGeometry().getLocation().getLng();
                 destination_address = places_result.get(i).getGeometry().getLocation().getLat() + "," +  places_result.get(i).getGeometry().getLocation().getLng();
                 destination_name = places_result.get(i).getName();
                 direccion_dos.setText(destination_name);
@@ -1332,9 +1345,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
 
 
                     String dir1= direccion_uno.getText().toString()+" Bogota Colombia";
-                    String dir2= direccion_dos.getText().toString()+" Bogota Colombia";
-
-
 
                     Call<DirectionsResponse> call_directions=service.directions(dir1,destination_address);
                     call_directions.enqueue(new Callback<DirectionsResponse>() {
@@ -2042,13 +2052,31 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                         if(dir_by_result.length() > 0){
                             dir_by_result = "";
                         }else {
-                            barrio = userBarrio;
-                            direccion_uno.setText(userAddress);
-                            no = userAddress;
-                            direccion_uno.setSelection(userAddress.length());
-                            direccion_uno.setEnabled(true);
+
+                            if(getIntent().getExtras() != null && getIntent().getExtras().getBoolean("new_destination",false)){
+                                barrio = userBarrio;
+                                direccion_uno.setText(userAddress + " 1");
+                                no = userAddress;
+                                direccion_uno.setEnabled(false);
+                                direccion_uno.clearFocus();
+                                direccion_dos.requestFocus();
+                            }else {
+                                direccion_uno.setEnabled(true);
+                                barrio = userBarrio;
+                                direccion_uno.setText(userAddress);
+                                no = userAddress;
+                                direccion_uno.setSelection(userAddress.length());
+                            }
                             //btnOk.setEnabled(true);
                         }
+                    }
+                    if(getIntent().getExtras() != null && getIntent().getExtras().getBoolean("new_destination",false)){
+                        barrio = userBarrio;
+                        direccion_uno.setText(userAddress + " 1");
+                        no = userAddress;
+                        direccion_uno.setEnabled(false);
+                        direccion_uno.clearFocus();
+                        direccion_dos.requestFocus();
                     }
 
                     if (mGoogleApiClient.isConnected()) {
@@ -2605,13 +2633,18 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         Log.v("onLocationChanged", "ini");
         if (firstTime) {
             Log.v("onLocationChanged", "firstTime ok");
-            if(direccion_uno.isFocused()){
-                latitud = (float) location.getLatitude();
-                longitud = (float) location.getLongitude();
+            if(getIntent().getExtras() != null && getIntent().getExtras().getBoolean("new_destination",false)){
+
+            }else {
+                if (direccion_uno.isFocused()) {
+                    latitud = (float) location.getLatitude();
+                    longitud = (float) location.getLongitude();
+                }
+                Log.i("GPS_1", "onLocationChanged firstTime " + String.valueOf(latitud)+ " Long "+longitud);
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitud, longitud), 17));
+                firstTime = false;
             }
-            Log.i("GPS_1", "onLocationChanged firstTime " + String.valueOf(latitud)+ " Long "+longitud);
-            map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitud, longitud), 17));
-            firstTime = false;
+
         }
     }
 
@@ -2744,173 +2777,256 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
 
     private void getService() {
 
-        if (direccion_uno.getText().toString().trim().length() != 0 && direccion_dos.getText().toString().trim().length() != 0){
+        if (direccion_uno.getText().toString().trim().length() != 0 && direccion_dos.getText().toString().trim().length() != 0) {
 
             String strLatitud = String.valueOf(latitud);
-        String strLongitud = String.valueOf(longitud);
-        Log.i("ADDRESS ON SERVICE", "Lat: " + latitud + " Long: " + longitud);
+            String strLongitud = String.valueOf(longitud);
+            Log.i("ADDRESS ON SERVICE", "Lat: " + latitud + " Long: " + longitud);
 
-        final ObjectAnimator animation = ObjectAnimator.ofInt(circleProgressBar, "progress", 1, 90);
+            final ObjectAnimator animation = ObjectAnimator.ofInt(circleProgressBar, "progress", 1, 90);
 
-        if (android.os.Build.VERSION.SDK_INT >= 11) {
-            animation.setDuration(10000).addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationStart(Animator animator) {
-                    Log.v("ANIMATION", "START");
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animator) {
-                    Log.v("ANIMATION", "STOP");
-                }
-            });
-            animation.setRepeatCount(10);
-            animation.setInterpolator(new AccelerateDecelerateInterpolator());
-        } else {
-
-
-        }
-        animation.start();
-
-        isRequestService = true;
-        String address = direccion_uno.getText().toString();
-        Log.v("SOLICITANDO_SERVICIO", "address " + address);
-        this.sendBroadcast(new Intent("com.google.android.intent.action.GTALK_HEARTBEAT"));
-        this.sendBroadcast(new Intent("com.google.android.intent.action.MCS_HEARTBEAT"));
-
-        // TODO: prepare data antes de enviar el servicio
-        String userEmail = conf.getUser();
-        String userUuid = conf.getIdUser();
-        String payType = "3";
-        if (mPayType == 1) {
-            payType = "1";
-            mCardReference = "0";
-        } else if (mPayType == 2) {
-            payType = "2";
-            mCardReference = conf.getCardDefault();
-            if (mCardReference == null) mCardReference = "0";
-        } else {
-            payType = "3";
-            mCardReference = mTicket.getText().toString();
-        }
-
-        String strPhone = conf.getPhone();
-        String strCode = strPhone.length() > 2 ? strPhone.substring(strPhone.length() - 2) : strPhone;
-        String commit = commitUser;
-        String old_destination = mPlaceDetailsText.getText().toString();
-        String destination = destination_name;
-
-        Log.v("CODE1", "strCode " + strCode);
-
-        pDialog = new ProgressDialog(MapaActivitys.this);
-        pDialog.setMessage(getString(R.string.texto_solicitando_servicio));
-        pDialog.setIndeterminate(false);
-        pDialog.setCancelable(false);
-
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(logging);
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Connect.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(httpClient.build())
-                .build();
-
-        ApiService service = retrofit.create(ApiService.class);
-
-        Call<RequestServiceAddressResponse> call_profile = service.requestServiceAddress(id_user, strLatitud, strLongitud, barrio, address, uuid, payType, "", userEmail, mCardReference, strCode, commit, destination);
-        call_profile.enqueue(new Callback<RequestServiceAddressResponse>() {
-            @Override
-            public void onResponse(Call<RequestServiceAddressResponse> call, Response<RequestServiceAddressResponse> response) {
-
-
-                try {
-
-                    if (myTimer == null) {
-                        Log.v("CNF_SRV", "myTimer is null");
-                        myTimer = new Timer();
+            if (android.os.Build.VERSION.SDK_INT >= 11) {
+                animation.setDuration(10000).addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animator animator) {
+                        Log.v("ANIMATION", "START");
                     }
 
-                    if (response.body().getSuccess()) {
-
-                        mServiceId = response.body().getService_id();
-                        conf.setServiceId(mServiceId);
-                        mStatusNew = response.body().getStatus_id();
-                        Log.v("SERVICE_STATUS", "getServiceAddress onSuccess service_id " + mServiceId);
-                        Log.e("SERVICE_CMS", "    GET_SERVICE_ADDRESS success service_id= " + mServiceId);
-
-                        final Calendar c = Calendar.getInstance();
-                        long actualDate = c.getTimeInMillis();
-
-                        mySQLiteAdapter.insertService(mServiceId, String.valueOf(mStatusNew), "", id_user, "", actualDate);
-                        reintento = 0;
-                        myTimer.schedule(new TimerTask() {
-                            @Override
-                            public void run() {
-                                Log.e("TIMER_EJECUTANDO", "EJECUTANDO *** " + String.valueOf(reintento));
-                                Log.v("SOLICITANDO_SERVICIO", "TIMER - EJECUTANDO " + String.valueOf(new Date()));
-
-                                reintento++;
-
-                                try {
-                                    checkService();
-                                } catch (JSONException e) {
-                                    Log.v("CHECK1", "checkService exception " + e.toString());
-                                    e.printStackTrace();
-                                }
-
-                                //if (reintento >= 3) {
-                                if (reintento >= 29) {
-                                    Log.e("TIMER_EJECUTANDO", "FIN EJECUTANDO *** ");
-                                    Log.v("SOLICITANDO_SERVICIO", "TIMER - FIN EJECUTANDO " + String.valueOf(new Date()));
+                    @Override
+                    public void onAnimationEnd(Animator animator) {
+                        Log.v("ANIMATION", "STOP");
+                    }
+                });
+                animation.setRepeatCount(10);
+                animation.setInterpolator(new AccelerateDecelerateInterpolator());
+            } else {
 
 
-                                    isReceiverRegistered = false;
-                                    puente.sendEmptyMessage(2000);
-                                    myTimer.cancel();
-                                    myTimer.purge();
-                                    myTimer = null;
+            }
+            animation.start();
 
-                                }
+            isRequestService = true;
+            String address = direccion_uno.getText().toString();
+            Log.v("SOLICITANDO_SERVICIO", "address " + address);
+            this.sendBroadcast(new Intent("com.google.android.intent.action.GTALK_HEARTBEAT"));
+            this.sendBroadcast(new Intent("com.google.android.intent.action.MCS_HEARTBEAT"));
+
+            // TODO: prepare data antes de enviar el servicio
+            String userEmail = conf.getUser();
+            String userUuid = conf.getIdUser();
+            String payType = "3";
+            if (mPayType == 1) {
+                payType = "1";
+                mCardReference = "0";
+            } else if (mPayType == 2) {
+                payType = "2";
+                mCardReference = conf.getCardDefault();
+                if (mCardReference == null) mCardReference = "0";
+            } else {
+                payType = "3";
+                mCardReference = mTicket.getText().toString();
+            }
+
+            String strPhone = conf.getPhone();
+            String strCode = strPhone.length() > 2 ? strPhone.substring(strPhone.length() - 2) : strPhone;
+            String commit = commitUser;
+            String old_destination = mPlaceDetailsText.getText().toString();
+            String destination = destination_name;
+
+            Log.v("CODE1", "strCode " + strCode);
+
+            pDialog = new ProgressDialog(MapaActivitys.this);
+            pDialog.setMessage(getString(R.string.texto_solicitando_servicio));
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            httpClient.addInterceptor(logging);
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Connect.BASE_URL_IP)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(httpClient.build())
+                    .build();
+
+            ApiService service = retrofit.create(ApiService.class);
+            if (getIntent().getExtras() != null && getIntent().getExtras().getBoolean("new_destination", false)) {
+                Call<InterruptResponse> call_profile = service.interrupt(Integer.parseInt(conf.getCarId()),Integer.parseInt(conf.getDriverId()), Double.parseDouble(strLatitud),  Double.parseDouble(strLongitud), to_lat, to_lng, address, "", barrio, "", 0,"", 0, getIntent().getExtras().getInt("last_service",-1),1);
+                call_profile.enqueue(new Callback<InterruptResponse>() {
+                    @Override
+                    public void onResponse(Call<InterruptResponse> call, Response<InterruptResponse> response) {
+
+
+                        try {
+
+                            if (myTimer == null) {
+                                Log.v("CNF_SRV", "myTimer is null");
+                                myTimer = new Timer();
                             }
 
-                        }, 5000, 3000);
+                                mServiceId = response.body().getId();
+                                conf.setServiceId(mServiceId);
+                                mStatusNew = Integer.parseInt(response.body().getStatus_id());
+                                Log.v("SERVICE_STATUS", "getServiceAddress onSuccess service_id " + mServiceId);
+                                Log.e("SERVICE_CMS", "    GET_SERVICE_ADDRESS success service_id= " + mServiceId);
+
+                                final Calendar c = Calendar.getInstance();
+                                long actualDate = c.getTimeInMillis();
+
+                                mySQLiteAdapter.insertService(mServiceId, String.valueOf(mStatusNew), "", id_user, "", actualDate);
+                                reintento = 0;
+                                myTimer.schedule(new TimerTask() {
+                                    @Override
+                                    public void run() {
+                                        Log.e("TIMER_EJECUTANDO", "EJECUTANDO *** " + String.valueOf(reintento));
+                                        Log.v("SOLICITANDO_SERVICIO", "TIMER - EJECUTANDO " + String.valueOf(new Date()));
+
+                                        reintento++;
+
+                                        try {
+                                            checkService();
+                                        } catch (JSONException e) {
+                                            Log.v("CHECK1", "checkService exception " + e.toString());
+                                            e.printStackTrace();
+                                        }
+
+                                        //if (reintento >= 3) {
+                                        if (reintento >= 29) {
+                                            Log.e("TIMER_EJECUTANDO", "FIN EJECUTANDO *** ");
+                                            Log.v("SOLICITANDO_SERVICIO", "TIMER - FIN EJECUTANDO " + String.valueOf(new Date()));
 
 
-                    } else {
-                        if (response.body().getError() == Error.NO_DRIVER_ENABLE) {
+                                            isReceiverRegistered = false;
+                                            puente.sendEmptyMessage(2000);
+                                            myTimer.cancel();
+                                            myTimer.purge();
+                                            myTimer = null;
 
-                            Log.v("SOLICITANDO_SERVICIO", "error - Error.NO_DRIVER_ENABLE " + String.valueOf(new Date()));
-                            Toast.makeText(getApplicationContext(), getString(R.string.error_no_driver), Toast.LENGTH_LONG).show();
+                                        }
+                                    }
 
-                        } else {
-                            Log.v("SOLICITANDO_SERVICIO", "error_request - " + String.valueOf(new Date()));
+                                }, 5000, 3000);
+
+
+                        } catch (Exception e) {
                             err_request();
-
+//
+                            isRequestService = false;
                         }
 
-                        finish();
                     }
 
-                } catch (Exception e) {
-                    err_request();
+                    @Override
+                    public void onFailure(Call<InterruptResponse> call, Throwable t) {
+                        Log.w("-----Error-----", t.toString());
+                        err_request();
+                        pDialog.dismiss();
+                    }
+                });
+            } else {
+
+                retrofit = new Retrofit.Builder()
+                        .baseUrl(Connect.BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(httpClient.build())
+                        .build();
+                service = retrofit.create(ApiService.class);
+
+                Call<RequestServiceAddressResponse> call_profile = service.requestServiceAddress(id_user, strLatitud, strLongitud, String.valueOf(to_lat) ,String.valueOf(to_lng), barrio, address, uuid, payType, "", userEmail, mCardReference, strCode, commit, destination);
+            call_profile.enqueue(new Callback<RequestServiceAddressResponse>() {
+                @Override
+                public void onResponse(Call<RequestServiceAddressResponse> call, Response<RequestServiceAddressResponse> response) {
+
+
+                    try {
+
+                        if (myTimer == null) {
+                            Log.v("CNF_SRV", "myTimer is null");
+                            myTimer = new Timer();
+                        }
+
+                        if (response.body().getSuccess()) {
+
+                            mServiceId = response.body().getService_id();
+                            conf.setServiceId(mServiceId);
+                            mStatusNew = response.body().getStatus_id();
+                            Log.v("SERVICE_STATUS", "getServiceAddress onSuccess service_id " + mServiceId);
+                            Log.e("SERVICE_CMS", "    GET_SERVICE_ADDRESS success service_id= " + mServiceId);
+
+                            final Calendar c = Calendar.getInstance();
+                            long actualDate = c.getTimeInMillis();
+
+                            mySQLiteAdapter.insertService(mServiceId, String.valueOf(mStatusNew), "", id_user, "", actualDate);
+                            reintento = 0;
+                            myTimer.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    Log.e("TIMER_EJECUTANDO", "EJECUTANDO *** " + String.valueOf(reintento));
+                                    Log.v("SOLICITANDO_SERVICIO", "TIMER - EJECUTANDO " + String.valueOf(new Date()));
+
+                                    reintento++;
+
+                                    try {
+                                        checkService();
+                                    } catch (JSONException e) {
+                                        Log.v("CHECK1", "checkService exception " + e.toString());
+                                        e.printStackTrace();
+                                    }
+
+                                    //if (reintento >= 3) {
+                                    if (reintento >= 29) {
+                                        Log.e("TIMER_EJECUTANDO", "FIN EJECUTANDO *** ");
+                                        Log.v("SOLICITANDO_SERVICIO", "TIMER - FIN EJECUTANDO " + String.valueOf(new Date()));
+
+
+                                        isReceiverRegistered = false;
+                                        puente.sendEmptyMessage(2000);
+                                        myTimer.cancel();
+                                        myTimer.purge();
+                                        myTimer = null;
+
+                                    }
+                                }
+
+                            }, 5000, 3000);
+
+
+                        } else {
+                            if (response.body().getError() == Error.NO_DRIVER_ENABLE) {
+
+                                Log.v("SOLICITANDO_SERVICIO", "error - Error.NO_DRIVER_ENABLE " + String.valueOf(new Date()));
+                                Toast.makeText(getApplicationContext(), getString(R.string.error_no_driver), Toast.LENGTH_LONG).show();
+
+                            } else {
+                                Log.v("SOLICITANDO_SERVICIO", "error_request - " + String.valueOf(new Date()));
+                                err_request();
+
+                            }
+
+                            finish();
+                        }
+
+                    } catch (Exception e) {
+                        err_request();
 //
-                    isRequestService = false;
-                    puente.sendEmptyMessage(2000);
+                        isRequestService = false;
+                        puente.sendEmptyMessage(2000);
+                    }
+
                 }
 
-            }
+                @Override
+                public void onFailure(Call<RequestServiceAddressResponse> call, Throwable t) {
+                    Log.w("-----Error-----", t.toString());
+                    err_request();
+                    puente.sendEmptyMessage(2000);
+                    pDialog.dismiss();
+                }
+            });
 
-            @Override
-            public void onFailure(Call<RequestServiceAddressResponse> call, Throwable t) {
-                Log.w("-----Error-----", t.toString());
-                err_request();
-                puente.sendEmptyMessage(2000);
-                pDialog.dismiss();
-            }
-        });
+        }
 
         }else{
             Toast.makeText(MapaActivitys.this,R.string.fill_fields,Toast.LENGTH_SHORT).show();

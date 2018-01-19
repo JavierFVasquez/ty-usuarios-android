@@ -216,10 +216,10 @@ public class Main_MapActivity extends AppCompatActivity implements OnClickListen
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        map = googleMap;
-        map.setMyLocationEnabled(true);
-        marker = map.addMarker(options);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(mTaxi, 17.0f));
+            map = googleMap;
+            map.setMyLocationEnabled(true);
+            marker = map.addMarker(options);
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(mTaxi, 17.0f));
 
     }
 

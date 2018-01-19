@@ -42,7 +42,7 @@
     <string name="close_session_error">Hubo un error al cerrar sesión</string>
     <string name="code_pass">user/pwd/confirm</string>
     <string name="codigo_de_confirmaci_n">Codigo de confirmación</string>
-    <string name="confirm_cancel">¿Estás seguro de cancelar el servicio?</string>
+    <string name="confirm_interrupt">¿Estás seguro de interrumpir el servicio?</string>
     <string name="confirmacion_seguro_cierra_sesion">¿Está seguro de cerrar la sesión?</string>
     <string name="deladdress">address/delete</string>
     <string name="digita_nueva_contrase_a">Digita nueva contraseña</string>
@@ -269,7 +269,7 @@
     <string name="confirm_ticket">service/ticket</string>
     <string name="ticket_data">Ingresa datos del vale</string>
     <string name="ticket_commit">Ingresa motivo del vale</string>
-    <string name="title_code_authorization">Código de autorización:</string>
+    <string name="title_code_authorization">Código: </string>
     <string name="ticket_invalid">El vale no se ingresó o es inválido</string>
     <string name="kind_services">Selecciona una opción para continuar</string>
     <string name="car_text">Selecciona un vehículo para continuar</string>
@@ -297,6 +297,11 @@
     <string name="type_your_message_here">Escribe tu mensaje aquí ...</string>
     <string name="new_message">Nuevo mensaje</string>
     <string name="llamar_pbx">Llamar a PBX</string>
+    <string name="llamar">Llamar</string>
+    <string name="text_btn_interrumpir">Interrumpir</string>
+    <string name="interrupt_request">¿Desea interrumpir el servicio?</string>
+    <string name="select_new_destination">Seleccionar nuevo destino</string>
+    <string name="text_interrumpiendo">Interrumpiendo el servicio...</string>
 
 
 </resources>

@@ -256,6 +256,7 @@
     <string name="driver_arrived_message">The driver arrived. Thank you for using TaxisYa</string>
     <string name="agradecimiento_uso_taxisya">Thank you for using TaxisYa, we invite you to rate our service</string>
     <string name="confirm_cancel">Are you sure to cancel the service?</string>
+    <string name="confirm_interrupt">Are you sure to interrupt the service?</string>
     <string name="lun">Mon</string>
     <string name="marca">brand</string>
     <string name="text_dia_jue">Thu</string>
@@ -275,7 +276,7 @@
     <string name="ticket_data">Input data of ticket</string>
     <string name="ticket_commit">Input reason of ticket</string>
     <string name="ticket_unauthorized">The ticket is not authorized</string>
-    <string name="title_code_authorization">Code of authorization:</string>
+    <string name="title_code_authorization">Code:</string>
     <string name="ticket_invalid">The ticket is not filled or not authorized</string>
     <string name="place_details">
     <![CDATA[
@@ -306,6 +307,11 @@
     <string name="type_your_message_here">Type your message here ...</string>
     <string name="new_message">New Message</string>
     <string name="llamar_pbx">Call PBX</string>
+    <string name="llamar">Call</string>
+    <string name="text_btn_interrumpir">Interrupt</string>
+    <string name="interrupt_request">Do you want to interrupt the service?</string>
+    <string name="select_new_destination">Select new destination</string>
+    <string name="text_interrumpiendo">Interrupting service...</string>
 
 
 </resources>
