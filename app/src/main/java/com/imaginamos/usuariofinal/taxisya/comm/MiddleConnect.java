@@ -56,16 +56,15 @@ public class MiddleConnect {
 
 	public static void checkStatusService(Context context, String user_id, String service_id, String uuid, String address, Double from_lat, Double from_lng, AsyncHttpResponseHandler responseHandler) throws JSONException {
 
+
 		RequestParams params = new RequestParams();
         Log.v("checkStatusService","service_id = " + service_id + " user_id = " + user_id);
         if (service_id != null ) {
 		    params.put("user_id", user_id);
 		    params.put("service_id", service_id);
 			params.put("address", address);
-			params.put("address", from_lat);
-			params.put("address", from_lng);
 
-	        Log.v("USER_SERVICE", "checkStatusService: ");
+	        Log.v("USER_SERVICE", "checkStatusService: " + params.toString());
 
 			Connect.post(context.getResources().getString(R.string.checkstatuservice), params, responseHandler);
         }

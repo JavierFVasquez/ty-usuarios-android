@@ -190,42 +190,15 @@ public class GcmIntentServices extends IntentService {
                                 break;
 
                             case Actions.SERVICE_ENDED:
-                                Log.e("CNF_SRV", "PUSJ SERVICE_ENDEDi service_id= " + extra.getString("service_id"));
-                                Log.e("SERVICE_CMS", "GCM SERVICE_ENDED service_id " + mServiceId + " old_status " + String.valueOf(mStatusOld));
+                                Log.e("SERVICE_ENDED", "service_id= " + extra.getString("service_id"));
 
-                                mCursor = mySQLiteAdapter.filterService(mServiceId);
-                                if (mCursor.getCount() > 0) {
-                                    mCursor.moveToPosition(0);
-                                    mStatusOld = Integer.valueOf(mCursor.getString(mCursor.getColumnIndex(BDAdapter.SRV_STA)));
-                                    mStatusNew = Integer.valueOf(extra.getString("status_id"));
-
-                                    Log.v("SQLITE", "PUSH SERVICE ENDED 1 status " + String.valueOf(mStatusOld));
-                                    Log.v("SQLITE", "PUSH SERVICE_ENDED 2 status " + String.valueOf(mStatusNew));
-
-                                    Log.e("SERVICE_CMS", "GCM SERVICE_ENDED SQLITE service_id " + mServiceId + " old_status " + String.valueOf(mStatusOld));
-                                    Log.e("SERVICE_CMS", "GCM SERVICE_ENDED SQLITE service_id " + mServiceId + " new status " + String.valueOf(mStatusNew));
+                                Intent si = new Intent(Actions.ACTION_SERVICE_ENDED);
+                                si.putExtra("service_id", extra.getString("service_id"));
+                                si.putExtra("message", message);
+                                sendBroadcast(si);
+                                sendNotification(message);
 
 
-                                    mCursor.close();
-
-                                    if (mStatusNew > mStatusOld) {
-                                        Log.e("SERVICE_CMS", "GCM SERVICE_ENDED change status service_id= " + extra.getString("service_id") + message);
-
-                                        Intent si = new Intent(Actions.ACTION_SERVICE_ENDED);
-                                        si.putExtra("service_id", extra.getString("service_id"));
-                                        si.putExtra("pay_type", extra.getString("pay_type"));
-                                        si.putExtra("units", extra.getString("units"));
-                                        si.putExtra("charge1", extra.getString("charge1"));
-                                        si.putExtra("charge2", extra.getString("charge2"));
-                                        si.putExtra("charge3", extra.getString("charge3"));
-                                        si.putExtra("charge4", extra.getString("charge4"));
-                                        si.putExtra("value", extra.getString("value"));
-
-                                        si.putExtra("message", message);
-                                        sendBroadcast(si);
-                                        sendNotification(message);
-                                    }
-                                }
                                 break;
 
                             case Actions.TAXI_GO:

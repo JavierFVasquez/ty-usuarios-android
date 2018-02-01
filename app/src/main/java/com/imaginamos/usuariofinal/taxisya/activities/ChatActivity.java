@@ -23,10 +23,21 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.imaginamos.usuariofinal.taxisya.Holders.ChatHolder;
 import com.imaginamos.usuariofinal.taxisya.Model.Chat;
+import com.imaginamos.usuariofinal.taxisya.Model.SimpleResponse;
 import com.imaginamos.usuariofinal.taxisya.R;
+import com.imaginamos.usuariofinal.taxisya.comm.Connect;
+import com.imaginamos.usuariofinal.taxisya.io.ApiService;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class ChatActivity extends AppCompatActivity {
@@ -37,6 +48,7 @@ public class ChatActivity extends AppCompatActivity {
     private String service_id;
     private RecyclerView.Adapter adapter;
     private boolean first_time = false;
+    private String driver_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +57,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
         service_id = getIntent().getExtras().getString("service_id","0");
+        driver_id = getIntent().getExtras().getString("driver_id","0");
 
         RV_Chat_Content = (RecyclerView) findViewById(R.id.RV_Chat_Content);
         ET_Chat_Text = (EditText) findViewById(R.id.ET_Chat_Text);
@@ -124,6 +137,30 @@ public class ChatActivity extends AppCompatActivity {
                 chat_ref.updateChildren(childUpdates);
 
                 ET_Chat_Text.setText("");
+
+                HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+                OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+                httpClient.addInterceptor(logging);
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(Connect.BASE_URL_IP)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(httpClient.build())
+                        .build();
+                ApiService service = retrofit.create(ApiService.class);
+                Call<SimpleResponse> call_directions=service.sendNotification(driver_id);
+                call_directions.enqueue(new Callback<SimpleResponse>() {
+                    @Override
+                    public void onResponse(Call<SimpleResponse> call, Response<SimpleResponse> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<SimpleResponse> call, Throwable t) {
+                        Log.w("-----Error-----",t.toString());
+                    }
+                });
             }
         });
 

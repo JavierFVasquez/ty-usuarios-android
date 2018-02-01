@@ -42,6 +42,7 @@
     <string name="close_session_error">Hubo un error al cerrar sesión</string>
     <string name="code_pass">user/pwd/confirm</string>
     <string name="codigo_de_confirmaci_n">Codigo de confirmación</string>
+    <string name="confirm_cancel">¿Estás seguro de cancelar el servicio?</string>
     <string name="confirm_interrupt">¿Estás seguro de interrumpir el servicio?</string>
     <string name="confirmacion_seguro_cierra_sesion">¿Está seguro de cerrar la sesión?</string>
     <string name="deladdress">address/delete</string>
@@ -302,6 +303,10 @@
     <string name="interrupt_request">¿Desea interrumpir el servicio?</string>
     <string name="select_new_destination">Seleccionar nuevo destino</string>
     <string name="text_interrumpiendo">Interrumpiendo el servicio...</string>
+    <string name="nuevo_destino">Nuevo Destino</string>
+    <string name="creando_servicio_con_nuevo__">Creando servicio con nuevo destino</string>
+    <string name="calculado_ruta">Calculando ruta</string>
+    <string name="calculado_tarifa">Calculando tarifa...</string>
 
 
 </resources>

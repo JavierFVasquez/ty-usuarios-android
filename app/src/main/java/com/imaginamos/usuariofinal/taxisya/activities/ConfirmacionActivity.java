@@ -117,7 +117,8 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
     public static boolean open = false;
     private Conf conf;
 
-    private Timer myTimer = new Timer();
+    private Timer myTimer = new
+            Timer();
     private int reintento = 0;
     private int status = 0;
     private String uuid;
@@ -153,6 +154,7 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
     private GoogleMap map;
     private Marker marker;
     private String celular_taxista;
+    private String driver_id;
 
     @Override
     protected void onRestart() {
@@ -282,47 +284,14 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
                     mostrarAviso(message, false);
                     //btn_cancelar.setVisibility(View.GONE);
                     btnCancelar.setVisibility(View.GONE);
+                    BT_Interrupt.setVisibility(View.VISIBLE);
 
                 } else if (intent.getAction().equals(Actions.ACTION_SERVICE_ENDED)) {
-                    Log.v("CNF_SRV", "ConfirmacionActivity ACTION_SERVICE_ENDED");
-                    Log.v("SERVICE_PUSH", "SERVICE_ENDED servicio");
-                    String message = intent.getExtras().getString("message");
+                    try {
+                        checkService();
+                    } catch (Exception e) {
 
-                    mTotUnits = intent.getExtras().getString("units");
-                    mTotCharge1 = intent.getExtras().getString("charge1");
-                    mTotCharge2 = intent.getExtras().getString("charge2");
-                    mTotCharge3 = intent.getExtras().getString("charge3");
-                    mTotCharge4 = intent.getExtras().getString("charge4");
-                    mTotValue = intent.getExtras().getString("value");
-
-
-                    mServiceId = intent.getExtras().getString("service_id");
-                    Log.e("SERVICE_CMS", "GCM CNF SERVICE_ENDED " + mServiceId);
-
-
-                    //quality.setVisibility(View.VISIBLE);
-                    //volvermapa.setVisibility(View.GONE);
-                    //btn_cancelar.setVisibility(View.GONE);
-                    btnCalificar.setVisibility(View.VISIBLE);
-                    btnCancelar.setVisibility(View.GONE);
-                    messageTextView.setText(message);
-
-                    showResumeService();
-                    //mostrarMensaje(message);
-                    // } else if (intent.getAction().equals(Actions.ACTION_TAXI_GO)) {
-                    //     Log.v("SERVICE_PUSH", "TAXI_GO servicio");
-                    //     try {
-                    //         JSONObject position = new JSONObject(intent.getExtras()
-                    //                 .getString("service"));
-                    //         Log.v("CONFIRMATION", "onReceive() position = " + position.toString());
-
-                    //         latitud_taxi = position.getDouble("lat");
-
-                    //         longitud_taxi = position.getDouble("lng");
-
-                    //     } catch (Exception e) {
-                    //         Log.e("CONFIRMACION", e.toString() + "");
-                    //     }
+                    }
                 } else if (intent.getAction().equals(Actions.ACTION_USER_CLOSE_SESSION)) {
                     Log.v("USER_CLOSE_SESSION", "Sesión cerrada - confirmación");
                     Conf conf = new Conf(getApplicationContext());
@@ -347,7 +316,7 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
                         JSONObject position = new JSONObject(intent.getExtras().getString("service"));
                         latitud_taxi = position.getDouble("lat");
                         longitud_taxi = position.getDouble("lng");
-                        dibujarTaxi(latitud_taxi, longitud_taxi);
+//                        dibujarTaxi(latitud_taxi, longitud_taxi);
 
                     } catch (Exception e) {
                         Log.e("ERROR", e.toString() + "");
@@ -378,9 +347,6 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
 
         }
 
-//        quality = (ImageButton) findViewById(R.id.calificar);
-//        volvermapa = (ImageView) findViewById(R.id.btn_mapa);
-//        btn_cancelar = (ImageView) findViewById(R.id.btn_cancelar);
         nombre_taxista = (TextView) findViewById(R.id.nom_taxista);
         tv_celular_taxista = (TextView) findViewById(R.id.celular);
         placa_taxi = (TextView) findViewById(R.id.numero_placa);
@@ -413,6 +379,7 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
             if (getIntent().getExtras().getString("qualification").equals("1")) {
                 btnCalificar.setVisibility(View.VISIBLE);
                 btnCancelar.setVisibility(View.GONE);
+                BT_Interrupt.setVisibility(View.GONE);
                 // set test
                 messageTextView.setText(R.string.agradecimiento_uso_taxisya);
             }
@@ -475,51 +442,19 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
 
             cargarTaxista(new JSONObject(getIntent().getExtras().getString("driver")));
 
-            // monitorea si se cancela el servicio
-            reintento = 0;
             myTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    Log.e("TIMER_EJECUTANDO", "CARGANDO TAXISTA INI EJECUCIÓN *** " + String.valueOf(reintento));
-
-                    reintento++;
-
+                    Log.e("TIMER_EJECUTANDO", "CARGANDO TAXISTA INI EJECUCIÓN *** ");
                     try {
-                        checkService();
-                    } catch (JSONException e) {
-                        // TODO Auto-generated catch block
+                        updateTaxiPosition();
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
-
-                    Log.e("TIMER_EJECUTNDO", "CONFIRMATION cerrando activity status " + String.valueOf(status));
-                    if (status >= 6) {
-//						myTimer.cancel();
-                        Log.e("TIMER_EJECUTNDO", "CONFIRMATION cerrando activity status " + String.valueOf(status));
-                        String msg;
-                        if (status == 8) {
-                            msg = getString(R.string.servicio_cancelado_conductor);
-                        } else {
-                            msg = getString(R.string.servicio_cancelado);
-                        }
-                        Log.e("TIMER_EJECUTANDO", "CARGANDO TAXISTA FIN EJECUTANDO *** ");
-
-                        //finish();
-                        callMap();
-
-                    }
-
-                    //checkService();
-                     /*
-                    if (reintento >= 3) {
-						Log.e("TIMER_EJECUTANDO", "CARGANDO TAXISTA FIN EJECUTANDO *** ");
-						//puente.sendEmptyMessage(2000);
-						myTimer.cancel();
-					}
-                    */
                 }
             }, 5000, 3000);
-            //}, 5000, 300000); // 5 minutos
+
 
 
         } catch (Exception e) {
@@ -590,7 +525,7 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
                         int recargo_aeropuerto = Integer.parseInt(response.body().getKm().trim());
                         int recargo_puerta_a_puerta = Integer.parseInt(response.body().getPuerta_a_puerta().trim());
 
-                        final int price = MapaActivitys.getEstimatedPrice((int) distance, time, response.body().getTotal_recargo());
+                        final int price = MapaActivitys.getEstimatedPrice((int) distance, time, response.body().getTotal_recargo(),true);
 
                         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
                         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -615,9 +550,10 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
                                     Intent i =  new Intent(ConfirmacionActivity.this,MapaActivitys.class);
                                     Bundle b =  new Bundle();
                                     b.putBoolean("new_destination",true);
+                                    b.putInt("last_service_price",price);
                                     b.putDouble("from_lat",latitud_taxi);
                                     b.putDouble("from_lng",longitud_taxi);
-                                    b.putString("last_service",service_id);
+                                    b.putInt("last_service",Integer.parseInt(service_id));
                                     i.putExtras(b);
                                     startActivity(i);
                                 }
@@ -795,6 +731,11 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
         mConnectivityChecker.startConnectivityMonitor();
         mNetworkMonitor = new NetworkChangeReceiver(this);
         registerReceiver(mNetworkMonitor, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        try {
+            checkService();
+        } catch (JSONException e) {
+
+        }
     }
 
     @Override
@@ -1039,10 +980,53 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
 
 
 
+    public void updateTaxiPosition () throws JSONException {
+        id_user = conf.getIdUser();
+        service_id = conf.getServiceId();
+        mServiceId = service_id;
+
+        MiddleConnect.checkStatusService(this, id_user, service_id, "uuid", address, from_lat, from_lng, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onStart() {
+                Log.v("checkService", "onStart");
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String response = new String(responseBody);
+                try {
+                    Log.v("checkService", "SUCCES: "+response);
+                    JSONObject responsejson = new JSONObject(response);
+                    latitud_taxi = responsejson.getJSONObject("driver").getDouble("crt_lat");
+                    longitud_taxi = responsejson.getJSONObject("driver").getDouble("crt_lng");
+                    dibujarTaxi(latitud_taxi, longitud_taxi);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e("checkService",  e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                Log.v("checkService", "CONFIRMTION onFailure");
+
+            }
+
+            @Override
+            public void onFinish() {
+            }
+        });
+    }
+
+
     public void checkService() throws JSONException {
 
         id_user = conf.getIdUser();
         service_id = conf.getServiceId();
+        driver_id = conf.getDriverId();
         mServiceId = service_id;
 
 
@@ -1062,6 +1046,7 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
                 Intent i = new Intent(ConfirmacionActivity.this, ChatActivity.class);
                 Bundle b = new Bundle();
                 b.putString("service_id", service_id);
+                b.putString("driver_id", driver_id);
                 i.putExtras(b);
                 startActivity(i);
             }
@@ -1080,20 +1065,26 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String response = new String(responseBody);
                 try {
-                    //Log.v("checkService", "SUCCES: "+response);
+                    Log.v("checkService", "SUCCES: "+response);
                     JSONObject responsejson = new JSONObject(response);
                     //if (responsejson.getInt("status_id"))
                     //{
                     status = responsejson.getInt("status_id");
-                    Log.v("checkService", "CONFIRMATION status_id: " + String.valueOf(status));
-
+                    Log.i("SERVICE - STATUS", String.valueOf(status));
+                    if(status > 5){
+                        callMap();
+                    }
                     String user_uuid_service = responsejson.getJSONObject("user").getString("uuid");
+
 
                     mAddress = responsejson.getString("address");
                     from_lat = responsejson.getDouble("from_lat");
                     from_lng = responsejson.getDouble("from_lng");
+                    latitud_taxi = responsejson.getJSONObject("driver").getDouble("crt_lat");
+                    longitud_taxi = responsejson.getJSONObject("driver").getDouble("crt_lng");
 
-                    conf.setDriverId(responsejson.getString("id"));
+                    dibujarTaxi(latitud_taxi, longitud_taxi);
+                    conf.setDriverId(responsejson.getString("driver_id"));
                     conf.setCarId(responsejson.getString("car_id"));
 
 
@@ -1234,11 +1225,13 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
                 case 3:
                     messageTextView.setText(R.string.driver_arrived_message);
                     btnCancelar.setVisibility(View.GONE);
+                    BT_Interrupt.setVisibility(View.VISIBLE);
                     break;
 
                 case 4:
                     btnCalificar.setVisibility(View.VISIBLE);
                     btnCancelar.setVisibility(View.GONE);
+                    BT_Interrupt.setVisibility(View.GONE);
 
                     // set test
                     messageTextView.setText(R.string.agradecimiento_uso_taxisya);
@@ -1318,11 +1311,25 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(mTaxi, 17.0f));
     }
 
-    public void dibujarTaxi(double latitud, double longitud) {
-        markerPoints = new ArrayList<LatLng>();
-        LatLng taxi = new LatLng(latitud, longitud);
-        marker.setPosition(taxi);
-        map.animateCamera(CameraUpdateFactory.newLatLng(taxi));
+    public void dibujarTaxi(final double latitud, final double longitud) {
+
+        Handler mainHandler = new Handler(ConfirmacionActivity.this.getMainLooper());
+
+        Runnable myRunnable = new Runnable() {
+            @Override
+            public void run() {
+                markerPoints = new ArrayList<LatLng>();
+                LatLng taxi = new LatLng(latitud, longitud);
+                marker.setPosition(taxi);
+                map.moveCamera(CameraUpdateFactory.newLatLng(taxi));
+                Log.i("==POSICIÓN TAXI==",latitud + "," + longitud);
+
+            }
+        };
+        mainHandler.post(myRunnable);
+
+
+
     }
 
     @Override

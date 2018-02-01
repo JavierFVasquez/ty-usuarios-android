@@ -599,15 +599,9 @@ public class HomeActivity extends Activity {
                     Log.v("checkService", "status_id: " + String.valueOf(status_service));
                     // si hay un servicio asignado lo recupera
 
-                    if (qualy.equals("0") || (status_service == 5 )) {
+                    Log.i("---------BANDERA----",status_service + " -- " + responsejson.getString("qualification"));
 
-                        Log.v("HomeActivity", "checkService() servicio recuperado - status_service " + String.valueOf(qualification) + " service_id=" + qualification);
-                        Log.v("HomeActivity", "checkService() servicio recuperado - driver " + responsejson.getJSONObject("driver").toString());
-                        Log.v("CNF_SRV1", "HomeActivity before call ConfirmacionActivity.class");
-                        //mPref.setRootActivity("HomeActivity");
-                        //Intent mIntent = new Intent(getApplicationContext(), CalificarActivity.class);
-                        //mIntent.putExtra("qualification", "1");
-                        Log.v("checkService", "servicios detectado por socket, sin push");
+                    if (status_service == 5 && responsejson.getString("qualification") == "null") {
                         Intent mIntent = new Intent(getApplicationContext(), ConfirmacionActivity.class);
                         mIntent.putExtra("driver", responsejson.getJSONObject("driver").toString());
                         startActivity(mIntent);

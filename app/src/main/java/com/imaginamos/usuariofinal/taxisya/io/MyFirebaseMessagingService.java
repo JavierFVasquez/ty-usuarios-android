@@ -14,6 +14,11 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.imaginamos.usuariofinal.taxisya.R;
 import com.imaginamos.usuariofinal.taxisya.activities.HomeActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Map;
+
 /**
  * Created by leo on 9/10/16.
  */
@@ -46,6 +51,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+            Map<String, String> params = remoteMessage.getData();
+            try {
+                JSONObject data =  new JSONObject(params.get("extra"));
+                sendNotification(data.getString(params.get("message")));
+            } catch (Exception e) {
+
+            }
         }
 
         // Check if message contains a notification payload.

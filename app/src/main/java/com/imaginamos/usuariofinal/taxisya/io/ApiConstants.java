@@ -13,6 +13,7 @@ public class ApiConstants {
     public static final String PLACES_GOOGLE = "place/nearbysearch/json?location=4.661934, -74.097383&radius=20000&language=es&" + GOOGLE_KEY;
     public static final String SERVICE_INTERRUPT = "nuevoCms/webservices/creacion_interrupcion.php";
     public static final String SERVICE_UPDATE = "nuevoCms/webservices/actualizar_servicio";
+    public static final String SERVICE_CHAT = "nuevoCms/webservices/service_chat";
     public static String app_code = "TAXISYA";
     //public static String app_secret_key = "oDX4b0Yk4usp0ptEf1XFK00KQSxAgV";
     public static String app_secret_key = "jN2Dk59eDX1h7W7NtiV3YYbzCFSHRY";
@@ -37,7 +38,7 @@ public class ApiConstants {
     public static final String CANCEL_SERVICE = "v2/user/{user_id}/cancelservice";
     public static final String CANCEL_SERVICE_SYSTEM = "/service/systemcancel";
     public static final String REQUEST_SERVICE = "/v2/user/{user_id}/requestservice";
-    public static final String REQUEST_SERVICE_ADDRESS = "v2/user/{user_id}/requestservice_address";
+    public static final String REQUEST_SERVICE_ADDRESS = "nuevoCms/webservices/crearServicio";
 
     public static final String SERVICE_SCORE = "/service/score";
     public static final String SERVICE_STATUS = "/service/status";

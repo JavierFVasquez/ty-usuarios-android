@@ -13,6 +13,7 @@ public class FeesResponse{
 	private String nocturno;
 	private String banderazo;
 	private int total_recargo_calidad;
+	private String aeropuerto;
 
 	public void setMinima(String minima){
 		this.minima = minima;
@@ -128,4 +129,12 @@ public class FeesResponse{
 			",total_recargo_calidad = '" + total_recargo_calidad + '\'' +
 			"}";
 		}
+
+	public String getAeropuerto() {
+		return aeropuerto;
+	}
+
+	public void setAeropuerto(String aeropuerto) {
+		this.aeropuerto = aeropuerto;
+	}
 }

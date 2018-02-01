@@ -1,6 +1,7 @@
 package com.imaginamos.usuariofinal.taxisya.io;
 
 import com.imaginamos.usuariofinal.taxisya.Model.AddAddressResponse;
+import com.imaginamos.usuariofinal.taxisya.Model.CheckServiceResponse;
 import com.imaginamos.usuariofinal.taxisya.Model.DirectionsResponse;
 import com.imaginamos.usuariofinal.taxisya.Model.FeesResponse;
 import com.imaginamos.usuariofinal.taxisya.Model.InterruptResponse;
@@ -9,6 +10,7 @@ import com.imaginamos.usuariofinal.taxisya.Model.PlacesResponse;
 import com.imaginamos.usuariofinal.taxisya.Model.RegisterResponse;
 import com.imaginamos.usuariofinal.taxisya.Model.RequestServiceAddressResponse;
 import com.imaginamos.usuariofinal.taxisya.Model.ReverseGeocodingResponse;
+import com.imaginamos.usuariofinal.taxisya.Model.SimpleResponse;
 import com.imaginamos.usuariofinal.taxisya.Model.UpdateResponse;
 import com.imaginamos.usuariofinal.taxisya.Model.UpdateServiceResponse;
 import com.imaginamos.usuariofinal.taxisya.models.CancelServiceResponse;
@@ -61,6 +63,18 @@ public interface ApiService {
                                 @Field("token") String token,
                                 @Field("cellphone") String cellphone,
                                 @Field("uuid") String uuid);
+    @FormUrlEncoded
+    @POST(ApiConstants.USER_UPDATE)
+    Call<CheckServiceResponse> checkService(@Field("user_id") String user_id,
+                                            @Field("service_id") String service_id,
+                                            @Field("uuid") String uuid,
+                                            @Field("address") String address,
+                                            @Field("from_lat") Double from_lat,
+                                            @Field("from_lng") Double from_lng
+    );
+
+    @GET(ApiConstants.SERVICE_CHAT)
+    Call<SimpleResponse> sendNotification(@Query("id_conductor") String id_conductor);
 
     @FormUrlEncoded
     @POST(ApiConstants.SERVICE_INTERRUPT)
@@ -91,23 +105,28 @@ public interface ApiService {
     @FormUrlEncoded
     @POST(ApiConstants.REQUEST_SERVICE_ADDRESS)
     Call<RequestServiceAddressResponse> requestServiceAddress(
-            @Path("user_id") String user_id,
-            @Field("lat") String lat,
-            @Field("lng") String lng,
+            @Field("usuario") String usuario,
+            @Field("latitude") String latitude,
+            @Field("longitude") String longitude,
             @Field("to_lati") String to_lati,
             @Field("to_lng") String to_lng,
+            @Field("obs") String obs,
             @Field("barrio") String barrio,
-            @Field("address") String address,
-            @Field("uuid") String uuid,
+            @Field("aeropuerto") int aeropuerto,
+            @Field("nocturno") int nocturno,
+            @Field("mensajeria") int mensajeria,
+            @Field("pp") int pp,
             @Field("pay_type") String pay_type,
-            @Field("pay_reference") String pay_reference,
-            @Field("user_email") String user_email,
-            @Field("user_card_reference") String user_card_reference,
-            @Field("code") String code,
-            @Field("commit") String commit,
-            @Field("destination") String destination
+            @Field("destino") String destino,
+            @Field("address") String address,
+            @Field("km_recorrido") int km_recorrido,
+            @Field("tiempo_recorido") int tiempo_recorido,
+            @Field("valor_app") int valor_app,
+            @Field("nVale") String nVale,
+            @Field("motivoVale") String motivoVale
 
     );
+
 
     @GET(ApiConstants.REQUEST_FEES)
     Call<FeesResponse> requestFees(
@@ -116,6 +135,7 @@ public interface ApiService {
             @Query("time") String time
 
     );
+
 
     // cancelar servicio
     @POST(ApiConstants.CANCEL_SERVICE)

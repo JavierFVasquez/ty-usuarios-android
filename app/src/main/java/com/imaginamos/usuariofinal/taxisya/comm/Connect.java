@@ -37,7 +37,7 @@ public class Connect {
 	  public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
 		  getClient().setTimeout(timeout * 1000);
 		  getClient().post(getAbsoluteUrl(url), params, responseHandler);
-//		  Log.i("REQUEST",url+" \n- \n"+params.toString());
+		  Log.i("REQUEST",url+" \n- \n"+params.toString());
 	  }
 
 	  public static void sendJson(Context context, String url, RequestParams params, JSONObject bodyAsJson,

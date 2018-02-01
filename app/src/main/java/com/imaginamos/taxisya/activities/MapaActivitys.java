@@ -147,7 +147,6 @@ import com.imaginamos.usuariofinal.taxisya.comm.Connectivity;
 import com.imaginamos.usuariofinal.taxisya.comm.MiddleConnect;
 import com.imaginamos.usuariofinal.taxisya.comm.NewAddressActivity;
 import com.imaginamos.usuariofinal.taxisya.models.Target;
-import com.imaginamos.usuariofinal.taxisya.models.Error;
 import com.imaginamos.usuariofinal.taxisya.utils.Utils;
 import com.imaginamos.usuariofinal.taxisya.R;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -272,7 +271,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     private TextView TV_Estimated_Price;
 
     private AutoCompleteTextView direccion_dos;
-    private String destination_name;
+    private String destination_name = "";
     private String travel_distance;
     private String travel_estimated_time;
     private String pay_type = "Efectivo";
@@ -282,6 +281,13 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     private String total_con_recargos = "";
     private double to_lat;
     private double to_lng;
+    private int recargo_nocturno = 0;
+    private int recargo_aeropuerto = 0;
+    private int recargo_puerta_a_puerta = 0;
+    private String ticket_value = "";
+    private int valor_app;
+    private int travel_distance_int;
+    private int travel_estimated_time_int;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -390,13 +396,13 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
             @Override
             public void afterTextChanged(Editable editable) {
 
-                final String stk = mTicket.getText().toString();
-                rTicket = new String(stk);
-                if ((stk != null) && stk.length() >= 7) {
-                    Log.v("LOG1", "mTicket afterTextChanged " + stk);
+                ticket_value = mTicket.getText().toString();
+                rTicket = new String(ticket_value);
+                if ((ticket_value != null) && ticket_value.length() >= 7) {
+                    Log.v("LOG1", "mTicket afterTextChanged " + ticket_value);
                     isTicketValid = false;
 
-                    MiddleConnect.confirmTicker(getApplicationContext(), stk, new AsyncHttpResponseHandler() {
+                    MiddleConnect.confirmTicker(getApplicationContext(), ticket_value, new AsyncHttpResponseHandler() {
 
                         @Override
                         public void onStart() {
@@ -669,6 +675,8 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                 }
                 // validate -
 
+
+
             }
         };
 
@@ -725,7 +733,12 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
             }
         });
 
+        try {
+            checkService();
+        } catch (JSONException e) {
 
+
+        }
     }
 
     public void onPlaceSelected(Place place) {
@@ -765,98 +778,110 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                 imageMapView.setVisibility(GONE);
                 imageMapMarker.setVisibility(GONE);
 
-                if (((direccion_uno.hasFocus()) || (direccion_dos.hasFocus())) && (!direccion_uno.getText().toString().isEmpty()) && (!direccion_dos.getText().toString().isEmpty()) && (!destination_address.isEmpty())) {
+                if (((direccion_uno.hasFocus()) || (direccion_dos.hasFocus())) && (!direccion_uno.getText().toString().isEmpty()) && (!direccion_dos.getText().toString().isEmpty()) && (!destination_address.isEmpty()))
+                {
 
-                    Snackbar.make(getCurrentFocus(), "Calculando ruta", Snackbar.LENGTH_LONG).show();
 
+//                    pDialog = new ProgressDialog(MapaActivitys.this);
+//                    pDialog.setMessage(getString(R.string.calculado_ruta));
+//                    pDialog.setIndeterminate(false);
+//                    pDialog.setCancelable(false);
+//                    if(!pDialog.isShowing()) {
+//                        pDialog.show();
+//                    }
 
                     final String dir1 = direccion_uno.getText().toString() + "Bogota Colombia";
                     String dir2 = direccion_dos.getText().toString() + "Bogota Colombia";
 
+                    if(direccion_uno.isFocused()) {
+                        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+                        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+                        httpClient.addInterceptor(logging);
 
-                    HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-                    logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-                    OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-                    httpClient.addInterceptor(logging);
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl(Connect.BASE_GOOGLE_URL)
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .client(httpClient.build())
+                                .build();
 
-                    Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl(Connect.BASE_GOOGLE_URL)
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .client(httpClient.build())
-                            .build();
+                        ApiService service = retrofit.create(ApiService.class);
+                        Call<DirectionsResponse> call_profile = service.directions(dir1, destination_address);
+                        call_profile.enqueue(new Callback<DirectionsResponse>() {
+                            @Override
+                            public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
+                                pDialog.dismiss();
+                                String poly_encode = response.body().getRoutes().get(0).getOverview_polyline().getPoints();
+                                List<LatLng> points = PolyUtil.decode(poly_encode);
 
-                    ApiService service = retrofit.create(ApiService.class);
-                    Call<DirectionsResponse> call_profile = service.directions(dir1, destination_address);
-                    call_profile.enqueue(new Callback<DirectionsResponse>() {
-                        @Override
-                        public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
+                                PolylineOptions rectOptions = new PolylineOptions().width(10).color(getResources().getColor(R.color.text_orange));
 
-                            String poly_encode = response.body().getRoutes().get(0).getOverview_polyline().getPoints();
-                            List<LatLng> points = PolyUtil.decode(poly_encode);
+                                for (LatLng l : points) {
+                                    rectOptions.add(l);
+                                }
 
-                            PolylineOptions rectOptions = new PolylineOptions().width(10).color(getResources().getColor(R.color.text_orange));
+                                int height = convertSpToPixels(40, MapaActivitys.this);
+                                int width = convertSpToPixels(90, MapaActivitys.this);
+                                ;
+                                BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.pointer_1);
+                                Bitmap b = bitmapdraw.getBitmap();
+                                Bitmap smallMarker_1 = Bitmap.createScaledBitmap(b, width, height, false);
+                                BitmapDrawable bitmapdraw_2 = (BitmapDrawable) getResources().getDrawable(R.drawable.pointer_2);
+                                b = bitmapdraw_2.getBitmap();
+                                Bitmap smallMarker_2 = Bitmap.createScaledBitmap(b, width, height, false);
 
-                            for (LatLng l : points) {
-                                rectOptions.add(l);
+                                map.clear();
+                                map.addMarker(new MarkerOptions()
+                                        .position(new LatLng(response.body().getRoutes().get(0).getLegs().get(0).getStart_location().getLat(), response.body().getRoutes().get(0).getLegs().get(0).getStart_location().getLng()))
+                                        .title(direccion_uno.getText().toString()))
+                                        .setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker_1));
+                                map.addMarker(new MarkerOptions()
+                                        .position(new LatLng(response.body().getRoutes().get(0).getLegs().get(0).getEnd_location().getLat(), response.body().getRoutes().get(0).getLegs().get(0).getEnd_location().getLng()))
+                                        .title(direccion_dos.getText().toString()))
+                                        .setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker_2));
+
+                                Polyline polyline = map.addPolyline(rectOptions);
+                                LinearLayout LL_Estimated = (LinearLayout) findViewById(R.id.LL_Estimated);
+                                LL_Estimated.setVisibility(View.VISIBLE);
+                                travel_distance = response.body().getRoutes().get(0).getLegs().get(0).getDistance().getText();
+                                travel_estimated_time = response.body().getRoutes().get(0).getLegs().get(0).getDuration().getText();
+                                travel_distance_int = response.body().getRoutes().get(0).getLegs().get(0).getDistance().getValue();
+                                travel_estimated_time_int = response.body().getRoutes().get(0).getLegs().get(0).getDuration().getValue();
+                                TV_Distance.setText(response.body().getRoutes().get(0).getLegs().get(0).getDistance().getText());
+                                TV_Estimated_Time.setText(response.body().getRoutes().get(0).getLegs().get(0).getDuration().getText());
+
+                                getEstimatedPriceWithFees(String.valueOf(response.body().getRoutes().get(0).getLegs().get(0).getEnd_location().getLat()), String.valueOf(response.body().getRoutes().get(0).getLegs().get(0).getEnd_location().getLng()), response.body().getRoutes().get(0).getLegs().get(0).getDistance().getValue(), response.body().getRoutes().get(0).getLegs().get(0).getDuration().getValue());
+
+                                map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+                                    @Override
+                                    public void onCameraChange(CameraPosition cameraPosition) {
+
+                                    }
+                                });
+                                imageMapMarker.setVisibility(GONE);
+
+                                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+
+                                builder.include(new LatLng(response.body().getRoutes().get(0).getBounds().getNortheast().getLat(), response.body().getRoutes().get(0).getBounds().getNortheast().getLng()));
+                                builder.include(new LatLng(response.body().getRoutes().get(0).getBounds().getSouthwest().getLat(), response.body().getRoutes().get(0).getBounds().getSouthwest().getLng()));
+
+                                LatLngBounds bounds = builder.build();
+
+                                int padding = convertSpToPixels(40, MapaActivitys.this); // offset from edges of the map in pixels
+                                CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                                map.setPadding(0, 0, 0, convertSpToPixels(150, MapaActivitys.this));
+                                map.animateCamera(cu);
+
                             }
 
-                            int height = convertSpToPixels(40, MapaActivitys.this);
-                            int width = convertSpToPixels(90, MapaActivitys.this);
-                            ;
-                            BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.pointer_1);
-                            Bitmap b = bitmapdraw.getBitmap();
-                            Bitmap smallMarker_1 = Bitmap.createScaledBitmap(b, width, height, false);
-                            BitmapDrawable bitmapdraw_2 = (BitmapDrawable) getResources().getDrawable(R.drawable.pointer_2);
-                            b = bitmapdraw_2.getBitmap();
-                            Bitmap smallMarker_2 = Bitmap.createScaledBitmap(b, width, height, false);
-
-                            map.clear();
-                            map.addMarker(new MarkerOptions()
-                                    .position(new LatLng(response.body().getRoutes().get(0).getLegs().get(0).getStart_location().getLat(), response.body().getRoutes().get(0).getLegs().get(0).getStart_location().getLng()))
-                                    .title(direccion_uno.getText().toString()))
-                                    .setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker_1));
-                            map.addMarker(new MarkerOptions()
-                                    .position(new LatLng(response.body().getRoutes().get(0).getLegs().get(0).getEnd_location().getLat(), response.body().getRoutes().get(0).getLegs().get(0).getEnd_location().getLng()))
-                                    .title(direccion_dos.getText().toString()))
-                                    .setIcon(BitmapDescriptorFactory.fromBitmap(smallMarker_2));
-
-                            Polyline polyline = map.addPolyline(rectOptions);
-                            LinearLayout LL_Estimated = (LinearLayout) findViewById(R.id.LL_Estimated);
-                            LL_Estimated.setVisibility(View.VISIBLE);
-                            travel_distance = response.body().getRoutes().get(0).getLegs().get(0).getDistance().getText();
-                            travel_estimated_time = response.body().getRoutes().get(0).getLegs().get(0).getDuration().getText();
-                            TV_Distance.setText(response.body().getRoutes().get(0).getLegs().get(0).getDistance().getText());
-                            TV_Estimated_Time.setText(response.body().getRoutes().get(0).getLegs().get(0).getDuration().getText());
-
-                            getEstimatedPriceWithFees(String.valueOf(response.body().getRoutes().get(0).getLegs().get(0).getEnd_location().getLat()), String.valueOf(response.body().getRoutes().get(0).getLegs().get(0).getEnd_location().getLng()), response.body().getRoutes().get(0).getLegs().get(0).getDistance().getValue(), response.body().getRoutes().get(0).getLegs().get(0).getDuration().getValue());
-
-                            map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
-                                @Override
-                                public void onCameraChange(CameraPosition cameraPosition) {
-
-                                }
-                            });
-                            imageMapMarker.setVisibility(GONE);
-
-                            LatLngBounds.Builder builder = new LatLngBounds.Builder();
-
-
-                            builder.include(new LatLng(response.body().getRoutes().get(0).getBounds().getNortheast().getLat(), response.body().getRoutes().get(0).getBounds().getNortheast().getLng()));
-                            builder.include(new LatLng(response.body().getRoutes().get(0).getBounds().getSouthwest().getLat(), response.body().getRoutes().get(0).getBounds().getSouthwest().getLng()));
-
-                            LatLngBounds bounds = builder.build();
-
-                            int padding = convertSpToPixels(40, MapaActivitys.this); // offset from edges of the map in pixels
-                            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-                            map.setPadding(0, 0, 0, convertSpToPixels(150, MapaActivitys.this));
-                            map.animateCamera(cu);
-                        }
-
-                        @Override
-                        public void onFailure(Call<DirectionsResponse> call, Throwable t) {
-                            Log.w("-----Error-----", t.toString());
-                        }
-                    });
+                            @Override
+                            public void onFailure(Call<DirectionsResponse> call, Throwable t) {
+                                Log.w("-----Error-----", t.toString());
+                                pDialog.dismiss();
+                            }
+                        });
+                    }
 
                 }
             }
@@ -878,9 +903,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     public static final int cost_by_kilometer_cfc = 998;
     public static final int banderazo_sfc = 2500;
     public static final int banderazo_cfc = 2800;
-    public static int recargo_nocturno = 0;
-    public static int recargo_puerta_a_puerta = 0;
-    public static int recargo_aeropuerto = 0;
     public static final int carrera_minima_sfc = 4400;
     public static final int carrera_minima_cfc = 5000;
 
@@ -893,7 +915,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     public static final double factorDeCalidad = 0;
 
 
-    public static int getEstimatedPrice(int distance, int time, int recargos) {
+    public static int getEstimatedPrice(int distance, int time, int recargos,boolean con_banderazo) {
 
         double distanceInKm = distance / 1000;
         double timeInHours = (time / 60) / 60;
@@ -904,11 +926,15 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
 
 
         if (factorDeCalidad == 0) {
-            costoServicio = banderazo_sfc + ((cost_by_kilometer_sfc * (1 + factorDeCalidad)) * (1 + fc) * distanceInKm) + recargos;
-            costoServicio = (costoServicio < carrera_minima_sfc) ? carrera_minima_sfc : costoServicio;
+            costoServicio = (con_banderazo ? banderazo_sfc : 0) + ((cost_by_kilometer_sfc * (1 + factorDeCalidad)) * (1 + fc) * distanceInKm) + recargos;
+            if(con_banderazo) {
+                costoServicio = (costoServicio < carrera_minima_sfc) ? carrera_minima_sfc : costoServicio;
+            }
         } else {
-            costoServicio = banderazo_cfc + ((cost_by_kilometer_cfc * (1 + factorDeCalidad)) * (1 + fc) * distanceInKm) + recargos;
-            costoServicio = (costoServicio < carrera_minima_cfc) ? carrera_minima_cfc : costoServicio;
+            costoServicio = (con_banderazo ? banderazo_cfc : 0) + ((cost_by_kilometer_cfc * (1 + factorDeCalidad)) * (1 + fc) * distanceInKm) + recargos;
+            if(con_banderazo) {
+                costoServicio = (costoServicio < carrera_minima_cfc) ? carrera_minima_cfc : costoServicio;
+            }
 
         }
 
@@ -928,6 +954,15 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     }
 
     public void getEstimatedPriceWithFees(String lat, String lng, final int distance, final int time) {
+
+
+//        pDialog = new ProgressDialog(MapaActivitys.this);
+//        pDialog.setMessage(getString(R.string.calculado_tarifa));
+//        pDialog.setIndeterminate(false);
+//        pDialog.setCancelable(false);
+//        if(!pDialog.isShowing()) {
+//            pDialog.show();
+//        }
 
         int inhours = (int) ((time / 60) / 60);
         int minutes = ((time / 60) % 60);
@@ -949,21 +984,119 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         call_profile.enqueue(new Callback<FeesResponse>() {
             @Override
             public void onResponse(Call<FeesResponse> call, Response<FeesResponse> response) {
+                if(pDialog.isShowing()) {
+                    pDialog.dismiss();
+                }
+                if (getIntent().getExtras() != null && getIntent().getExtras().getBoolean("new_destination", false))
+                {
+                    valor_app = getEstimatedPrice(distance, time,getIntent().getExtras().getInt("last_service_price", 0),false);
+                }else{
+                    valor_app = getEstimatedPrice(distance, time, response.body().getTotal_recargo(),true);
+                }
 
-                total_con_recargos = "$ " + String.format("%,d", getEstimatedPrice(distance, time, response.body().getTotal_recargo()));
+                total_con_recargos = "$ " + String.format("%,d", valor_app);
                 TV_Estimated_Price.setText(total_con_recargos);
                 recargo_nocturno = Integer.parseInt(response.body().getNocturno().trim());
-                recargo_aeropuerto = Integer.parseInt(response.body().getKm().trim());
+                recargo_aeropuerto = Integer.parseInt(response.body().getAeropuerto().trim());
                 recargo_puerta_a_puerta = Integer.parseInt(response.body().getPuerta_a_puerta().trim());
+
 
             }
 
             @Override
             public void onFailure(Call<FeesResponse> call, Throwable t) {
                 Log.w("-----Error-----", t.toString());
+                if(pDialog.isShowing()) {
+                    pDialog.dismiss();
+                }
             }
         });
 
+    }
+
+    public boolean checkService() throws JSONException {
+
+        //service_id = conf.getServiceId();
+        id_user = conf.getIdUser();
+        Log.v("checkService", "ini");
+        Log.v("checkService", "id_driver=" + id_user + " service_id=" + service_id);
+        service_id = conf.getServiceId();
+        Log.v("checkService", "id_user=" + id_user + " service_id=" + service_id);
+        this.sendBroadcast(new Intent("com.google.android.intent.action.GTALK_HEARTBEAT"));
+        this.sendBroadcast(new Intent("com.google.android.intent.action.MCS_HEARTBEAT"));
+
+        MiddleConnect.checkStatusService(this, id_user, service_id, "uuid", "", 0.0 , 0.0, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onStart() {
+                Log.v("checkService", "onStart");
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String response = new String(responseBody);
+                Log.i("CHECKSERVICE RESPONSE",response);
+                try {
+                    JSONObject responsejson = new JSONObject(response);
+                    int status_service = responsejson.getInt("status_id");
+                    Log.v("checkService", "status_id: " + String.valueOf(status_service));
+                    // si hay un servicio asignado lo recupera
+
+                    Log.i("---------BANDERA----",status_service + " -- "  + responsejson.getString("qualification"));
+
+                    if (status_service == 5 && responsejson.getString("qualification") == "null") {
+                        Intent mIntent = new Intent(getApplicationContext(), ConfirmacionActivity.class);
+                        mIntent.putExtra("driver", responsejson.getJSONObject("driver").toString());
+                        myTimer.cancel();
+                        myTimer.purge();
+                        myTimer = null;
+                        startActivity(mIntent);
+
+                    }
+
+                    else if ((status_service == 2) || (status_service == 4)) {
+
+                        service_id = responsejson.getString("id");
+                        conf.setServiceId(service_id);
+                        Log.v("HomeActivity", "checkService() servicio recuperado - status_service " + String.valueOf(status_service) + " service_id=" + service_id);
+                        Log.v("HomeActivity", "checkService() servicio recuperado - driver " + responsejson.getJSONObject("driver").toString());
+                        Log.v("CNF_SRV1", "HomeActivity before call ConfirmacionActivity.class");
+                        mPref.setRootActivity("HomeActivity");
+                        Intent mIntent = new Intent(getApplicationContext(), ConfirmacionActivity.class);
+                        mIntent.putExtra("driver", responsejson.getJSONObject("driver").toString());
+                        myTimer.cancel();
+                        myTimer.purge();
+                        myTimer = null;
+                        startActivity(mIntent);
+
+                    }
+
+                    Log.v("HomeActivity", "checkService() no tenia servicio para recuperar");
+                    Log.v("HomeActivity", "responsejson = " + responsejson.getJSONObject("driver").toString());
+
+                    if(status_service == 7 || status_service == 8 || status_service == 9){
+                        Toast.makeText(getApplicationContext(), getString(R.string.servicio_cancelado), Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    Log.v("checkService", "Problema json " + e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                //  String response = new String(responseBody);
+                 Log.v("checkService", "onFailure " + error.toString());
+
+            }
+
+            @Override
+            public void onFinish() {
+                Log.v("checkService", "onFinish");
+            }
+
+        });
+        return true;
     }
 
     @Override
@@ -1045,8 +1178,9 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
         }
 
         try {
-            timer.purge();
-            timer.cancel();
+            myTimer.cancel();
+            myTimer.purge();
+            myTimer = null;
         } catch (Exception e) {
         }
 
@@ -1341,8 +1475,14 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                 ApiService service = retrofit.create(ApiService.class);
                 if((!direccion_uno.getText().toString().isEmpty())&&(!direccion_dos.getText().toString().isEmpty())&&(!destination_address.isEmpty())){
 
-                    Snackbar.make(getCurrentFocus(),"Calculando ruta...",Snackbar.LENGTH_LONG).show();
-
+                    Log.i("==DIALOG==","Dialog is showing");
+                    pDialog = new ProgressDialog(MapaActivitys.this);
+                    pDialog.setMessage(getString(R.string.calculado_ruta));
+                    pDialog.setIndeterminate(false);
+                    pDialog.setCancelable(false);
+                    if(!pDialog.isShowing()) {
+                        pDialog.show();
+                    }
 
                     String dir1= direccion_uno.getText().toString()+" Bogota Colombia";
 
@@ -1350,6 +1490,8 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                     call_directions.enqueue(new Callback<DirectionsResponse>() {
                         @Override
                         public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
+                            pDialog.dismiss();
+
                             String poly_encode = response.body().getRoutes().get(0).getOverview_polyline().getPoints();
                             List<LatLng> points = PolyUtil.decode(poly_encode);
 
@@ -1413,6 +1555,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
 
                         @Override
                         public void onFailure(Call<DirectionsResponse> call, Throwable t) {
+                            pDialog.dismiss();
                             Log.w("-----Error-----",t.toString());
                         }
                     });
@@ -1677,7 +1820,7 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                                             setResult(RESULT_OK, intent);
                                             finish();
                                         } else {
-                                            showControls();
+
                                             map.getUiSettings().setScrollGesturesEnabled(false);
                                             direccion_uno.clearFocus();
                                             direccion_uno.setFocusableInTouchMode(false);
@@ -1687,7 +1830,12 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                                             direccion_dos.setFocusableInTouchMode(false);
                                             direccion_dos.setFocusable(false);
                                             map.getUiSettings().setAllGesturesEnabled(false);
-                                            screenShotMap(1);
+                                            if (getIntent().getExtras() != null && getIntent().getExtras().getBoolean("new_destination", false)) {
+
+                                            } else{
+                                                showControls();
+                                                screenShotMap(1);
+                                            }
                                             getTaxi();
                                         }
                                     }
@@ -1744,12 +1892,16 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                                                             map.getUiSettings().setScrollGesturesEnabled(false);
                                                             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                                                             imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.RESULT_HIDDEN);
-                                                            showControls();
+
                                                             InputMethodManager imm1 = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                                                             imm1.hideSoftInputFromWindow(mTicket.getWindowToken(), 0);
                                                             HideUtil.hideSoftKeyboard(MapaActivitys.this);
                                                             map.getUiSettings().setAllGesturesEnabled(false);
-                                                            screenShotMap(1);
+                                                            if (getIntent().getExtras() != null && getIntent().getExtras().getBoolean("new_destination", false)) {
+                                                            } else{
+                                                                showControls();
+                                                                screenShotMap(1);
+                                                            }
                                                             getTaxi();
                                                         }
                                                     }
@@ -2761,8 +2913,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
             else if (msg.what == 2000) {
 
                 cancelByService(getResources().getString(R.string.cancel_service, id_user));
-                Log.v("SolicitandoActivity", "msg.what = 2000");
-                Log.v("CNF_SRV", "no driver 3");
                 Toast.makeText(getApplicationContext(), getString(R.string.error_no_driver), Toast.LENGTH_SHORT).show();
 
                 hideControls();
@@ -2783,35 +2933,13 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
             String strLongitud = String.valueOf(longitud);
             Log.i("ADDRESS ON SERVICE", "Lat: " + latitud + " Long: " + longitud);
 
-            final ObjectAnimator animation = ObjectAnimator.ofInt(circleProgressBar, "progress", 1, 90);
-
-            if (android.os.Build.VERSION.SDK_INT >= 11) {
-                animation.setDuration(10000).addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationStart(Animator animator) {
-                        Log.v("ANIMATION", "START");
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animator animator) {
-                        Log.v("ANIMATION", "STOP");
-                    }
-                });
-                animation.setRepeatCount(10);
-                animation.setInterpolator(new AccelerateDecelerateInterpolator());
-            } else {
 
 
-            }
-            animation.start();
-
-            isRequestService = true;
             String address = direccion_uno.getText().toString();
             Log.v("SOLICITANDO_SERVICIO", "address " + address);
             this.sendBroadcast(new Intent("com.google.android.intent.action.GTALK_HEARTBEAT"));
             this.sendBroadcast(new Intent("com.google.android.intent.action.MCS_HEARTBEAT"));
 
-            // TODO: prepare data antes de enviar el servicio
             String userEmail = conf.getUser();
             String userUuid = conf.getIdUser();
             String payType = "3";
@@ -2835,10 +2963,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
 
             Log.v("CODE1", "strCode " + strCode);
 
-            pDialog = new ProgressDialog(MapaActivitys.this);
-            pDialog.setMessage(getString(R.string.texto_solicitando_servicio));
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
 
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -2852,8 +2976,38 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                     .build();
 
             ApiService service = retrofit.create(ApiService.class);
-            if (getIntent().getExtras() != null && getIntent().getExtras().getBoolean("new_destination", false)) {
-                Call<InterruptResponse> call_profile = service.interrupt(Integer.parseInt(conf.getCarId()),Integer.parseInt(conf.getDriverId()), Double.parseDouble(strLatitud),  Double.parseDouble(strLongitud), to_lat, to_lng, address, "", barrio, "", 0,"", 0, getIntent().getExtras().getInt("last_service",-1),1);
+            if (getIntent().getExtras() != null && getIntent().getExtras().getBoolean("new_destination", false))
+            {
+
+                pDialog = new ProgressDialog(MapaActivitys.this);
+                pDialog.setMessage(getString(R.string.creando_servicio_con_nuevo__));
+                pDialog.setIndeterminate(false);
+                pDialog.setCancelable(false);
+                if(!pDialog.isShowing()) {
+                    pDialog.show();
+                }
+
+                int inhours = (int) ((travel_estimated_time_int / 60) / 60);
+                int minutes = ((travel_estimated_time_int / 60) % 60);
+                String time_formated = inhours + ":" + minutes;
+
+
+                Call<InterruptResponse> call_profile = service.interrupt(
+                        Integer.parseInt(conf.getCarId()),
+                        Integer.parseInt(conf.getDriverId()),
+                        Double.parseDouble(strLatitud),
+                        Double.parseDouble(strLongitud),
+                        to_lat,
+                        to_lng,
+                        address,
+                        "",
+                        barrio,
+                        destination,
+                        (travel_distance_int/1000),
+                        time_formated,
+                        valor_app,
+                        getIntent().getExtras().getInt("last_service",-1)
+                        ,1);
                 call_profile.enqueue(new Callback<InterruptResponse>() {
                     @Override
                     public void onResponse(Call<InterruptResponse> call, Response<InterruptResponse> response) {
@@ -2861,53 +3015,12 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
 
                         try {
 
-                            if (myTimer == null) {
-                                Log.v("CNF_SRV", "myTimer is null");
-                                myTimer = new Timer();
-                            }
-
-                                mServiceId = response.body().getId();
-                                conf.setServiceId(mServiceId);
-                                mStatusNew = Integer.parseInt(response.body().getStatus_id());
-                                Log.v("SERVICE_STATUS", "getServiceAddress onSuccess service_id " + mServiceId);
-                                Log.e("SERVICE_CMS", "    GET_SERVICE_ADDRESS success service_id= " + mServiceId);
-
-                                final Calendar c = Calendar.getInstance();
-                                long actualDate = c.getTimeInMillis();
-
-                                mySQLiteAdapter.insertService(mServiceId, String.valueOf(mStatusNew), "", id_user, "", actualDate);
-                                reintento = 0;
-                                myTimer.schedule(new TimerTask() {
-                                    @Override
-                                    public void run() {
-                                        Log.e("TIMER_EJECUTANDO", "EJECUTANDO *** " + String.valueOf(reintento));
-                                        Log.v("SOLICITANDO_SERVICIO", "TIMER - EJECUTANDO " + String.valueOf(new Date()));
-
-                                        reintento++;
-
-                                        try {
-                                            checkService();
-                                        } catch (JSONException e) {
-                                            Log.v("CHECK1", "checkService exception " + e.toString());
-                                            e.printStackTrace();
-                                        }
-
-                                        //if (reintento >= 3) {
-                                        if (reintento >= 29) {
-                                            Log.e("TIMER_EJECUTANDO", "FIN EJECUTANDO *** ");
-                                            Log.v("SOLICITANDO_SERVICIO", "TIMER - FIN EJECUTANDO " + String.valueOf(new Date()));
-
-
-                                            isReceiverRegistered = false;
-                                            puente.sendEmptyMessage(2000);
-                                            myTimer.cancel();
-                                            myTimer.purge();
-                                            myTimer = null;
-
-                                        }
-                                    }
-
-                                }, 5000, 3000);
+                            mServiceId = response.body().getData().getId();
+                            conf.setServiceId(mServiceId);
+                            service_id = mServiceId;
+                            mStatusNew = Integer.parseInt(response.body().getData().getStatus_id());
+                            checkService();
+                            pDialog.dismiss();
 
 
                         } catch (Exception e) {
@@ -2927,14 +3040,65 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                 });
             } else {
 
+                final ObjectAnimator animation = ObjectAnimator.ofInt(circleProgressBar, "progress", 1, 90);
+
+                if (android.os.Build.VERSION.SDK_INT >= 11) {
+                    animation.setDuration(10000).addListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationStart(Animator animator) {
+                            Log.v("ANIMATION", "START");
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animator) {
+                            Log.v("ANIMATION", "STOP");
+                        }
+                    });
+                    animation.setRepeatCount(10);
+                    animation.setInterpolator(new AccelerateDecelerateInterpolator());
+                } else {
+
+
+                }
+                animation.start();
+
+                isRequestService = true;
+                pDialog = new ProgressDialog(MapaActivitys.this);
+                pDialog.setMessage(getString(R.string.texto_solicitando_servicio));
+                pDialog.setIndeterminate(false);
+                pDialog.setCancelable(false);
+
                 retrofit = new Retrofit.Builder()
-                        .baseUrl(Connect.BASE_URL)
+                        .baseUrl(Connect.BASE_URL_IP)
                         .addConverterFactory(GsonConverterFactory.create())
                         .client(httpClient.build())
                         .build();
                 service = retrofit.create(ApiService.class);
 
-                Call<RequestServiceAddressResponse> call_profile = service.requestServiceAddress(id_user, strLatitud, strLongitud, String.valueOf(to_lat) ,String.valueOf(to_lng), barrio, address, uuid, payType, "", userEmail, mCardReference, strCode, commit, destination);
+
+
+                Call<RequestServiceAddressResponse> call_profile = service.requestServiceAddress(
+                        id_user,
+                        strLatitud,
+                        strLongitud,
+                        String.valueOf(to_lat),
+                        String.valueOf(to_lng),
+                        "",
+                        barrio,
+                        recargo_aeropuerto,
+                        recargo_nocturno,
+                        0,
+                        recargo_puerta_a_puerta,
+                        payType,
+                        destination,
+                        address,
+                        travel_distance_int,
+                        travel_estimated_time_int,
+                        valor_app,
+                        ticket_value,
+                        commit
+                );
+
             call_profile.enqueue(new Callback<RequestServiceAddressResponse>() {
                 @Override
                 public void onResponse(Call<RequestServiceAddressResponse> call, Response<RequestServiceAddressResponse> response) {
@@ -2943,18 +3107,14 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                     try {
 
                         if (myTimer == null) {
-                            Log.v("CNF_SRV", "myTimer is null");
                             myTimer = new Timer();
                         }
 
                         if (response.body().getSuccess()) {
 
-                            mServiceId = response.body().getService_id();
+                            mServiceId = response.body().getData().getId_servicio();
                             conf.setServiceId(mServiceId);
-                            mStatusNew = response.body().getStatus_id();
-                            Log.v("SERVICE_STATUS", "getServiceAddress onSuccess service_id " + mServiceId);
-                            Log.e("SERVICE_CMS", "    GET_SERVICE_ADDRESS success service_id= " + mServiceId);
-
+                            mStatusNew = Integer.parseInt(response.body().getData().getEstado());
                             final Calendar c = Calendar.getInstance();
                             long actualDate = c.getTimeInMillis();
 
@@ -2963,24 +3123,14 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                             myTimer.schedule(new TimerTask() {
                                 @Override
                                 public void run() {
-                                    Log.e("TIMER_EJECUTANDO", "EJECUTANDO *** " + String.valueOf(reintento));
-                                    Log.v("SOLICITANDO_SERVICIO", "TIMER - EJECUTANDO " + String.valueOf(new Date()));
-
                                     reintento++;
-
                                     try {
                                         checkService();
                                     } catch (JSONException e) {
-                                        Log.v("CHECK1", "checkService exception " + e.toString());
-                                        e.printStackTrace();
+                                        Log.e("--Error--" , e.toString());
                                     }
 
-                                    //if (reintento >= 3) {
                                     if (reintento >= 29) {
-                                        Log.e("TIMER_EJECUTANDO", "FIN EJECUTANDO *** ");
-                                        Log.v("SOLICITANDO_SERVICIO", "TIMER - FIN EJECUTANDO " + String.valueOf(new Date()));
-
-
                                         isReceiverRegistered = false;
                                         puente.sendEmptyMessage(2000);
                                         myTimer.cancel();
@@ -2994,21 +3144,12 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
 
 
                         } else {
-                            if (response.body().getError() == Error.NO_DRIVER_ENABLE) {
-
-                                Log.v("SOLICITANDO_SERVICIO", "error - Error.NO_DRIVER_ENABLE " + String.valueOf(new Date()));
-                                Toast.makeText(getApplicationContext(), getString(R.string.error_no_driver), Toast.LENGTH_LONG).show();
-
-                            } else {
-                                Log.v("SOLICITANDO_SERVICIO", "error_request - " + String.valueOf(new Date()));
-                                err_request();
-
-                            }
-
+                            Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
                             finish();
                         }
 
                     } catch (Exception e) {
+                        Log.e("---ERROR---",e.toString());
                         err_request();
 //
                         isRequestService = false;
@@ -3066,20 +3207,6 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     }
 
 
-    public void checkService() throws JSONException {
-
-        service_id = conf.getServiceId();
-//        if ((mServiceId != null) && (mServiceId.length() > 1)) service_id = mServiceId;
-        Log.e("SERVICE_CMS", "    CHECK_SERVICE");
-        Log.v("CHECK1","checkService service_id =  " + service_id);
-
-        Log.v("checkService", "id_user=" + id_user + " service_id=" + service_id);
-        this.sendBroadcast(new Intent("com.google.android.intent.action.GTALK_HEARTBEAT"));
-        this.sendBroadcast(new Intent("com.google.android.intent.action.MCS_HEARTBEAT"));
-
-        Log.v("CHECK1","checkService 2 service_id =  " + service_id);
-
-    }
 
     private void cancelarService() {
 
@@ -3111,7 +3238,9 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                 pDialog.setMessage("Cancelando Servicio....");
                 pDialog.setIndeterminate(false);
                 pDialog.setCancelable(false);
-                pDialog.show();
+                if(!pDialog.isShowing()) {
+                    pDialog.show();
+                }
             }
         } catch (Exception e) {
         }
@@ -3318,7 +3447,9 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                         pDialog.setMessage("Cancelando Servicio....");
                         pDialog.setIndeterminate(false);
                         pDialog.setCancelable(false);
-                        pDialog.show();
+                        if(!pDialog.isShowing()) {
+                            pDialog.show();
+                        }
                     }
                 } catch (Exception e) {
                 }

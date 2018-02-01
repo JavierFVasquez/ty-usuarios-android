@@ -312,6 +312,10 @@
     <string name="interrupt_request">Do you want to interrupt the service?</string>
     <string name="select_new_destination">Select new destination</string>
     <string name="text_interrumpiendo">Interrupting service...</string>
+    <string name="nuevo_destino">New destination</string>
+    <string name="creando_servicio_con_nuevo__">Creating service with new destination</string>
+    <string name="calculado_ruta">Loading directions</string>
+    <string name="calculado_tarifa">Calculating rate...</string>
 
 
 </resources>
