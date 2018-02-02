@@ -25,8 +25,8 @@ android {
         applicationId "co.taxisya.usuarioandroid"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 104
-        versionName "1.9.24"
+        versionCode 105
+        versionName "1.9.25"
     }
 //    signingConfigs {
 //        release {

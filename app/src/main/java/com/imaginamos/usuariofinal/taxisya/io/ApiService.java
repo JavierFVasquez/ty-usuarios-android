@@ -92,7 +92,11 @@ public interface ApiService {
                                       @Field("tiempo_recorido") String tiempo_recorido,
                                       @Field("valor_app") double valor_app,
                                       @Field("carrera_anterior") int carrera_anterior,
-                                      @Field("n_pasajeros") int n_pasajeros);
+                                      @Field("n_pasajeros") int n_pasajeros,
+                                      @Field("charge1") int charge1,
+                                      @Field("charge2") int charge2,
+                                      @Field("charge3") int charge3,
+                                      @Field("charge4") int charge4);
  @FormUrlEncoded
     @POST(ApiConstants.SERVICE_UPDATE)
     Call<UpdateServiceResponse> service_update (@Field("idServicio") int idServicio,

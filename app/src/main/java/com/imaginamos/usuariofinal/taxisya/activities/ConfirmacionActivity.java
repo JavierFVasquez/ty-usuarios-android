@@ -551,11 +551,21 @@ public class ConfirmacionActivity extends Activity implements OnClickListener, C
                                     Bundle b =  new Bundle();
                                     b.putBoolean("new_destination",true);
                                     b.putInt("last_service_price",price);
+                                    b.putString("charge1",mTotCharge1);
+                                    b.putString("charge2",mTotCharge2);
+                                    b.putString("charge3",mTotCharge3);
+                                    b.putString("charge4",mTotCharge4);
                                     b.putDouble("from_lat",latitud_taxi);
                                     b.putDouble("from_lng",longitud_taxi);
                                     b.putInt("last_service",Integer.parseInt(service_id));
                                     i.putExtras(b);
                                     startActivity(i);
+                                }else{
+                                    try {
+                                        checkService();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                                 pDialog.dismiss();
 

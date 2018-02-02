@@ -288,6 +288,10 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
     private int valor_app;
     private int travel_distance_int;
     private int travel_estimated_time_int;
+    private int r_aeropuerto = 0;
+    private int r_nocturno = 0;
+    private int r_mensajeria = 0;
+    private int r_pp = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -996,9 +1000,17 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
 
                 total_con_recargos = "$ " + String.format("%,d", valor_app);
                 TV_Estimated_Price.setText(total_con_recargos);
-                recargo_nocturno = Integer.parseInt(response.body().getNocturno().trim());
-                recargo_aeropuerto = Integer.parseInt(response.body().getAeropuerto().trim());
-                recargo_puerta_a_puerta = Integer.parseInt(response.body().getPuerta_a_puerta().trim());
+
+                if(getIntent().getExtras() != null) {
+                    r_aeropuerto = Integer.parseInt(getIntent().getExtras().getString("charge1", "0"));
+                    r_nocturno = Integer.parseInt(getIntent().getExtras().getString("charge2", "0"));
+                    r_mensajeria = Integer.parseInt(getIntent().getExtras().getString("charge3", "0"));
+                    r_pp = Integer.parseInt(getIntent().getExtras().getString("charge4", "0"));
+                }
+
+                recargo_nocturno =  r_nocturno > 0 ? r_nocturno : Integer.parseInt(response.body().getNocturno().trim());
+                recargo_aeropuerto = r_aeropuerto > 0 ? r_aeropuerto : Integer.parseInt(response.body().getAeropuerto().trim());
+                recargo_puerta_a_puerta =  r_pp > 0 ? r_pp : Integer.parseInt(response.body().getPuerta_a_puerta().trim());
 
 
             }
@@ -3007,7 +3019,12 @@ public class MapaActivitys extends FragmentActivity implements OnClickListener, 
                         time_formated,
                         valor_app,
                         getIntent().getExtras().getInt("last_service",-1)
-                        ,1);
+                        ,1
+                        ,recargo_aeropuerto
+                        ,recargo_nocturno
+                        ,0
+                        ,recargo_puerta_a_puerta
+                );
                 call_profile.enqueue(new Callback<InterruptResponse>() {
                     @Override
                     public void onResponse(Call<InterruptResponse> call, Response<InterruptResponse> response) {
